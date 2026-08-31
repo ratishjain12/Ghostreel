@@ -1,0 +1,245 @@
+<template>
+<div data-hf-id="hf-wsc7" id="root" data-composition-id="02-cache-expires" data-width="1080" data-height="1920" data-duration="11.26">
+  <style>
+    @font-face { font-family: 'Space Grotesk'; src: url('assets/fonts/Space-Grotesk-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Space Grotesk'; src: url('assets/fonts/Space-Grotesk-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Space Grotesk'; src: url('assets/fonts/Space-Grotesk-700.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Inter'; src: url('assets/fonts/Inter-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Inter'; src: url('assets/fonts/Inter-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: block; }
+
+    #root {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+      color: #111111;
+    }
+
+    #root .clip { position: absolute; }
+
+    .f02ce-bg {
+      inset: 0;
+      background: #fdfae7;
+    }
+
+    .f02ce-glow {
+      left: 350px;
+      top: 1210px;
+      width: 380px;
+      height: 380px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(30, 43, 250, 0.45) 0%, rgba(30, 43, 250, 0) 70%);
+      opacity: 0;
+    }
+
+    .f02ce-tile {
+      left: 90px;
+      top: 140px;
+      width: 270px;
+      height: 74px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 100px;
+      background: rgba(30, 43, 250, 0.08);
+      border: 1.5px dashed rgba(30, 43, 250, 0.4);
+      opacity: 0;
+    }
+
+    .f02ce-tile-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 28px;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      color: #1e2bfa;
+    }
+
+    .f02ce-dot {
+      width: 84px;
+      height: 84px;
+      border-radius: 50%;
+      background: #1e2bfa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      will-change: transform;
+    }
+
+    .f02ce-dot span {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #fdfae7;
+    }
+
+    .f02ce-db {
+      left: 380px;
+      top: 1303px;
+      width: 320px;
+      height: 235px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      border-radius: 14px;
+      background: rgba(30, 43, 250, 0.04);
+      border: 1.5px solid rgba(30, 43, 250, 0.2);
+      opacity: 0;
+    }
+
+    .f02ce-db-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #1e2bfa;
+    }
+
+    .f02ce-counter {
+      left: 700px;
+      top: 1050px;
+      width: 300px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      opacity: 0;
+    }
+
+    .f02ce-counter-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 78px;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+      color: #1e2bfa;
+    }
+
+    .f02ce-counter-label {
+      margin-top: 8px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #6b6b6b;
+    }
+  </style>
+
+  <div data-hf-id="hf-xlu2" class="clip f02ce-bg" data-start="0" data-duration="11.26" data-track-index="0"></div>
+
+  <div data-hf-id="hf-bb5e" class="clip f02ce-glow" data-start="9.0" data-duration="2.26" data-track-index="1"></div>
+
+  <div data-hf-id="hf-77d1" class="clip f02ce-tile" data-start="0" data-duration="11.26" data-track-index="2">
+    <span data-hf-id="hf-n62s" class="f02ce-tile-label">cache:key</span>
+  </div>
+
+  <div data-hf-id="hf-ha8z" class="clip f02ce-db" data-start="5.3" data-duration="5.96" data-track-index="3">
+    <svg data-hf-id="hf-mm4y" viewBox="0 0 120 100" width="108" height="90" fill="none" stroke="#1e2bfa" stroke-width="4">
+      <ellipse data-hf-id="hf-p7zh" cx="60" cy="18" rx="52" ry="16" />
+      <path data-hf-id="hf-64hc" d="M8,18 L8,82 A52,16 0 0 0 112,82 L112,18" />
+      <path data-hf-id="hf-fh80" d="M8,50 A52,16 0 0 0 112,50" />
+    </svg>
+    <div data-hf-id="hf-8d5f" class="f02ce-db-label">database</div>
+  </div>
+
+  <div data-hf-id="hf-o7z8" class="clip f02ce-counter" data-start="5.3" data-duration="5.96" data-track-index="4">
+    <span data-hf-id="hf-3bth" class="f02ce-counter-num">0</span>
+    <span data-hf-id="hf-ifxv" class="f02ce-counter-label">requests</span>
+  </div>
+
+  <div data-hf-id="hf-esph" class="clip f02ce-dot" data-start="1.84" data-duration="9.42" data-track-index="5" style="left:110px;top:280px" data-touch-x="20" data-touch-y="-49" data-stream-x="318" data-stream-y="720">
+    <span data-hf-id="hf-pplb">req</span>
+  </div>
+  <div data-hf-id="hf-d0j8" class="clip f02ce-dot" data-start="2.24" data-duration="9.02" data-track-index="6" style="left:380px;top:220px" data-touch-x="-74" data-touch-y="-28" data-stream-x="238" data-stream-y="780">
+    <span data-hf-id="hf-t59r">req</span>
+  </div>
+  <div data-hf-id="hf-pssf" class="clip f02ce-dot" data-start="2.64" data-duration="8.62" data-track-index="7" style="left:620px;top:300px" data-touch-x="-158" data-touch-y="-56" data-stream-x="-192" data-stream-y="780">
+    <span data-hf-id="hf-sqyq">req</span>
+  </div>
+  <div data-hf-id="hf-pmc9" class="clip f02ce-dot" data-start="3.04" data-duration="8.22" data-track-index="8" style="left:860px;top:240px" data-touch-x="-242" data-touch-y="-35" data-stream-x="-242" data-stream-y="840">
+    <span data-hf-id="hf-scnp">req</span>
+  </div>
+  <div data-hf-id="hf-evc7" class="clip f02ce-dot" data-start="3.44" data-duration="7.82" data-track-index="9" style="left:180px;top:480px" data-touch-x="-4" data-touch-y="-119" data-stream-x="248" data-stream-y="680">
+    <span data-hf-id="hf-v4sw">req</span>
+  </div>
+  <div data-hf-id="hf-9icf" class="clip f02ce-dot" data-start="3.84" data-duration="7.42" data-track-index="10" style="left:460px;top:520px" data-touch-x="-102" data-touch-y="-133" data-stream-x="158" data-stream-y="640">
+    <span data-hf-id="hf-uqhv">req</span>
+  </div>
+  <div data-hf-id="hf-idg5" class="clip f02ce-dot" data-start="4.24" data-duration="7.02" data-track-index="11" style="left:740px;top:460px" data-touch-x="-200" data-touch-y="-112" data-stream-x="-312" data-stream-y="780">
+    <span data-hf-id="hf-uc6u">req</span>
+  </div>
+  <div data-hf-id="hf-695u" class="clip f02ce-dot" data-start="4.64" data-duration="6.62" data-track-index="12" style="left:920px;top:560px" data-touch-x="-263" data-touch-y="-147" data-stream-x="-302" data-stream-y="680">
+    <span data-hf-id="hf-txvt">req</span>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    (function () {
+      const root = document.querySelector('[data-composition-id="02-cache-expires"]');
+      const tile = root.querySelector(".f02ce-tile");
+      const dots = Array.from(root.querySelectorAll(".f02ce-dot"));
+      const db = root.querySelector(".f02ce-db");
+      const glow = root.querySelector(".f02ce-glow");
+      const counterWrap = root.querySelector(".f02ce-counter");
+      const counterNum = root.querySelector(".f02ce-counter-num");
+
+      const tl = gsap.timeline({ paused: true });
+
+      // Scene 1 — the hollow cache-key tile continues from Frame 1, static.
+      tl.fromTo(tile, { opacity: 0, y: -14 }, { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }, 0);
+
+      // Handoff to Scene 2 — tile fades to context as the dots take over as focal.
+      tl.to(tile, { opacity: 0.55, scale: 0.88, duration: 0.6, ease: "power2.out" }, 1.84);
+
+      // Scene 2 — dots reveal one by one, each touches the tile and recoils empty.
+      // Scene 3 — in lockstep, the whole cluster streams down toward the database (center-outward-expansion).
+      dots.forEach((dot) => {
+        const start = parseFloat(dot.dataset.start);
+        const touchX = Number(dot.dataset.touchX);
+        const touchY = Number(dot.dataset.touchY);
+        const streamX = Number(dot.dataset.streamX);
+        const streamY = Number(dot.dataset.streamY);
+
+        tl.fromTo(dot, { opacity: 0, scale: 0.5 }, { opacity: 1, scale: 1, duration: 0.25, ease: "power2.out" }, start);
+        tl.to(dot, { x: touchX, y: touchY, duration: 0.18, ease: "power1.inOut" }, start + 0.25);
+        tl.to(dot, { x: 0, y: 0, duration: 0.22, ease: "power2.out" }, start + 0.43);
+
+        // Shared start/duration/ease across every dot — one chord, not an arpeggio.
+        tl.to(dot, { x: streamX, y: streamY, duration: 3.6, ease: "power3.out" }, 5.4);
+      });
+
+      // The database glyph is revealed lower-frame as the stream begins.
+      tl.fromTo(db, { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.5, ease: "power2.out" }, 5.3);
+
+      // A small steady counter climbs to "10,000" alongside the stream — fixed size, no growth.
+      tl.fromTo(counterWrap, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 5.3);
+      const counterState = { value: 0 };
+      tl.to(
+        counterState,
+        {
+          value: 10000,
+          duration: 3.6,
+          ease: "power3.out",
+          onUpdate: () => {
+            counterNum.textContent = Math.round(counterState.value).toLocaleString();
+          },
+        },
+        5.4,
+      );
+
+      // Scene 4 — the stream arrives at the database edge; an impact glow settles and holds.
+      tl.fromTo(glow, { opacity: 0, scale: 0.7 }, { opacity: 0.4, scale: 1, duration: 0.35, ease: "power2.out" }, 9.0);
+      tl.to(glow, { opacity: 0.18, duration: 0.5, ease: "power2.out" }, 9.35);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["02-cache-expires"] = tl;
+    })();
+  </script>
+</div>
+</template>

@@ -1,0 +1,260 @@
+<template>
+  <div data-hf-id="hf-7njs" id="root" data-composition-id="07-the-payoff" data-width="1080" data-height="1920" data-duration="4.084">
+    <style>
+    @font-face { font-family: 'Newsreader'; src: url('assets/fonts/newsreader-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Hanken Grotesk'; src: url('assets/fonts/hanken-grotesk-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Hanken Grotesk'; src: url('assets/fonts/hanken-grotesk-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: block; }
+    @font-face { font-family: 'DM Mono'; src: url('assets/fonts/dm-mono-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+      #root {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        font-family: "Hanken Grotesk", sans-serif;
+      }
+
+      .clip {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      .f07-bg {
+        background-color: #f0ebde;
+        background-image:
+          linear-gradient(rgba(31, 43, 224, 0.1) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(31, 43, 224, 0.1) 1px, transparent 1px);
+        background-size: 36px 36px;
+      }
+
+      .f07-hairline {
+        position: absolute;
+        left: 43px;
+        right: 43px;
+        height: 2px;
+        background: #1f2be0;
+      }
+      .f07-hairline.top {
+        top: 160px;
+      }
+      .f07-hairline.bottom {
+        top: 1550px;
+      }
+
+      .f07-stage {
+        pointer-events: none;
+      }
+
+      /* cache node (focal) */
+      .f07-node-wrap {
+        position: absolute;
+        left: 445px;
+        top: 360px;
+        width: 190px;
+        height: 230px;
+      }
+      .f07-node-card {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transform-origin: 50% 40%;
+      }
+      .f07-node-card.outgoing {
+        z-index: 1;
+      }
+      .f07-node-card.incoming {
+        z-index: 2;
+        opacity: 0;
+      }
+      .f07-node-box {
+        width: 190px;
+        height: 190px;
+        box-sizing: border-box;
+        border: 3px solid #1f2be0;
+      }
+      .f07-node-box.miss {
+        background-color: #f0ebde;
+        background-image: repeating-linear-gradient(
+          45deg,
+          rgba(31, 43, 224, 0.18) 0 2px,
+          transparent 2px 12px
+        );
+      }
+      .f07-node-box.hit {
+        background-color: #1f2be0;
+      }
+      .f07-node-label {
+        margin-top: 14px;
+        font-family: "DM Mono", monospace;
+        font-size: 22px;
+        letter-spacing: 0.08em;
+        color: #1f2be0;
+      }
+
+      /* gate glyph (supporting, recedes) */
+      .f07-gate-wrap {
+        position: absolute;
+        left: 400px;
+        top: 820px;
+        width: 280px;
+        transform-origin: 50% 40%;
+      }
+      .f07-gate-frame {
+        position: relative;
+        width: 280px;
+        height: 170px;
+        box-sizing: border-box;
+        border: 3px solid #1f2be0;
+        background-color: #f0ebde;
+      }
+      .f07-gate-arm {
+        position: absolute;
+        left: 50%;
+        top: 0;
+        width: 3px;
+        height: 100%;
+        background: #1f2be0;
+        margin-left: -1.5px;
+      }
+      .f07-gate-label {
+        margin-top: 14px;
+        text-align: center;
+        font-family: "DM Mono", monospace;
+        font-size: 18px;
+        letter-spacing: 0.14em;
+        color: #1f2be0;
+      }
+
+      /* lead dot that reaches the node */
+      .f07-lead-wrap {
+        position: absolute;
+        left: 503px;
+        top: 663px;
+        width: 74px;
+        height: 74px;
+      }
+      .f07-lead-halo {
+        position: absolute;
+        inset: 0;
+        border: 2px solid #1f2be0;
+        opacity: 0.35;
+      }
+      .f07-lead-dot {
+        position: absolute;
+        left: 12px;
+        top: 12px;
+        width: 50px;
+        height: 50px;
+        background: #1f2be0;
+      }
+
+      /* queued dots (foreground subject, in motion) */
+      .f07-dot {
+        position: absolute;
+        width: 44px;
+        height: 44px;
+        background: #1f2be0;
+        transform-origin: 50% 50%;
+      }
+    </style>
+
+    <div data-hf-id="hf-awxr" class="clip f07-bg" data-start="0" data-duration="4.084" data-track-index="0">
+      <div data-hf-id="hf-sysh" class="f07-hairline top"></div>
+      <div data-hf-id="hf-csq1" class="f07-hairline bottom"></div>
+    </div>
+
+    <div data-hf-id="hf-crjl" class="clip f07-stage" data-start="0" data-duration="4.084" data-track-index="1">
+      <div data-hf-id="hf-d3mj" class="f07-node-wrap">
+        <div data-hf-id="hf-u2pw" class="f07-node-card outgoing" id="f07-node-outgoing">
+          <div data-hf-id="hf-mtgu" class="f07-node-box miss"></div>
+          <div data-hf-id="hf-hczr" class="f07-node-label">MISS</div>
+        </div>
+        <div data-hf-id="hf-a5s8" class="f07-node-card incoming" id="f07-node-incoming">
+          <div data-hf-id="hf-mvoh" class="f07-node-box hit"></div>
+          <div data-hf-id="hf-rew4" class="f07-node-label">HIT</div>
+        </div>
+      </div>
+
+      <div data-hf-id="hf-j646" class="f07-gate-wrap" id="f07-gate-wrap">
+        <div data-hf-id="hf-gbhz" class="f07-gate-frame">
+          <div data-hf-id="hf-ua1y" class="f07-gate-arm"></div>
+        </div>
+        <div data-hf-id="hf-uif9" class="f07-gate-label">GATE</div>
+      </div>
+
+      <div data-hf-id="hf-x1oc" class="f07-lead-wrap" id="f07-lead-wrap">
+        <div data-hf-id="hf-vc33" class="f07-lead-halo"></div>
+        <div data-hf-id="hf-1w5a" class="f07-lead-dot"></div>
+      </div>
+
+      <div data-hf-id="hf-a0sn" class="f07-dot" id="f07-dot-1" style="left: 368px; top: 1260px"></div>
+      <div data-hf-id="hf-o6gr" class="f07-dot" id="f07-dot-2" style="left: 468px; top: 1260px"></div>
+      <div data-hf-id="hf-cmmr" class="f07-dot" id="f07-dot-3" style="left: 568px; top: 1260px"></div>
+      <div data-hf-id="hf-auwv" class="f07-dot" id="f07-dot-4" style="left: 668px; top: 1260px"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script>
+      (function () {
+        var tl = gsap.timeline({ paused: true });
+
+        // Scene 1 (0-1.28s): queued dots pulse once in unison on "waits"
+        tl.to(".f07-dot", { scale: 1.16, duration: 0.12, ease: "power2.out" }, 0.95);
+        tl.to(".f07-dot", { scale: 1.0, duration: 0.14, ease: "power2.in" }, 1.07);
+
+        // Scene 2 (1.28-2.6s): lead dot travels up to the cache node
+        tl.to("#f07-lead-wrap", { y: -245, duration: 0.55, ease: "power2.inOut" }, 1.28);
+
+        // merge triggers the scale-swap: MISS -> HIT
+        var TRIGGER = 1.98;
+        tl.to(
+          "#f07-lead-wrap",
+          { opacity: 0, duration: 0.12, ease: "power1.in" },
+          TRIGGER,
+        );
+        tl.to(
+          "#f07-node-outgoing",
+          { scale: 0.7, opacity: 0, duration: 0.4, ease: "power2.in" },
+          TRIGGER,
+        );
+        tl.fromTo(
+          "#f07-node-incoming",
+          { scale: 0.7, opacity: 0 },
+          { scale: 1.0, opacity: 1, duration: 0.55, ease: "power3.out" },
+          TRIGGER + 0.4 - 0.15,
+        );
+
+        // the gate recedes now that the node holds the value
+        tl.to(
+          "#f07-gate-wrap",
+          { opacity: 0.4, scale: 0.9, duration: 0.5, ease: "power2.out" },
+          2.0,
+        );
+
+        // Scene 3 (2.6-3.584s): queued dots release, staggered, bypassing the
+        // gate and grazing the node, settling into a cluster beside it.
+        var releases = [
+          { id: "#f07-dot-1", dxMid: 382, dyMid: -310, dxEnd: 332, dyEnd: -865, start: 2.6 },
+          { id: "#f07-dot-2", dxMid: 282, dyMid: -310, dxEnd: 232, dyEnd: -825, start: 2.75 },
+          { id: "#f07-dot-3", dxMid: 182, dyMid: -310, dxEnd: 132, dyEnd: -785, start: 2.9 },
+          { id: "#f07-dot-4", dxMid: 82, dyMid: -310, dxEnd: 32, dyEnd: -745, start: 3.05 },
+        ];
+        releases.forEach(function (d) {
+          tl.to(d.id, { x: d.dxMid, y: d.dyMid, duration: 0.18, ease: "power2.out" }, d.start);
+          tl.to(
+            d.id,
+            { x: d.dxEnd, y: d.dyEnd, duration: 0.22, ease: "power3.out" },
+            d.start + 0.18,
+          );
+        });
+
+        window.__timelines = window.__timelines || {};
+        window.__timelines["07-the-payoff"] = tl;
+      })();
+    </script>
+  </div>
+</template>

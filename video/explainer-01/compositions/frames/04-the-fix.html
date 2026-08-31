@@ -1,0 +1,468 @@
+<template>
+<style>
+@font-face { font-family: 'Space Grotesk'; src: url('assets/fonts/Space-Grotesk-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: block; }
+@font-face { font-family: 'Space Grotesk'; src: url('assets/fonts/Space-Grotesk-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: block; }
+@font-face { font-family: 'Space Grotesk'; src: url('assets/fonts/Space-Grotesk-700.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: block; }
+@font-face { font-family: 'Inter'; src: url('assets/fonts/Inter-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+@font-face { font-family: 'Inter'; src: url('assets/fonts/Inter-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: block; }
+
+#root {
+  position: absolute;
+  inset: 0;
+  width: 1080px;
+  height: 1920px;
+  overflow: hidden;
+  --cream: #fdfae7;
+  --cobalt: #1e2bfa;
+  --text: #111111;
+  --text-muted: #6b6b6b;
+  --border: rgba(30, 43, 250, 0.2);
+  --card-bg: rgba(30, 43, 250, 0.04);
+  --accent-light: rgba(30, 43, 250, 0.08);
+  --positive: #059669;
+  font-family: 'Inter', sans-serif;
+}
+
+.tf04-mono {
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
+.tf04-bg {
+  position: absolute;
+  inset: 0;
+  background: var(--cream);
+  z-index: 0;
+}
+
+.tf04-eyebrow {
+  position: absolute;
+  left: 50%;
+  top: 110px;
+  transform: translateX(-50%);
+  padding: 10px 26px;
+  border-radius: 100px;
+  background: var(--accent-light);
+  color: var(--cobalt);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  z-index: 5;
+}
+
+.tf04-line {
+  position: absolute;
+  left: 538px;
+  width: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  transform-origin: top center;
+  z-index: 1;
+}
+
+.tf04-gate {
+  position: absolute;
+  left: 380px;
+  top: 650px;
+  width: 320px;
+  height: 170px;
+  border-radius: 14px;
+  background: var(--card-bg);
+  border: 1.5px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  z-index: 3;
+  transform-origin: 50% 50%;
+}
+
+.tf04-gate-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--cobalt);
+  text-transform: uppercase;
+}
+
+.tf04-dot {
+  position: absolute;
+  top: 418px;
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  border: 2px solid var(--cobalt);
+  background: var(--card-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--cobalt);
+  transform-origin: 50% 50%;
+  z-index: 3;
+}
+
+.tf04-dot-solid {
+  position: absolute;
+  top: 418px;
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  background: var(--cobalt);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--cream);
+  transform-origin: 50% 50%;
+  z-index: 4;
+}
+
+.tf04-dot-checked {
+  position: absolute;
+  top: 418px;
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  background: var(--cobalt);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-origin: 50% 50%;
+  z-index: 4;
+}
+
+.tf04-recompute-card {
+  position: absolute;
+  left: 420px;
+  top: 1000px;
+  width: 240px;
+  height: 120px;
+  border-radius: 14px;
+  background: var(--card-bg);
+  border: 1.5px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-origin: 50% 50%;
+  z-index: 3;
+}
+
+.tf04-recompute-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--cobalt);
+  text-transform: uppercase;
+}
+
+.tf04-status {
+  position: absolute;
+  left: 690px;
+  top: 1042px;
+  width: 340px;
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--text-muted);
+  white-space: nowrap;
+  z-index: 5;
+}
+
+.tf04-cursor {
+  display: inline-block;
+  width: 10px;
+}
+
+.tf04-waiting {
+  position: absolute;
+  left: 660px;
+  top: 512px;
+  width: 260px;
+  font-size: 19px;
+  font-weight: 500;
+  color: var(--text-muted);
+  white-space: nowrap;
+  z-index: 5;
+}
+
+.tf04-cache-tile {
+  position: absolute;
+  left: 400px;
+  top: 1250px;
+  width: 280px;
+  height: 100px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-origin: 50% 50%;
+}
+
+.tf04-cache-empty {
+  background: var(--card-bg);
+  border: 1.5px solid var(--border);
+  z-index: 3;
+}
+
+.tf04-cache-filled {
+  background: var(--cobalt);
+  z-index: 4;
+}
+
+.tf04-cache-key {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 25px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.tf04-cache-empty .tf04-cache-key {
+  color: var(--cobalt);
+}
+
+.tf04-cache-filled .tf04-cache-key {
+  color: var(--cream);
+}
+
+.tf04-glow {
+  position: absolute;
+  left: 250px;
+  top: 1100px;
+  width: 580px;
+  height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(19, 27, 190, 0.55) 0%, rgba(19, 27, 190, 0) 70%);
+  opacity: 0;
+  z-index: 2;
+}
+
+.tf04-shared {
+  position: absolute;
+  left: 50%;
+  top: 1400px;
+  transform: translateX(-50%);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--cobalt);
+  text-transform: uppercase;
+  white-space: nowrap;
+  z-index: 5;
+}
+</style>
+
+<div data-hf-id="hf-fjzc" id="root" data-composition-id="04-the-fix" data-width="1080" data-height="1920" data-duration="8.98">
+
+  <div data-hf-id="hf-azhv" class="clip tf04-bg" id="tf04-bg" data-start="0" data-duration="8.98" data-track-index="0"></div>
+
+  <div data-hf-id="hf-52tk" class="clip tf04-eyebrow" id="tf04-eyebrow" data-start="0" data-duration="8.98" data-track-index="1">
+    SINGLE-FLIGHT GATE
+  </div>
+
+  <div data-hf-id="hf-vmw1" class="clip tf04-line" id="tf04-line1" style="top:492px;height:158px;" data-start="0" data-duration="8.98" data-track-index="2"></div>
+
+  <div data-hf-id="hf-cozi" class="clip tf04-gate" id="tf04-gate" data-start="0" data-duration="8.98" data-track-index="3">
+    <svg data-hf-id="hf-vf9q" viewBox="0 0 48 48" width="58" height="58">
+      <path data-hf-id="hf-xr4e" d="M14 20V15A10 10 0 0 1 34 15V20" fill="none" stroke="#1e2bfa" stroke-width="3.5" stroke-linecap="round" />
+      <rect data-hf-id="hf-9is9" x="10" y="20" width="28" height="22" rx="5" fill="#1e2bfa" />
+      <circle data-hf-id="hf-5op6" cx="24" cy="30" r="3" fill="#fdfae7" />
+      <rect data-hf-id="hf-3qe6" x="22.5" y="31" width="3" height="7" rx="1.5" fill="#fdfae7" />
+    </svg>
+    <div data-hf-id="hf-4z9c" class="tf04-gate-label">Gate</div>
+  </div>
+
+  <!-- queued dot: x=260 -->
+  <div data-hf-id="hf-giub" class="clip tf04-dot" id="tf04-dot0-outline" style="left:228px;" data-start="0" data-duration="5.85" data-track-index="4">req</div>
+  <div data-hf-id="hf-q6ya" class="clip tf04-dot-checked" id="tf04-dot0-checked" style="left:228px;" data-start="5.60" data-duration="3.38" data-track-index="5">
+    <svg data-hf-id="hf-uvq2" viewBox="0 0 26 26" width="32" height="32" fill="none">
+      <path data-hf-id="hf-yfgg" id="tf04-check0-path" d="M6 13 L11 18 L20 7" stroke="#fdfae7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="22" stroke-dashoffset="22" />
+    </svg>
+  </div>
+
+  <!-- queued dot: x=400 -->
+  <div data-hf-id="hf-qa6f" class="clip tf04-dot" id="tf04-dot1-outline" style="left:368px;" data-start="0" data-duration="6.00" data-track-index="6">req</div>
+  <div data-hf-id="hf-1vd8" class="clip tf04-dot-checked" id="tf04-dot1-checked" style="left:368px;" data-start="5.75" data-duration="3.23" data-track-index="7">
+    <svg data-hf-id="hf-mtry" viewBox="0 0 26 26" width="32" height="32" fill="none">
+      <path data-hf-id="hf-402f" id="tf04-check1-path" d="M6 13 L11 18 L20 7" stroke="#fdfae7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="22" stroke-dashoffset="22" />
+    </svg>
+  </div>
+
+  <!-- the singled-out hero request: x=540 -->
+  <div data-hf-id="hf-u7sl" class="clip tf04-dot" id="tf04-hero-outline" style="left:508px;" data-start="0" data-duration="1.25" data-track-index="8">req</div>
+  <div data-hf-id="hf-swso" class="clip tf04-dot-solid" id="tf04-hero-solid" style="left:508px;" data-start="0.90" data-duration="8.08" data-track-index="9">req</div>
+
+  <!-- queued dot: x=680 -->
+  <div data-hf-id="hf-o1fg" class="clip tf04-dot" id="tf04-dot3-outline" style="left:648px;" data-start="0" data-duration="6.15" data-track-index="15">req</div>
+  <div data-hf-id="hf-k3fd" class="clip tf04-dot-checked" id="tf04-dot3-checked" style="left:648px;" data-start="5.90" data-duration="3.08" data-track-index="16">
+    <svg data-hf-id="hf-n82z" viewBox="0 0 26 26" width="32" height="32" fill="none">
+      <path data-hf-id="hf-fufh" id="tf04-check3-path" d="M6 13 L11 18 L20 7" stroke="#fdfae7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="22" stroke-dashoffset="22" />
+    </svg>
+  </div>
+
+  <!-- queued dot: x=820 -->
+  <div data-hf-id="hf-wfqz" class="clip tf04-dot" id="tf04-dot4-outline" style="left:788px;" data-start="0" data-duration="6.30" data-track-index="17">req</div>
+  <div data-hf-id="hf-i5tj" class="clip tf04-dot-checked" id="tf04-dot4-checked" style="left:788px;" data-start="6.05" data-duration="2.93" data-track-index="18">
+    <svg data-hf-id="hf-nme0" viewBox="0 0 26 26" width="32" height="32" fill="none">
+      <path data-hf-id="hf-oo7o" id="tf04-check4-path" d="M6 13 L11 18 L20 7" stroke="#fdfae7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="22" stroke-dashoffset="22" />
+    </svg>
+  </div>
+
+  <div data-hf-id="hf-m6zn" class="clip tf04-waiting" id="tf04-waiting" data-start="3.15" data-duration="2.70" data-track-index="14"><span data-hf-id="hf-hk87" class="tf04-mono" id="tf04-waiting-inner">waiting</span></div>
+
+  <div data-hf-id="hf-pd9m" class="clip tf04-line" id="tf04-line2" style="top:820px;height:180px;" data-start="1.75" data-duration="7.23" data-track-index="11"></div>
+  <div data-hf-id="hf-9obd" class="clip tf04-line" id="tf04-line3" style="top:1120px;height:130px;" data-start="1.75" data-duration="7.23" data-track-index="12"></div>
+
+  <div data-hf-id="hf-3nag" class="clip tf04-recompute-card" id="tf04-recompute-card" data-start="1.75" data-duration="7.23" data-track-index="10">
+    <div data-hf-id="hf-0v18" class="tf04-recompute-label">Recompute</div>
+  </div>
+
+  <div data-hf-id="hf-8g9z" class="clip tf04-status tf04-mono" id="tf04-status" data-start="2.00" data-duration="6.98" data-track-index="13"><span data-hf-id="hf-wk35" id="tf04-status-text"></span><span data-hf-id="hf-7gp2" class="tf04-cursor" id="tf04-cursor">_</span></div>
+
+  <div data-hf-id="hf-lbht" class="clip tf04-glow" id="tf04-glow" data-start="5.60" data-duration="3.38" data-track-index="19"></div>
+
+  <div data-hf-id="hf-c3ja" class="clip tf04-cache-tile tf04-cache-empty" id="tf04-cache-empty" data-start="0" data-duration="6.00" data-track-index="20">
+    <div data-hf-id="hf-r5gk" class="tf04-cache-key">cache:key</div>
+  </div>
+  <div data-hf-id="hf-y238" class="clip tf04-cache-tile tf04-cache-filled" id="tf04-cache-filled" data-start="5.85" data-duration="3.13" data-track-index="21">
+    <div data-hf-id="hf-ryfw" class="tf04-cache-key">cache:key</div>
+  </div>
+
+  <div data-hf-id="hf-isz1" class="clip tf04-shared" id="tf04-shared" data-start="6.30" data-duration="2.68" data-track-index="22">shared result</div>
+
+</div>
+
+<script>
+  window.__timelines = window.__timelines || {};
+  const tl = gsap.timeline({ paused: true });
+
+  function scaleSwap(outSel, inSel, trigger, opts) {
+    opts = opts || {};
+    const EXIT_DUR = opts.exitDur !== undefined ? opts.exitDur : 0.35;
+    const ENTER_DUR = opts.enterDur !== undefined ? opts.enterDur : 0.5;
+    const OVERLAP = opts.overlap !== undefined ? opts.overlap : 0.15;
+    const EXIT_SCALE = opts.exitScale !== undefined ? opts.exitScale : 0.7;
+    const BOUNCE = opts.bounce !== undefined ? opts.bounce : 1.5;
+    tl.to(outSel, { scale: EXIT_SCALE, opacity: 0, duration: EXIT_DUR, ease: "power2.in" }, trigger);
+    tl.fromTo(
+      inSel,
+      { scale: EXIT_SCALE, opacity: 0 },
+      { scale: 1, opacity: 1, duration: ENTER_DUR, ease: "back.out(" + BOUNCE + ")" },
+      trigger + EXIT_DUR - OVERLAP
+    );
+  }
+
+  // ---- t=0 batch: continuity carry-over (dot field, gate, cache tile, chrome) ----
+  tl.fromTo("#tf04-eyebrow", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 0.0);
+  tl.fromTo("#tf04-line1", { opacity: 0, scaleY: 0 }, { opacity: 1, scaleY: 1, duration: 0.35, ease: "power2.out" }, 0.04);
+  tl.fromTo("#tf04-gate", { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.42, ease: "power2.out" }, 0.08);
+  tl.fromTo("#tf04-dot0-outline", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 0.12);
+  tl.fromTo("#tf04-dot1-outline", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 0.16);
+  tl.fromTo("#tf04-hero-outline", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 0.20);
+  tl.fromTo("#tf04-dot3-outline", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 0.24);
+  tl.fromTo("#tf04-dot4-outline", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 0.28);
+  tl.fromTo("#tf04-cache-empty", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 0.32);
+
+  // ---- Scene 1 (0.0-1.74s): "only one" -- the hero singles out from the pack ----
+  scaleSwap("#tf04-hero-outline", "#tf04-hero-solid", 0.90, { exitDur: 0.35, enterDur: 0.55, overlap: 0.15, exitScale: 0.7, bounce: 1.6 });
+
+  // ---- Scene 2 (1.74-3.12s): recompute card arrives, hero travels down, status types on ----
+  tl.fromTo("#tf04-line2", { opacity: 0, scaleY: 0 }, { opacity: 1, scaleY: 1, duration: 0.30, ease: "power2.out" }, 1.75);
+  tl.fromTo("#tf04-line3", { opacity: 0, scaleY: 0 }, { opacity: 1, scaleY: 1, duration: 0.30, ease: "power2.out" }, 1.85);
+  tl.fromTo("#tf04-recompute-card", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(1.4)" }, 1.85);
+  tl.to("#tf04-hero-solid", { y: 710, duration: 0.85, ease: "power2.inOut" }, 2.05);
+
+  // discrete-text-sequence: typed "recomputing" status, held, then snaps to resolved
+  const tf04StatusEl = document.getElementById("tf04-status-text");
+  const TF04_STATUS_SEQ = [
+    { t: 2.05, text: "" },
+    { t: 2.15, text: "r" },
+    { t: 2.22, text: "re" },
+    { t: 2.29, text: "rec" },
+    { t: 2.36, text: "reco" },
+    { t: 2.43, text: "recom" },
+    { t: 2.50, text: "recomp" },
+    { t: 2.57, text: "recompu" },
+    { t: 2.64, text: "recomput" },
+    { t: 2.71, text: "recomputi" },
+    { t: 2.78, text: "recomputin" },
+    { t: 2.85, text: "recomputing" },
+    { t: 2.95, text: "recomputing…" },
+    { t: 5.60, text: "resolved ✓" },
+  ];
+  function tf04StatusAt(time) {
+    for (let i = TF04_STATUS_SEQ.length - 1; i >= 0; i--) {
+      if (time >= TF04_STATUS_SEQ[i].t) return TF04_STATUS_SEQ[i].text;
+    }
+    return "";
+  }
+  const tf04StatusDriver = { t: 0 };
+  tl.to(
+    tf04StatusDriver,
+    {
+      t: 8.48,
+      duration: 8.48,
+      ease: "none",
+      onUpdate: function () {
+        tf04StatusEl.textContent = tf04StatusAt(tf04StatusDriver.t);
+      },
+    },
+    0
+  );
+  tl.to("#tf04-status", { color: "#059669", duration: 0.3, ease: "power1.out" }, 5.60);
+
+  // cursor blink -- deterministic sin square wave, bounded to the working window
+  const tf04Cursor = document.getElementById("tf04-cursor");
+  const tf04Blink = { p: 0 };
+  tl.to(
+    tf04Blink,
+    {
+      p: Math.PI * 2 * 6,
+      duration: 3.55,
+      ease: "none",
+      onUpdate: function () {
+        tf04Cursor.style.opacity = Math.sin(tf04Blink.p) > 0 ? "1" : "0";
+      },
+    },
+    2.05
+  );
+  tl.set("#tf04-cursor", { opacity: 0 }, 5.60);
+
+  // ---- Scene 3 (3.12-6.92s): the rest wait, then "reads" resolves everything at once ----
+  tl.fromTo("#tf04-waiting-inner", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 3.20);
+  tl.to("#tf04-waiting-inner", { opacity: 0, duration: 0.30, ease: "power1.in" }, 5.50);
+  tl.set("#tf04-waiting-inner", { opacity: 0 }, 5.75);
+
+  // cache-key tile flips back to filled cobalt
+  scaleSwap("#tf04-cache-empty", "#tf04-cache-filled", 5.60, { exitDur: 0.40, enterDur: 0.60, overlap: 0.15, exitScale: 0.75, bounce: 1.5 });
+
+  // ambient-glow-bloom behind the tile, landing exactly as it settles (bloom-and-hold)
+  tl.fromTo("#tf04-glow", { opacity: 0, scale: 0.85 }, { opacity: 0.30, scale: 1, duration: 0.6, ease: "power2.out" }, 5.85);
+
+  tl.fromTo("#tf04-shared", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 6.30);
+
+  // receipt cascade: each queued dot flips outline -> solid check, staggered left to right
+  scaleSwap("#tf04-dot0-outline", "#tf04-dot0-checked", 5.60, { exitDur: 0.25, enterDur: 0.35, overlap: 0.10, exitScale: 0.75, bounce: 1.5 });
+  tl.to("#tf04-check0-path", { strokeDashoffset: 0, duration: 0.30, ease: "power2.out" }, 5.75);
+
+  scaleSwap("#tf04-dot1-outline", "#tf04-dot1-checked", 5.75, { exitDur: 0.25, enterDur: 0.35, overlap: 0.10, exitScale: 0.75, bounce: 1.5 });
+  tl.to("#tf04-check1-path", { strokeDashoffset: 0, duration: 0.30, ease: "power2.out" }, 5.90);
+
+  scaleSwap("#tf04-dot3-outline", "#tf04-dot3-checked", 5.90, { exitDur: 0.25, enterDur: 0.35, overlap: 0.10, exitScale: 0.75, bounce: 1.5 });
+  tl.to("#tf04-check3-path", { strokeDashoffset: 0, duration: 0.30, ease: "power2.out" }, 6.05);
+
+  scaleSwap("#tf04-dot4-outline", "#tf04-dot4-checked", 6.05, { exitDur: 0.25, enterDur: 0.35, overlap: 0.10, exitScale: 0.75, bounce: 1.5 });
+  tl.to("#tf04-check4-path", { strokeDashoffset: 0, duration: 0.30, ease: "power2.out" }, 6.20);
+
+  // ---- Scene 4 (6.92-8.48s): hold the resolved state, static, finite (no further motion) ----
+
+  window.__timelines["04-the-fix"] = tl;
+</script>
+</template>

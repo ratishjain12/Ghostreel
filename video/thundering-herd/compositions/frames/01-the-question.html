@@ -1,0 +1,268 @@
+<template>
+<div data-hf-id="hf-lqs9" id="root" data-composition-id="01-the-question" data-width="1080" data-height="1920">
+  <style>
+    @font-face { font-family: 'Newsreader'; src: url('assets/fonts/newsreader-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Hanken Grotesk'; src: url('assets/fonts/hanken-grotesk-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Hanken Grotesk'; src: url('assets/fonts/hanken-grotesk-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: block; }
+    @font-face { font-family: 'DM Mono'; src: url('assets/fonts/dm-mono-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+
+    #root {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      container-type: size;
+      background: transparent;
+      font-family: "Hanken Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    }
+
+    #root > .clip {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    #root .tq-serif {
+      font-family: "Newsreader", serif;
+    }
+
+    /* ground */
+    #root .tq-bg {
+      background-color: #f0ebde;
+      background-image:
+        linear-gradient(rgba(31, 43, 224, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(31, 43, 224, 0.1) 1px, transparent 1px);
+      background-size: 2cqw 2cqw;
+    }
+
+    #root .tq-hairline {
+      position: absolute;
+      left: 4cqw;
+      right: 4cqw;
+      height: 1.5px;
+      background: #1f2be0;
+    }
+    #root .tq-hairline--top {
+      top: 152px;
+    }
+    #root .tq-hairline--bottom {
+      top: 1583px;
+    }
+
+    /* cache-entry node (supporting) */
+    #root .tq-node-group {
+      position: absolute;
+      inset: 0;
+    }
+    #root .tq-node-square {
+      position: absolute;
+      left: 50%;
+      top: 42cqh;
+      width: 210px;
+      height: 210px;
+      margin-left: -105px;
+      margin-top: -105px;
+      border: 2px solid #1f2be0;
+      background: rgba(31, 43, 224, 0.14);
+      opacity: 0;
+    }
+    #root .tq-node-ring {
+      position: absolute;
+      left: 50%;
+      top: 42cqh;
+      width: 320px;
+      height: 320px;
+      margin-left: -160px;
+      margin-top: -160px;
+      overflow: visible;
+    }
+    #root .tq-node-ring circle {
+      fill: none;
+      stroke: #1f2be0;
+      stroke-width: 3;
+      transform: rotate(-90deg);
+      transform-origin: center center;
+    }
+    #root .tq-node-label {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      top: 975px;
+      text-align: center;
+      color: #1f2be0;
+      font-family: "DM Mono", monospace;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      opacity: 0;
+    }
+
+    /* hero numeral + request-dot burst */
+    #root .tq-burst-wrap {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 1740px;
+      display: grid;
+      place-items: center;
+    }
+    #root .tq-numeral-wrap {
+      width: 60cqw;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    #root .tq-counter {
+      font-variant-numeric: tabular-nums;
+      display: inline-block;
+      font-size: 12.5cqw;
+      line-height: 0.9;
+      letter-spacing: -0.015em;
+      color: #1f2be0;
+      transform-origin: center center;
+    }
+    #root .tq-dot {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 2px solid #1f2be0;
+      background: transparent;
+      will-change: transform;
+    }
+  </style>
+
+  <div data-hf-id="hf-oskm" class="clip tq-bg" data-start="0" data-duration="6.656" data-track-index="0">
+    <div data-hf-id="hf-tv23" class="tq-hairline tq-hairline--top"></div>
+    <div data-hf-id="hf-qfcn" class="tq-hairline tq-hairline--bottom"></div>
+  </div>
+
+  <div data-hf-id="hf-q44s" class="clip" data-start="0" data-duration="6.656" data-track-index="1">
+    <div data-hf-id="hf-u93a" class="tq-node-group" id="tq-node-group">
+      <div data-hf-id="hf-hs55" class="tq-node-ring">
+        <svg data-hf-id="hf-cn5i" viewBox="0 0 320 320" width="320" height="320" xmlns="http://www.w3.org/2000/svg">
+          <circle data-hf-id="hf-shxb" id="tq-ring-circle" cx="160" cy="160" r="150" />
+        </svg>
+      </div>
+      <div data-hf-id="hf-jhxe" class="tq-node-square" id="tq-node-square"></div>
+      <div data-hf-id="hf-x7iu" class="tq-node-label" id="tq-node-label">CACHE ENTRY</div>
+    </div>
+  </div>
+
+  <div data-hf-id="hf-1ghh" class="clip" data-start="4.3" data-duration="2.356" data-track-index="2">
+    <div data-hf-id="hf-groo" class="tq-burst-wrap" id="tq-burst-wrap">
+      <div data-hf-id="hf-koo4" class="tq-dot" data-target-x="0" data-target-y="-360"></div>
+      <div data-hf-id="hf-u5k3" class="tq-dot" data-target-x="283" data-target-y="-283"></div>
+      <div data-hf-id="hf-s2vf" class="tq-dot" data-target-x="360" data-target-y="0"></div>
+      <div data-hf-id="hf-oc8i" class="tq-dot" data-target-x="283" data-target-y="283"></div>
+      <div data-hf-id="hf-wpxj" class="tq-dot" data-target-x="0" data-target-y="360"></div>
+      <div data-hf-id="hf-1b5j" class="tq-dot" data-target-x="-283" data-target-y="283"></div>
+      <div data-hf-id="hf-r9t6" class="tq-dot" data-target-x="-360" data-target-y="0"></div>
+      <div data-hf-id="hf-fktk" class="tq-dot" data-target-x="-283" data-target-y="-283"></div>
+
+      <div data-hf-id="hf-awms" class="tq-numeral-wrap" id="tq-numeral-wrap">
+        <span data-hf-id="hf-4uv0" class="tq-counter tq-serif" id="tq-counter">0</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    (function () {
+      window.__timelines = window.__timelines || {};
+      var tl = gsap.timeline({ paused: true });
+
+      // Ring "drains" — measured stroke length; starts fully drawn (dashoffset 0, full TTL)
+      // and undraws to empty as the cache entry expires.
+      var ringCircle = document.getElementById("tq-ring-circle");
+      var ringLen = ringCircle.getTotalLength();
+      ringCircle.style.strokeDasharray = String(ringLen);
+      ringCircle.style.strokeDashoffset = "0";
+
+      // Scene 1 (0.0-2.5s) — node + label settle in, ring drains synced to "cache entry expires"
+      tl.fromTo(
+        "#tq-node-square",
+        { opacity: 0, scale: 0.92 },
+        { opacity: 1, scale: 1, duration: 0.4, ease: "power2.out" },
+        0.1,
+      );
+      tl.fromTo(
+        "#tq-node-label",
+        { opacity: 0, y: 8 },
+        { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" },
+        0.2,
+      );
+      tl.to(ringCircle, { strokeDashoffset: ringLen, duration: 1.9, ease: "none" }, 0.5);
+
+      // Scene 2 (2.5-4.3s) — ring hits zero, fill hard-cuts to empty (instant, no tween);
+      // node then holds small as supporting context through the rest of the shot.
+      tl.set("#tq-node-square", { backgroundColor: "transparent" }, 2.5);
+      tl.to("#tq-node-group", { opacity: 0.35, duration: 0.3, ease: "power1.out" }, 4.3);
+
+      // Scene 3 (4.3-6.656s) — counting-dynamic-scale: value + transform scale share one beat
+      var counterEl = document.getElementById("tq-counter");
+      var counterState = { value: 0 };
+      var COUNT_DUR = 1.4;
+      var COUNT_EASE = "power3.out";
+
+      tl.to(
+        counterState,
+        {
+          value: 10000,
+          duration: COUNT_DUR,
+          ease: COUNT_EASE,
+          onUpdate: function () {
+            counterEl.textContent = Math.round(counterState.value).toLocaleString("en-US");
+          },
+        },
+        4.3,
+      );
+      tl.fromTo(
+        "#tq-counter",
+        { scale: 0.4 },
+        { scale: 1, duration: COUNT_DUR, ease: COUNT_EASE },
+        4.3,
+      );
+
+      // center-outward-expansion, chord variant — request-dots fling out on the SAME beat
+      var dots = document.querySelectorAll(".tq-dot");
+      dots.forEach(function (dot) {
+        tl.fromTo(
+          dot,
+          { xPercent: -50, yPercent: -50, x: 0, y: 0, scale: 0.6, opacity: 0 },
+          {
+            x: Number(dot.dataset.targetX),
+            y: Number(dot.dataset.targetY),
+            scale: 1,
+            opacity: 1,
+            duration: COUNT_DUR,
+            ease: COUNT_EASE,
+          },
+          4.3,
+        );
+      });
+
+      // Landing hold — subtle jitter only (sine-wave-loop, yoyo form), settled before frame end
+      tl.to(
+        "#tq-numeral-wrap",
+        { y: -2, duration: 0.45, ease: "sine.inOut", yoyo: true, repeat: 1 },
+        5.7,
+      );
+      tl.to(
+        "#tq-burst-wrap",
+        { y: 2, duration: 0.5, ease: "sine.inOut", yoyo: true, repeat: 1 },
+        5.75,
+      );
+
+      tl.to({}, { duration: 6.656 - tl.duration() }, tl.duration());
+
+      window.__timelines["01-the-question"] = tl;
+    })();
+  </script>
+</div>
+</template>

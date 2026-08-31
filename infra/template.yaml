@@ -1,0 +1,125 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Instagram comment-to-DM webhook handler for the reel pipeline. Receives Meta's
+  comment/message webhooks, sends a private-reply follow-gate, and delivers the
+  matching PDF guide from S3 once the commenter confirms they're following.
+
+Parameters:
+  VerifyTokenParam:
+    Type: String
+    Default: /reel-pipeline/ig-verify-token
+    Description: SSM parameter name holding the webhook verify token (you choose this value; Meta echoes it back during subscription)
+  AppSecretParam:
+    Type: String
+    Default: /reel-pipeline/ig-app-secret
+    Description: SSM parameter name holding the Meta app secret, used to verify X-Hub-Signature-256
+  AccessTokenParam:
+    Type: String
+    Default: /reel-pipeline/ig-access-token
+    Description: SSM parameter name holding the long-lived Instagram access token
+  IgUserIdParam:
+    Type: String
+    Default: /reel-pipeline/ig-user-id
+    Description: SSM parameter name holding the Instagram business account's user id
+
+Globals:
+  Function:
+    Runtime: python3.12
+    Timeout: 10
+    MemorySize: 256
+
+Resources:
+  WebhookFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: lambda/
+      Handler: handler.lambda_handler
+      Environment:
+        Variables:
+          BUCKET_NAME: !Ref ResourceBucket
+          VERIFY_TOKEN_PARAM: !Ref VerifyTokenParam
+          APP_SECRET_PARAM: !Ref AppSecretParam
+          ACCESS_TOKEN_PARAM: !Ref AccessTokenParam
+          IG_USER_ID_PARAM: !Ref IgUserIdParam
+          SENT_TABLE: !Ref SentMarkersTable
+      Policies:
+        - S3ReadPolicy:
+            BucketName: !Ref ResourceBucket
+        - DynamoDBCrudPolicy:
+            TableName: !Ref SentMarkersTable
+        - Statement:
+            - Sid: ReadSecretParams
+              Effect: Allow
+              Action: ssm:GetParameter
+              Resource:
+                - !Sub "arn:${AWS::Partition}:ssm:${AWS::Region}:${AWS::AccountId}:parameter${VerifyTokenParam}"
+                - !Sub "arn:${AWS::Partition}:ssm:${AWS::Region}:${AWS::AccountId}:parameter${AppSecretParam}"
+                - !Sub "arn:${AWS::Partition}:ssm:${AWS::Region}:${AWS::AccountId}:parameter${AccessTokenParam}"
+                - !Sub "arn:${AWS::Partition}:ssm:${AWS::Region}:${AWS::AccountId}:parameter${IgUserIdParam}"
+      Events:
+        WebhookGet:
+          Type: HttpApi
+          Properties:
+            Path: /webhook
+            Method: get
+        WebhookPost:
+          Type: HttpApi
+          Properties:
+            Path: /webhook
+            Method: post
+        OAuthRedirect:
+          Type: HttpApi
+          Properties:
+            Path: /oauth-redirect
+            Method: get
+        PrivacyPolicy:
+          Type: HttpApi
+          Properties:
+            Path: /privacy
+            Method: get
+
+  # Two item shapes share this table (distinguished by pk prefix):
+  #   marker#<comment_id|message_id> / "x"  — idempotency, so a Meta webhook retry
+  #     (on any non-2xx response) can't double-send a reply or a resource.
+  #   pending#<sender_id> / <media_id>      — one row per (person, post) they've
+  #     triggered and not yet received, queried by pk so a person who comments on
+  #     two tracked posts before replying gets both, not just whichever was last.
+  SentMarkersTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: pk
+          AttributeType: S
+        - AttributeName: sk
+          AttributeType: S
+      KeySchema:
+        - AttributeName: pk
+          KeyType: HASH
+        - AttributeName: sk
+          KeyType: RANGE
+
+  ResourceBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+
+Outputs:
+  WebhookUrl:
+    Description: Paste this into Meta's webhook subscription as the Callback URL
+    Value: !Sub "${ServerlessHttpApi.ApiEndpoint}/webhook"
+  ResourceBucketName:
+    Description: Put this into your local .env as S3_BUCKET
+    Value: !Ref ResourceBucket
+  PrivacyPolicyUrl:
+    Description: Paste this into Meta's App Settings > Basic > Privacy Policy URL
+    Value: !Sub "${ServerlessHttpApi.ApiEndpoint}/privacy"

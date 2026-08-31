@@ -1,0 +1,129 @@
+<template>
+<div data-hf-id="hf-p0050" id="root" data-composition-id="05-pattern-4" data-width="1080" data-height="1920" data-duration="8.54">
+  <style>
+    @font-face { font-family: 'Space Grotesk'; src: url('assets/fonts/Space-Grotesk-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Space Grotesk'; src: url('assets/fonts/Space-Grotesk-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Space Grotesk'; src: url('assets/fonts/Space-Grotesk-700.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Inter'; src: url('assets/fonts/Inter-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Inter'; src: url('assets/fonts/Inter-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: block; }
+
+    #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: 'Inter', sans-serif; color: #111111; }
+    #root .clip { position: absolute; }
+
+    .dstage { position: absolute; }
+    svg.dwires { position: absolute; left: 0; top: 0; overflow: visible; }
+    .dtrace { fill: none; stroke: #1e2bfa; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+    .dtrace-idle { fill: none; stroke: rgba(30,43,250,0.16); stroke-width: 2; }
+    .dtrace-label {
+      position: absolute; font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 600;
+      letter-spacing: 0.04em; text-transform: uppercase; color: #6b6b6b; background: #fdfae7; padding: 2px 8px;
+      opacity: 0;
+    }
+    .dnode {
+      position: absolute; display: flex; align-items: center; justify-content: center; text-align: center;
+      font-family: 'Space Grotesk', sans-serif; font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase;
+      border-radius: 14px; border: 2px solid rgba(17,17,17,0.22); background: #fdfae7; color: #6b6b6b;
+      padding: 6px 10px; line-height: 1.15;
+    }
+    .dnode.circle { border-radius: 50%; }
+    .dnode.lit { border-color: #1e2bfa; background: rgba(30,43,250,0.08); color: #1e2bfa; }
+    .dnode.solid { border-color: #1e2bfa; background: #1e2bfa; color: #fdfae7; }
+
+
+    .fp-bg { inset: 0; background: #fdfae7; }
+    .fp-tick {
+      left: 90px; top: 260px; width: 900px; text-align: center;
+      font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase; color: #6b6b6b;
+      opacity: 0;
+    }
+    .fp-pill {
+      left: 50%; top: 312px; transform: translateX(-50%);
+      width: auto; padding: 9px 26px; border-radius: 100px;
+      background: rgba(30,43,250,0.08); border: 1.5px solid rgba(30,43,250,0.2);
+      font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase; color: #1e2bfa;
+      white-space: nowrap;
+      opacity: 0;
+    }
+    .fp-lockup {
+      left: 60px; top: 402px; width: 960px; text-align: center;
+      font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 74px;
+      line-height: 1.05; letter-spacing: -0.01em; color: #111111;
+      opacity: 0;
+    }
+    .fp-desc {
+      left: 140px; top: 1134px; width: 800px; text-align: center;
+      font-family: 'Inter', sans-serif; font-size: 30px; font-weight: 400;
+      line-height: 1.45; color: #6b6b6b;
+      opacity: 0;
+    }
+
+  </style>
+
+  <div data-hf-id="hf-p0051" id="f-05-pattern-4-bg" class="clip fp-bg" data-start="0" data-duration="8.54" data-track-index="0"></div>
+  <div data-hf-id="hf-p0052" id="f-05-pattern-4-tick" class="clip fp-tick" data-start="0" data-duration="8.54" data-track-index="1">PATTERN 4 OF 8</div>
+  <div data-hf-id="hf-p0053" id="f-05-pattern-4-pill" class="clip fp-pill" data-start="0.15" data-duration="8.39" data-track-index="2">SINGLE-AGENT PATTERN</div>
+  <div data-hf-id="hf-p0054" id="f-05-pattern-4-lockup" class="clip fp-lockup" data-start="0.8" data-duration="7.74" data-track-index="3">AGENTIC RAG</div>
+  <div data-hf-id="hf-p0057" id="f-05-pattern-4-desc" class="clip fp-desc" data-start="1.9" data-duration="6.64" data-track-index="4">The model decides whether, what, and how much to retrieve.</div>
+
+  <div id="f-05-pattern-4-wires" class="clip" data-start="0" data-duration="8.54" data-track-index="9"><svg class="dwires" width="1080" height="1920"><defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1e2bfa"/>
+    </marker>
+  </defs><path data-hf-id="hf-w1" id="hf-w1" class="dtrace" d="M 540,578 L 540,609" marker-end="url(#arrow)"/>
+    <path data-hf-id="hf-w2" id="hf-w2" class="dtrace" d="M 615,684 L 755,684" marker-end="url(#arrow)"/>
+    <path data-hf-id="hf-w3" id="hf-w3" class="dtrace" d="M 505,754 L 505,800" marker-end="url(#arrow)"/>
+    <path data-hf-id="hf-w4" id="hf-w4" class="dtrace" d="M 575,800 L 575,754" marker-end="url(#arrow)"/>
+    <path data-hf-id="hf-w5" id="hf-w5" class="dtrace" d="M 505,939 L 505,974" marker-end="url(#arrow)"/>
+    <path data-hf-id="hf-w6" id="hf-w6" class="dtrace" d="M 575,974 L 575,939" marker-end="url(#arrow)"/>
+    <path data-hf-id="hf-w7" id="hf-w7" class="dtrace" d="M 615,1014 L 860,1014 L 860,728" marker-end="url(#arrow)"/></svg></div>
+  <div id="f-05-pattern-4-node-wrap-0" class="clip" data-start="0" data-duration="8.54" data-track-index="20"><div data-hf-id="hf-model" id="hf-model" class="clip dnode lit" style="left:435px;top:490px;width:210px;height:88px;font-size:15px" data-start="0" data-duration="8.54" data-track-index="10">MODEL</div></div>
+  <div id="f-05-pattern-4-node-wrap-1" class="clip" data-start="0" data-duration="8.54" data-track-index="21"><div data-hf-id="hf-q1" id="hf-q1" class="clip dnode circle" style="left:465px;top:609px;width:150px;height:150px;font-size:15px" data-start="0" data-duration="8.54" data-track-index="11">RETRIEVE?</div></div>
+  <div id="f-05-pattern-4-node-wrap-2" class="clip" data-start="0" data-duration="8.54" data-track-index="22"><div data-hf-id="hf-answer" id="hf-answer" class="clip dnode " style="left:755px;top:640px;width:210px;height:88px;font-size:15px" data-start="0" data-duration="8.54" data-track-index="12">ANSWER</div></div>
+  <div id="f-05-pattern-4-node-wrap-3" class="clip" data-start="0" data-duration="8.54" data-track-index="23"><div data-hf-id="hf-docs" id="hf-docs" class="clip dnode " style="left:435px;top:800px;width:210px;height:88px;font-size:15px" data-start="0" data-duration="8.54" data-track-index="13">DOCS</div></div>
+  <div id="f-05-pattern-4-node-wrap-4" class="clip" data-start="0" data-duration="8.54" data-track-index="24"><div data-hf-id="hf-q2" id="hf-q2" class="clip dnode circle" style="left:465px;top:939px;width:150px;height:150px;font-size:15px" data-start="0" data-duration="8.54" data-track-index="14">ENOUGH?</div></div>
+  <div id="f-05-pattern-4-label-wrap-0" class="clip" data-start="0" data-duration="8.54" data-track-index="30"><div class="dtrace-label" style="left:660px;top:649px;opacity:0" id="lbl-no1">no</div></div>
+  <div id="f-05-pattern-4-label-wrap-1" class="clip" data-start="0" data-duration="8.54" data-track-index="31"><div class="dtrace-label" style="left:340px;top:764px;opacity:0" id="lbl-yes1">yes</div></div>
+  <div id="f-05-pattern-4-label-wrap-2" class="clip" data-start="0" data-duration="8.54" data-track-index="32"><div class="dtrace-label" style="left:590px;top:949px;opacity:0" id="lbl-refine">refine</div></div>
+  <div id="f-05-pattern-4-label-wrap-3" class="clip" data-start="0" data-duration="8.54" data-track-index="33"><div class="dtrace-label" style="left:640px;top:874px;opacity:0" id="lbl-yes2">yes, enough</div></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    (function () {
+      const root = document.querySelector('[data-composition-id="05-pattern-4"]');
+      const tl = gsap.timeline({ paused: true });
+
+      const tick = root.querySelector('.fp-tick');
+      const pill = root.querySelector('.fp-pill');
+      const lockup = root.querySelector('.fp-lockup');
+      const desc = root.querySelector('.fp-desc');
+      tl.fromTo(tick, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 0);
+      tl.fromTo(pill, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" }, 0.15);
+      tl.fromTo(lockup, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }, 0.8);
+      tl.fromTo(desc, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 1.9);
+
+      tl.fromTo('#hf-w1', { strokeDasharray: 1200, strokeDashoffset: 1200 }, { strokeDashoffset: 0, duration: 0.25, ease: "power2.inOut" }, 1.35);
+      tl.to('#hf-q1', { borderColor: "#1e2bfa", backgroundColor: "rgba(30,43,250,0.08)", color: "#1e2bfa", duration: 0.3, ease: "power2.out" }, 1.6500000000000001);
+      tl.fromTo('#hf-w2', { strokeDasharray: 1200, strokeDashoffset: 1200 }, { strokeDashoffset: 0, duration: 0.3, ease: "power2.inOut" }, 2.05);
+      tl.fromTo('#lbl-no1', { opacity: 0 }, { opacity: 1, duration: 0.2 }, 2.2);
+      tl.to('#hf-answer', { borderColor: "#1e2bfa", backgroundColor: "rgba(30,43,250,0.08)", color: "#1e2bfa", duration: 0.3, ease: "power2.out" }, 2.4000000000000004);
+      tl.to('#hf-answer', { borderColor: "rgba(17,17,17,0.22)", backgroundColor: "#fdfae7", color: "#6b6b6b", duration: 0.3, ease: "power2.out" }, 2.7);
+      tl.fromTo('#hf-w3', { strokeDasharray: 1200, strokeDashoffset: 1200 }, { strokeDashoffset: 0, duration: 0.3, ease: "power2.inOut" }, 2.85);
+      tl.fromTo('#lbl-yes1', { opacity: 0 }, { opacity: 1, duration: 0.2 }, 3.0);
+      tl.to('#hf-docs', { borderColor: "#1e2bfa", backgroundColor: "rgba(30,43,250,0.08)", color: "#1e2bfa", duration: 0.3, ease: "power2.out" }, 3.25);
+      tl.fromTo('#hf-w5', { strokeDasharray: 1200, strokeDashoffset: 1200 }, { strokeDashoffset: 0, duration: 0.3, ease: "power2.inOut" }, 3.65);
+      tl.to('#hf-q2', { borderColor: "#1e2bfa", backgroundColor: "rgba(30,43,250,0.08)", color: "#1e2bfa", duration: 0.3, ease: "power2.out" }, 4.050000000000001);
+      tl.fromTo('#hf-w6', { strokeDasharray: 1200, strokeDashoffset: 1200 }, { strokeDashoffset: 0, duration: 0.3, ease: "power2.inOut" }, 4.45);
+      tl.fromTo('#lbl-refine', { opacity: 0 }, { opacity: 1, duration: 0.2 }, 4.550000000000001);
+      tl.to('#hf-docs', { scale: 1.06, duration: 0.18, ease: "power2.out", yoyo: true, repeat: 1 }, 4.85);
+      tl.fromTo('#hf-w7', { strokeDasharray: 1200, strokeDashoffset: 1200 }, { strokeDashoffset: 0, duration: 0.55, ease: "power2.inOut" }, 5.25);
+      tl.fromTo('#lbl-yes2', { opacity: 0 }, { opacity: 1, duration: 0.2 }, 5.449999999999999);
+      tl.to('#hf-answer', { borderColor: "#1e2bfa", backgroundColor: "rgba(30,43,250,0.08)", color: "#1e2bfa", duration: 0.3, ease: "power2.out" }, 5.85);
+      tl.to('#hf-answer', { scale: 1.06, duration: 0.18, ease: "power2.out", yoyo: true, repeat: 1 }, 5.85);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["05-pattern-4"] = tl;
+    })();
+  </script>
+</div>
+</template>

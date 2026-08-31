@@ -1,0 +1,69 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Dashboard web build (run `npm run build` in dashboard/web to regenerate)
+dashboard/web/node_modules/
+dashboard/static/
+
+# Local secrets (S3 bucket, AWS creds if not using ~/.aws)
+.env
+
+# SAM build output
+infra/.aws-sam/
+
+# OS cruft
+.DS_Store
+
+# HyperFrames CLI's vendored skill mirror (`npx hyperframes skills update` recreates this).
+# .claude/skills/* are relative symlinks into here (e.g. `captions-overlay -> ../../.agents/
+# skills/captions-overlay`) — both must be excluded together, or cloning leaves the symlinks
+# dangling. reel-batch is the one project-authored skill, not a vendored copy — keep it.
+.agents/
+.claude/skills/*
+!.claude/skills/reel-batch/
+
+# Machine-specific, session-accumulated permission grants (absolute local paths) — not a
+# deliberately curated, shareable policy. Set up your own if you want one.
+.claude/settings.local.json
+.claude/settings.json
+
+# Reference voice sample for Chatterbox voice cloning — personal recording, not a generic
+# fixture. Each user supplies their own at the repo root (see README § 2).
+/voice_ref.wav
+
+# Locked TTS narration + word-level captions — regeneratable via `gen_reel_batch.py`, but
+# Chatterbox isn't deterministic, so a fresh run won't byte-for-byte match what an already
+# authored/rendered project was timed against. Excluded as generated output either way.
+audio/
+
+# Per-project generated output: renders, split narration audio, the PDF guide, and any
+# state that only exists once a project has actually been uploaded/published live.
+video/*/renders/
+video/*/assets/voice/
+video/*/resources/guide.pdf
+video/*/resources/uploaded.json
+video/*/resources/trigger.json
+video/*/resources/published.json
+
+# Per-project caption/audio-timing artifacts — derived from the (excluded) locked audio,
+# meaningless without it.
+video/*/audio_meta.json
+video/*/caption_groups.json
+video/*/caption-overrides.json
+video/*/compositions/captions.html
+
+# HyperFrames per-project tool caches (studio thumbnails, waveform cache, preview state,
+# frame-authoring scratch, check snapshots) — all regenerated on demand, none of it source.
+video/*/.thumbnails/
+video/*/.waveform-cache/
+video/*/.media/
+video/*/.hyperframes/
+video/*/snapshots/

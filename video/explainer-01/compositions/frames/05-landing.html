@@ -1,0 +1,199 @@
+<template>
+  <style>
+    @font-face {
+      font-family: "Space Grotesk";
+      font-style: normal;
+      font-weight: 700;
+      font-display: block;
+      src: url("assets/fonts/Space-Grotesk-700.woff2") format("woff2");
+    }
+
+    #root {
+      position: relative;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      font-family: "Inter", sans-serif;
+    }
+
+    .f05-landing-bg {
+      position: absolute;
+      inset: 0;
+      background: #fdfae7;
+    }
+
+    .f05-landing-atmosphere {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+    }
+
+    .f05-landing-ring {
+      position: absolute;
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+      border-radius: 50%;
+      border: 1px solid rgba(30, 43, 250, 1);
+    }
+    .f05-landing-ring--1 {
+      width: 1040px;
+      height: 1040px;
+      top: 286px;
+      border-color: rgba(30, 43, 250, 0.05);
+    }
+    .f05-landing-ring--2 {
+      width: 900px;
+      height: 900px;
+      top: 356px;
+      border-color: rgba(30, 43, 250, 0.07);
+    }
+    .f05-landing-ring--3 {
+      width: 640px;
+      height: 640px;
+      top: 486px;
+      border-color: rgba(30, 43, 250, 0.1);
+    }
+
+    .f05-landing-stage {
+      position: absolute;
+      inset: 0;
+    }
+
+    .f05-landing-cardslot {
+      position: absolute;
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+      top: 741px;
+      width: 960px;
+      height: 130px;
+    }
+
+    .f05-landing-card {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transform-origin: 50% 50%;
+    }
+
+    .f05-landing-accent {
+      width: 60px;
+      height: 4px;
+      border-radius: 2px;
+      background: #1e2bfa;
+      margin-bottom: 24px;
+    }
+
+    .f05-landing-term {
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 700;
+      font-size: 76px;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: #111111;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .f05-landing-caption {
+      position: absolute;
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+      top: 930px;
+      width: 960px;
+      text-align: center;
+      font-family: "Inter", sans-serif;
+      font-weight: 400;
+      font-size: 32px;
+      line-height: 1.4;
+      color: #6b6b6b;
+    }
+  </style>
+
+  <div data-hf-id="hf-w78q" id="root" data-composition-id="05-landing" data-width="1080" data-height="1920">
+    <div data-hf-id="hf-pwbn" class="clip f05-landing-bg" data-start="0" data-duration="4.68" data-track-index="0"></div>
+
+    <div data-hf-id="hf-4m6x" class="clip f05-landing-atmosphere" id="f05-landing-atmosphere" data-start="0" data-duration="4.68" data-track-index="1">
+      <div data-hf-id="hf-ocp3" class="f05-landing-ring f05-landing-ring--1"></div>
+      <div data-hf-id="hf-dh7g" class="f05-landing-ring f05-landing-ring--2"></div>
+      <div data-hf-id="hf-e8v9" class="f05-landing-ring f05-landing-ring--3"></div>
+    </div>
+
+    <div data-hf-id="hf-d1e8" class="clip f05-landing-stage" data-start="0" data-duration="4.68" data-track-index="2">
+      <div data-hf-id="hf-lwy0" class="f05-landing-cardslot">
+        <div data-hf-id="hf-hv63" class="f05-landing-card" id="f05-landing-card1">
+          <div data-hf-id="hf-09fc" class="f05-landing-accent"></div>
+          <div data-hf-id="hf-mhvr" class="f05-landing-term">Request Coalescing</div>
+        </div>
+        <div data-hf-id="hf-011v" class="f05-landing-card" id="f05-landing-card2" style="opacity: 0">
+          <div data-hf-id="hf-y4cw" class="f05-landing-accent"></div>
+          <div data-hf-id="hf-a390" class="f05-landing-term">Distributed Lock</div>
+        </div>
+      </div>
+      <div data-hf-id="hf-bqso" class="f05-landing-caption" id="f05-landing-caption">around the recompute step</div>
+    </div>
+  </div>
+
+  <script>
+    window.__timelines = window.__timelines || {};
+    const tl = gsap.timeline({ paused: true });
+
+    // Scene 1 (0.0–2.12s) — card 1: calm cream ground, term card fades up
+    // with a subtle scale-up settle under its accent-line (scale-swap-transition,
+    // entrance half only — opacity and scale on separate tweens so the fade
+    // clears the hero-visibility floor well before t=0.5s while the scale
+    // keeps its soft overshoot).
+    tl.fromTo(
+      "#f05-landing-atmosphere",
+      { opacity: 0 },
+      { opacity: 1, duration: 0.9, ease: "power1.out" },
+      0
+    );
+    tl.fromTo(
+      "#f05-landing-card1",
+      { opacity: 0 },
+      { opacity: 1, duration: 0.4, ease: "power2.out" },
+      0
+    );
+    tl.fromTo(
+      "#f05-landing-card1",
+      { scale: 0.72 },
+      { scale: 1, duration: 0.6, ease: "back.out(1.4)" },
+      0
+    );
+    // barely-perceptible drift, eased to a full stop well before the seam —
+    // the card-chain's one sanctioned live element during the hold
+    tl.fromTo(
+      "#f05-landing-card1",
+      { scale: 1 },
+      { scale: 1.01, duration: 0.8, ease: "sine.out" },
+      0.85
+    );
+
+    // Scene 2 (2.12–3.52s) — instant hard cut, no crossfade: the card-chain seam
+    tl.set("#f05-landing-card1", { opacity: 0 }, 2.12);
+    tl.set("#f05-landing-card2", { opacity: 1, scale: 1 }, 2.12);
+    tl.fromTo(
+      "#f05-landing-card2",
+      { scale: 1 },
+      { scale: 1.012, duration: 0.9, ease: "sine.out" },
+      2.4
+    );
+
+    // Scene 3 (3.52–4.68s) — qualifier line settles beneath the held card;
+    // frame ends fully still, held to the final frame (video's last beat)
+    tl.fromTo(
+      "#f05-landing-caption",
+      { opacity: 0, y: 14 },
+      { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" },
+      3.52
+    );
+
+    window.__timelines["05-landing"] = tl;
+  </script>
+</template>

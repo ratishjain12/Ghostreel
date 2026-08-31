@@ -1,0 +1,242 @@
+<template>
+  <div data-hf-id="hf-ogoa" id="root" data-composition-id="08-the-term" data-width="1080" data-height="1920">
+    <style>
+    @font-face { font-family: 'Newsreader'; src: url('assets/fonts/newsreader-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Hanken Grotesk'; src: url('assets/fonts/hanken-grotesk-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Hanken Grotesk'; src: url('assets/fonts/hanken-grotesk-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: block; }
+    @font-face { font-family: 'DM Mono'; src: url('assets/fonts/dm-mono-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+      #root {
+        position: relative;
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        background: transparent;
+      }
+
+      #root .clip {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      /* ---- ground: full-bleed paper + permanent graph-paper grid ---- */
+      .the-term-bg {
+        container-type: size;
+        container-name: the-term-frame;
+        background-color: #f0ebde;
+        background-image:
+          linear-gradient(to right, rgba(31, 43, 224, 0.1) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(31, 43, 224, 0.1) 1px, transparent 1px);
+        background-size: 2cqw 2cqw;
+      }
+
+      /* ---- frame furniture: hairlines + page chrome, safe-zone aware ---- */
+      .the-term-frame {
+        container-type: size;
+        container-name: the-term-frame;
+      }
+
+      .the-term-hairline {
+        position: absolute;
+        left: 4cqw;
+        right: 4cqw;
+        height: 0.12cqw;
+        min-height: 1px;
+        background: #1f2be0;
+      }
+      .the-term-hairline--top {
+        top: 150px; /* reel safe-zone: keep clear of the top ~150px */
+      }
+      .the-term-hairline--bottom {
+        top: 1593px; /* caption keep-out: bottom ~17% (>=1593px) stays clear */
+      }
+
+      .the-term-chrome {
+        position: absolute;
+        left: 4cqw;
+        right: 4cqw;
+        top: 1550px;
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        font-family: "DM Mono", "Courier New", monospace;
+        font-size: 13px;
+        letter-spacing: 0.06em;
+        color: #1f2be0;
+        opacity: 0;
+      }
+      .the-term-chrome-nav {
+        text-transform: uppercase;
+      }
+      .the-term-chrome-pagenum {
+        font-variant-numeric: tabular-nums;
+      }
+
+      /* ---- focal stage: the two names + connecting rule ---- */
+      .the-term-stage {
+        container-type: size;
+        container-name: the-term-frame;
+      }
+
+      .the-term-label {
+        position: absolute;
+        left: 0;
+        right: 0;
+        text-align: center;
+        font-family: "Newsreader", Georgia, "Times New Roman", serif;
+        font-weight: 400;
+        color: #1f2be0;
+        letter-spacing: -0.005em;
+      }
+
+      .the-term-label--top {
+        top: 500px;
+        font-size: 4.6cqw;
+        line-height: 0.95;
+      }
+      .the-term-word {
+        display: inline-block;
+        opacity: 0;
+      }
+      .the-term-word + .the-term-word {
+        margin-left: 0.28em;
+      }
+
+      .the-term-label--bottom {
+        top: 730px;
+        font-size: 4.6cqw;
+        line-height: 0.95;
+        opacity: 0;
+      }
+
+      .the-term-rule-wrap {
+        position: absolute;
+        left: 50%;
+        top: 650px;
+        width: 620px;
+        height: 6px;
+        transform: translateX(-50%);
+      }
+      .the-term-rule-wrap svg {
+        display: block;
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+      }
+      .the-term-rule-wrap path {
+        fill: none;
+        stroke: #1f2be0;
+        stroke-width: 2;
+        stroke-linecap: round;
+      }
+    </style>
+
+    <!-- background: paper + grid, full duration -->
+    <div data-hf-id="hf-ldz6" class="clip the-term-bg" data-start="0" data-duration="5.205" data-track-index="0"></div>
+
+    <!-- frame furniture: hairlines + page chrome, full duration -->
+    <div data-hf-id="hf-l1f7" class="clip the-term-frame" data-start="0" data-duration="5.205" data-track-index="1">
+      <div data-hf-id="hf-uosf" class="the-term-hairline the-term-hairline--top"></div>
+      <div data-hf-id="hf-v4i3" class="the-term-hairline the-term-hairline--bottom"></div>
+      <div data-hf-id="hf-cl0c" class="the-term-chrome" id="the-term-chrome">
+        <span data-hf-id="hf-av83" class="the-term-chrome-nav">THUNDERING HERD</span>
+        <span data-hf-id="hf-62xr" class="the-term-chrome-pagenum">08 / 08</span>
+      </div>
+    </div>
+
+    <!-- focal stage: the two names + connecting rule -->
+    <div data-hf-id="hf-pm1x" class="clip the-term-stage" data-start="0" data-duration="5.205" data-track-index="2">
+      <div data-hf-id="hf-1r2x" class="the-term-label the-term-label--top" id="the-term-top">
+        <span data-hf-id="hf-yjka" class="the-term-word" id="the-term-w1">REQUEST</span><span data-hf-id="hf-vkua" class="the-term-word" id="the-term-w2">COALESCING</span>
+      </div>
+
+      <div data-hf-id="hf-8c6o" class="the-term-rule-wrap">
+        <svg data-hf-id="hf-j05x" viewBox="0 0 600 2" preserveAspectRatio="none">
+          <path data-hf-id="hf-m8gg" id="the-term-rule-path" d="M0 1 L600 1" />
+        </svg>
+      </div>
+
+      <div data-hf-id="hf-rh2h" class="the-term-label the-term-label--bottom" id="the-term-bottom">
+        DISTRIBUTED LOCK
+      </div>
+    </div>
+
+    <script>
+      (function () {
+        const rulePath = document.getElementById("the-term-rule-path");
+        const ruleLen = rulePath.getTotalLength();
+        rulePath.style.strokeDasharray = String(ruleLen);
+        rulePath.style.strokeDashoffset = String(ruleLen);
+
+        const stage = document.querySelector(".the-term-stage");
+
+        const tl = gsap.timeline({ paused: true });
+
+        // Scene 1 (0.0-1.88s) — "REQUEST" then "COALESCING" assemble via
+        // per-word staggered reveal, timed to the VO reaching each word;
+        // the connecting rule self-draws as "coalescing" completes.
+        tl.fromTo(
+          "#the-term-w1",
+          { opacity: 0, y: 16 },
+          { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" },
+          0.3,
+        );
+        tl.fromTo(
+          "#the-term-w2",
+          { opacity: 0, y: 16 },
+          { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" },
+          1.3,
+        );
+        tl.to(
+          rulePath,
+          { strokeDashoffset: 0, duration: 0.5, ease: "power2.out" },
+          1.45,
+        );
+
+        // Scene 2 (1.88-3.68s) — "DISTRIBUTED LOCK" arrives beneath the rule
+        // with titlecard-reveal's slide-up-crossfade signature move (translate
+        // up while fading in), timed to the VO saying "distributed lock".
+        tl.fromTo(
+          "#the-term-bottom",
+          { opacity: 0, y: 34 },
+          { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" },
+          2.6,
+        );
+
+        // Scene 3 (3.68-5.205s) — both labels hold fully settled; page-chrome
+        // ticks in quietly at the corner as the VO closes on "recompute step".
+        tl.fromTo(
+          "#the-term-chrome",
+          { opacity: 0, y: 6 },
+          { opacity: 1, y: 0, duration: 0.4, ease: "power1.out" },
+          3.9,
+        );
+
+        // Final hold of the video — low-amplitude sine jitter on the settled
+        // stage only, no further motion, no exit (this is the last frame).
+        const phase = { p: 0 };
+        const IDLE_START = 4.2;
+        const IDLE_DUR = 5.205 - IDLE_START;
+        const Y_AMP_PX = 2;
+        const SCALE_AMP = 0.008;
+        tl.to(
+          phase,
+          {
+            p: Math.PI * 2 * 0.5, // 0.5 cycles — one gentle lobe, settles back to 0
+            duration: IDLE_DUR,
+            ease: "none",
+            onUpdate: () => {
+              const s = Math.sin(phase.p);
+              stage.style.transform = `translateY(${s * Y_AMP_PX}px) scale(${1 + s * SCALE_AMP})`;
+            },
+          },
+          IDLE_START,
+        );
+
+        window.__timelines = window.__timelines || {};
+        window.__timelines["08-the-term"] = tl;
+      })();
+    </script>
+  </div>
+</template>

@@ -1,0 +1,19 @@
+Most AI agents are just a for loop with a prompt. Here are the eight patterns that actually make them work.
+
+First. Tool use. The model doesn't call functions directly. It emits a structured call, your code runs it, and the result goes back in as a new message.
+
+Second. ReAct. Reason, then act, then observe, and repeat. You can't know what to search next until you see what the last search returned.
+
+Third. Plan and execute. One model plans every step upfront, then just runs the plan. More predictable, less adaptive than ReAct.
+
+Fourth. Agentic RAG. The model decides if it even needs to retrieve, what to search, and whether the results are good enough before it answers.
+
+Fifth. Sequential. Agents run in a fixed pipeline. Draft, review, format. Each one's output feeding the next.
+
+Sixth. Parallel. Independent agents run at the same time on different pieces of the task, then their outputs get merged.
+
+Seventh. Router. One agent classifies the task and sends it to whichever specialist actually handles it.
+
+Eighth. Orchestrator worker. A manager agent breaks the task down, assigns it to workers, checks their results, and decides what happens next.
+
+I wrote all eight up with code and the failure cases. Comment guide and I'll send it over.

@@ -1,0 +1,116 @@
+<template>
+<div data-hf-id="hf-p0090" id="root" data-composition-id="09-pattern-8" data-width="1080" data-height="1920" data-duration="8.78">
+  <style>
+    @font-face { font-family: 'Space Grotesk'; src: url('assets/fonts/Space-Grotesk-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Space Grotesk'; src: url('assets/fonts/Space-Grotesk-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Space Grotesk'; src: url('assets/fonts/Space-Grotesk-700.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Inter'; src: url('assets/fonts/Inter-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Inter'; src: url('assets/fonts/Inter-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: block; }
+
+    #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: 'Inter', sans-serif; color: #111111; }
+    #root .clip { position: absolute; }
+
+    .dstage { position: absolute; }
+    svg.dwires { position: absolute; left: 0; top: 0; overflow: visible; }
+    .dtrace { fill: none; stroke: #1e2bfa; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+    .dtrace-idle { fill: none; stroke: rgba(30,43,250,0.16); stroke-width: 2; }
+    .dtrace-label {
+      position: absolute; font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 600;
+      letter-spacing: 0.04em; text-transform: uppercase; color: #6b6b6b; background: #fdfae7; padding: 2px 8px;
+      opacity: 0;
+    }
+    .dnode {
+      position: absolute; display: flex; align-items: center; justify-content: center; text-align: center;
+      font-family: 'Space Grotesk', sans-serif; font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase;
+      border-radius: 14px; border: 2px solid rgba(17,17,17,0.22); background: #fdfae7; color: #6b6b6b;
+      padding: 6px 10px; line-height: 1.15;
+    }
+    .dnode.circle { border-radius: 50%; }
+    .dnode.lit { border-color: #1e2bfa; background: rgba(30,43,250,0.08); color: #1e2bfa; }
+    .dnode.solid { border-color: #1e2bfa; background: #1e2bfa; color: #fdfae7; }
+
+
+    .fp-bg { inset: 0; background: #fdfae7; }
+    .fp-tick {
+      left: 90px; top: 260px; width: 900px; text-align: center;
+      font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase; color: #6b6b6b;
+      opacity: 0;
+    }
+    .fp-pill {
+      left: 50%; top: 312px; transform: translateX(-50%);
+      width: auto; padding: 9px 26px; border-radius: 100px;
+      background: rgba(30,43,250,0.08); border: 1.5px solid rgba(30,43,250,0.2);
+      font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase; color: #1e2bfa;
+      white-space: nowrap;
+      opacity: 0;
+    }
+    .fp-lockup {
+      left: 60px; top: 402px; width: 960px; text-align: center;
+      font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 74px;
+      line-height: 1.05; letter-spacing: -0.01em; color: #111111;
+      opacity: 0;
+    }
+    .fp-desc {
+      left: 140px; top: 1134px; width: 800px; text-align: center;
+      font-family: 'Inter', sans-serif; font-size: 30px; font-weight: 400;
+      line-height: 1.45; color: #6b6b6b;
+      opacity: 0;
+    }
+
+  </style>
+
+  <div data-hf-id="hf-p0091" id="f-09-pattern-8-bg" class="clip fp-bg" data-start="0" data-duration="8.78" data-track-index="0"></div>
+  <div data-hf-id="hf-p0092" id="f-09-pattern-8-tick" class="clip fp-tick" data-start="0" data-duration="8.78" data-track-index="1">PATTERN 8 OF 8</div>
+  <div data-hf-id="hf-p0093" id="f-09-pattern-8-pill" class="clip fp-pill" data-start="0.15" data-duration="8.63" data-track-index="2">MULTI-AGENT PATTERN</div>
+  <div data-hf-id="hf-p0094" id="f-09-pattern-8-lockup" class="clip fp-lockup" data-start="0.5" data-duration="8.28" data-track-index="3">ORCHESTRATOR-WORKER</div>
+  <div data-hf-id="hf-p0097" id="f-09-pattern-8-desc" class="clip fp-desc" data-start="1.6" data-duration="7.18" data-track-index="4">A manager assigns, checks, and decides what happens next.</div>
+
+  <div id="f-09-pattern-8-wires" class="clip" data-start="0" data-duration="8.78" data-track-index="9"><svg class="dwires" width="1080" height="1920"><defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1e2bfa"/>
+    </marker>
+  </defs><path data-hf-id="hf-out1" id="hf-out1" class="dtrace" d="M 460,684 L 300,609" marker-end="url(#arrow)"/>
+    <path data-hf-id="hf-in1" id="hf-in1" class="dtrace" d="M 280,609 L 440,704" marker-end="url(#arrow)"/>
+    <path data-hf-id="hf-out2" id="hf-out2" class="dtrace" d="M 620,684 L 780,609" marker-end="url(#arrow)"/>
+    <path data-hf-id="hf-in2" id="hf-in2" class="dtrace" d="M 800,609 L 640,704" marker-end="url(#arrow)"/>
+    <path data-hf-id="hf-out3" id="hf-out3" class="dtrace" d="M 500,789 L 500,949" marker-end="url(#arrow)"/>
+    <path data-hf-id="hf-in3" id="hf-in3" class="dtrace" d="M 580,949 L 580,789" marker-end="url(#arrow)"/></svg></div>
+  <div id="f-09-pattern-8-node-wrap-0" class="clip" data-start="0" data-duration="8.78" data-track-index="20"><div data-hf-id="hf-mgr" id="hf-mgr" class="clip dnode lit" style="left:425px;top:679px;width:230px;height:110px;font-size:15px" data-start="0" data-duration="8.78" data-track-index="10">MANAGER</div></div>
+  <div id="f-09-pattern-8-node-wrap-1" class="clip" data-start="0" data-duration="8.78" data-track-index="21"><div data-hf-id="hf-w1n" id="hf-w1n" class="clip dnode " style="left:150px;top:520px;width:180px;height:88px;font-size:15px" data-start="0" data-duration="8.78" data-track-index="11">WORKER 1</div></div>
+  <div id="f-09-pattern-8-node-wrap-2" class="clip" data-start="0" data-duration="8.78" data-track-index="22"><div data-hf-id="hf-w2n" id="hf-w2n" class="clip dnode " style="left:750px;top:520px;width:180px;height:88px;font-size:15px" data-start="0" data-duration="8.78" data-track-index="12">WORKER 2</div></div>
+  <div id="f-09-pattern-8-node-wrap-3" class="clip" data-start="0" data-duration="8.78" data-track-index="23"><div data-hf-id="hf-w3n" id="hf-w3n" class="clip dnode " style="left:450px;top:950px;width:180px;height:88px;font-size:15px" data-start="0" data-duration="8.78" data-track-index="13">WORKER 3</div></div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    (function () {
+      const root = document.querySelector('[data-composition-id="09-pattern-8"]');
+      const tl = gsap.timeline({ paused: true });
+
+      const tick = root.querySelector('.fp-tick');
+      const pill = root.querySelector('.fp-pill');
+      const lockup = root.querySelector('.fp-lockup');
+      const desc = root.querySelector('.fp-desc');
+      tl.fromTo(tick, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 0);
+      tl.fromTo(pill, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" }, 0.15);
+      tl.fromTo(lockup, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }, 0.5);
+      tl.fromTo(desc, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 1.6);
+
+      tl.fromTo('#hf-out1', { strokeDasharray: 1200, strokeDashoffset: 1200 }, { strokeDashoffset: 0, duration: 0.3, ease: "power2.inOut" }, 1.05);
+      tl.to('#hf-w1n', { borderColor: "#1e2bfa", backgroundColor: "rgba(30,43,250,0.08)", color: "#1e2bfa", duration: 0.3, ease: "power2.out" }, 1.35);
+      tl.fromTo('#hf-in1', { strokeDasharray: 1200, strokeDashoffset: 1200 }, { strokeDashoffset: 0, duration: 0.3, ease: "power2.inOut" }, 1.7000000000000002);
+      tl.fromTo('#hf-out2', { strokeDasharray: 1200, strokeDashoffset: 1200 }, { strokeDashoffset: 0, duration: 0.3, ease: "power2.inOut" }, 1.35);
+      tl.to('#hf-w2n', { borderColor: "#1e2bfa", backgroundColor: "rgba(30,43,250,0.08)", color: "#1e2bfa", duration: 0.3, ease: "power2.out" }, 1.35);
+      tl.fromTo('#hf-in2', { strokeDasharray: 1200, strokeDashoffset: 1200 }, { strokeDashoffset: 0, duration: 0.3, ease: "power2.inOut" }, 1.7000000000000002);
+      tl.fromTo('#hf-out3', { strokeDasharray: 1200, strokeDashoffset: 1200 }, { strokeDashoffset: 0, duration: 0.3, ease: "power2.inOut" }, 2.1);
+      tl.to('#hf-w3n', { borderColor: "#1e2bfa", backgroundColor: "rgba(30,43,250,0.08)", color: "#1e2bfa", duration: 0.3, ease: "power2.out" }, 2.4000000000000004);
+      tl.fromTo('#hf-in3', { strokeDasharray: 1200, strokeDashoffset: 1200 }, { strokeDashoffset: 0, duration: 0.3, ease: "power2.inOut" }, 2.75);
+      tl.to('#hf-mgr', { scale: 1.06, duration: 0.18, ease: "power2.out", yoyo: true, repeat: 1 }, 3.0999999999999996);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["09-pattern-8"] = tl;
+    })();
+  </script>
+</div>
+</template>

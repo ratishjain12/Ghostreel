@@ -1,0 +1,266 @@
+<template>
+<div data-hf-id="hf-qxrg" id="root" data-composition-id="01-hook" data-width="1080" data-height="1920" data-duration="9.26">
+  <style>
+    @font-face { font-family: 'Space Grotesk'; src: url('assets/fonts/Space-Grotesk-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Space Grotesk'; src: url('assets/fonts/Space-Grotesk-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Space Grotesk'; src: url('assets/fonts/Space-Grotesk-700.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Inter'; src: url('assets/fonts/Inter-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Inter'; src: url('assets/fonts/Inter-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: block; }
+
+    #root {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+      color: #111111;
+    }
+
+    #root .clip { position: absolute; }
+
+    .f01h-bg {
+      inset: 0;
+      background: #fdfae7;
+    }
+
+    .f01h-ring-wrap {
+      left: 410px;
+      top: 150px;
+      width: 260px;
+      height: 260px;
+    }
+
+    .f01h-ring-svg {
+      position: absolute;
+      inset: 0;
+    }
+
+    .f01h-swap-wrap {
+      position: absolute;
+      left: 45px;
+      top: 45px;
+      width: 170px;
+      height: 170px;
+    }
+
+    .f01h-tile-out,
+    .f01h-tile-in {
+      position: absolute;
+      inset: 0;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      transform-origin: 50% 50%;
+    }
+
+    .f01h-tile-out {
+      background: #1e2bfa;
+      color: #fdfae7;
+      z-index: 1;
+    }
+
+    .f01h-tile-in {
+      background: transparent;
+      border: 2px solid #1e2bfa;
+      color: #1e2bfa;
+      opacity: 0;
+      z-index: 2;
+    }
+
+    .f01h-counter-wrap {
+      left: 90px;
+      top: 640px;
+      width: 900px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .f01h-counter-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 190px;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+      color: #1e2bfa;
+      transform-origin: 50% 50%;
+      opacity: 0;
+    }
+
+    .f01h-counter-label {
+      margin-top: 26px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 34px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #111111;
+      opacity: 0;
+    }
+
+    .f01h-dot {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: #1e2bfa;
+      opacity: 0;
+      transform: scale(0);
+      will-change: transform;
+    }
+
+    .f01h-server {
+      left: 445px;
+      top: 1175px;
+      width: 190px;
+      height: 150px;
+      opacity: 0;
+    }
+
+    .f01h-term-card {
+      left: 90px;
+      top: 1345px;
+      width: 900px;
+      padding: 40px 48px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: baseline;
+      gap: 16px 20px;
+      background: rgba(30, 43, 250, 0.04);
+      border: 1.5px solid rgba(30, 43, 250, 0.2);
+      border-radius: 14px;
+      opacity: 0;
+      transform: scale(0.94);
+      transform-origin: 50% 50%;
+    }
+
+    .f01h-term-word {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 60px;
+      font-weight: 700;
+      color: #111111;
+      letter-spacing: -0.01em;
+      opacity: 0;
+    }
+  </style>
+
+  <div data-hf-id="hf-7kf6" class="clip f01h-bg" data-start="0" data-duration="9.26" data-track-index="0"></div>
+
+  <div data-hf-id="hf-aszx" class="clip f01h-ring-wrap" data-start="0" data-duration="9.26" data-track-index="1">
+    <svg data-hf-id="hf-ytm4" class="f01h-ring-svg" width="260" height="260" viewBox="0 0 260 260">
+      <circle data-hf-id="hf-ceqm" cx="130" cy="130" r="124" fill="none" stroke="rgba(30,43,250,0.15)" stroke-width="6" />
+      <circle data-hf-id="hf-jst8" class="f01h-ring-progress" cx="130" cy="130" r="124" fill="none" stroke="#1e2bfa" stroke-width="6" stroke-linecap="round" transform="rotate(-90 130 130)" style="stroke-dasharray: 779; stroke-dashoffset: 0" />
+    </svg>
+    <div data-hf-id="hf-84b4" class="f01h-swap-wrap">
+      <div data-hf-id="hf-yy3o" class="f01h-tile-out">cache:key</div>
+      <div data-hf-id="hf-zmx7" class="f01h-tile-in">EXPIRED</div>
+    </div>
+  </div>
+
+  <div data-hf-id="hf-ttk0" class="clip f01h-counter-wrap" data-start="0" data-duration="9.26" data-track-index="2">
+    <span data-hf-id="hf-32qc" class="f01h-counter-num">0</span>
+    <span data-hf-id="hf-4oyn" class="f01h-counter-label">SIMULTANEOUS REQUESTS</span>
+  </div>
+
+  <div data-hf-id="hf-5bsr" class="clip f01h-dot" data-start="0" data-duration="9.26" data-track-index="3" style="left: 683px; top: 793px" data-fling-x="-138" data-fling-y="414"></div>
+  <div data-hf-id="hf-e4th" class="clip f01h-dot" data-start="0" data-duration="9.26" data-track-index="4" style="left: 608px; top: 663px" data-fling-x="-69" data-fling-y="534"></div>
+  <div data-hf-id="hf-34bc" class="clip f01h-dot" data-start="0" data-duration="9.26" data-track-index="5" style="left: 458px; top: 663px" data-fling-x="69" data-fling-y="534"></div>
+  <div data-hf-id="hf-6ovg" class="clip f01h-dot" data-start="0" data-duration="9.26" data-track-index="6" style="left: 383px; top: 793px" data-fling-x="138" data-fling-y="414"></div>
+  <div data-hf-id="hf-whpk" class="clip f01h-dot" data-start="0" data-duration="9.26" data-track-index="7" style="left: 458px; top: 923px" data-fling-x="69" data-fling-y="294"></div>
+  <div data-hf-id="hf-g923" class="clip f01h-dot" data-start="0" data-duration="9.26" data-track-index="8" style="left: 608px; top: 923px" data-fling-x="-69" data-fling-y="294"></div>
+
+  <div data-hf-id="hf-evz7" class="clip f01h-server" data-start="0" data-duration="9.26" data-track-index="9">
+    <svg data-hf-id="hf-o0du" width="190" height="150" viewBox="0 0 140 110" fill="none">
+      <rect data-hf-id="hf-t1uy" x="10" y="10" width="120" height="90" rx="12" stroke="#1e2bfa" stroke-width="4" opacity="0.5" />
+      <line data-hf-id="hf-tsxr" x1="25" y1="35" x2="115" y2="35" stroke="#1e2bfa" stroke-width="3" opacity="0.5" />
+      <line data-hf-id="hf-w4y3" x1="25" y1="60" x2="115" y2="60" stroke="#1e2bfa" stroke-width="3" opacity="0.5" />
+      <line data-hf-id="hf-cdxz" x1="25" y1="85" x2="115" y2="85" stroke="#1e2bfa" stroke-width="3" opacity="0.5" />
+      <circle data-hf-id="hf-xzhx" cx="103" cy="35" r="3" fill="#1e2bfa" opacity="0.6" />
+      <circle data-hf-id="hf-d0b3" cx="103" cy="60" r="3" fill="#1e2bfa" opacity="0.6" />
+      <circle data-hf-id="hf-6fki" cx="103" cy="85" r="3" fill="#1e2bfa" opacity="0.6" />
+    </svg>
+  </div>
+
+  <div data-hf-id="hf-kz8d" class="clip f01h-term-card" data-start="0" data-duration="9.26" data-track-index="10">
+    <span data-hf-id="hf-z4ij" class="f01h-term-word">The</span>
+    <span data-hf-id="hf-pa3q" class="f01h-term-word">Thundering</span>
+    <span data-hf-id="hf-t4sx" class="f01h-term-word">Herd</span>
+    <span data-hf-id="hf-me7r" class="f01h-term-word">Problem</span>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    (function () {
+      const root = document.querySelector('[data-composition-id="01-hook"]');
+      const ringProgress = root.querySelector(".f01h-ring-progress");
+      const tileOut = root.querySelector(".f01h-tile-out");
+      const tileIn = root.querySelector(".f01h-tile-in");
+      const counterWrap = root.querySelector(".f01h-counter-wrap");
+      const counterNum = root.querySelector(".f01h-counter-num");
+      const counterLabel = root.querySelector(".f01h-counter-label");
+      const dots = Array.from(root.querySelectorAll(".f01h-dot"));
+      const server = root.querySelector(".f01h-server");
+      const termCard = root.querySelector(".f01h-term-card");
+      const words = Array.from(root.querySelectorAll(".f01h-term-word"));
+
+      const tl = gsap.timeline({ paused: true });
+
+      // Scene 1 (0–1.6s) — the countdown ring drains toward expiry.
+      tl.fromTo(ringProgress, { strokeDashoffset: 0 }, { strokeDashoffset: 779, duration: 1.55, ease: "none" }, 0.05);
+
+      // Scene 2 (1.6–4.64s) — on "expires," the tile morphs filled → EXPIRED (scale-swap-transition).
+      tl.to(tileOut, { scale: 0.7, opacity: 0, duration: 0.4, ease: "power2.in" }, 1.6);
+      tl.fromTo(tileIn, { scale: 0.7 }, { scale: 1, opacity: 1, duration: 0.6, ease: "back.out(1.6)" }, 1.85);
+
+      // "10,000" counts up while its own scale grows with it (counting-dynamic-scale).
+      tl.fromTo(counterLabel, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 2.3);
+      const counterState = { value: 0 };
+      const START_SCALE = 95 / 190;
+      tl.to(
+        counterState,
+        {
+          value: 10000,
+          duration: 2.0,
+          ease: "power3.out",
+          onUpdate: () => {
+            counterNum.textContent = Math.round(counterState.value).toLocaleString();
+          },
+        },
+        2.64,
+      );
+      tl.fromTo(counterNum, { scale: START_SCALE, opacity: 0 }, { scale: 1, opacity: 1, duration: 2.0, ease: "power3.out" }, 2.64);
+
+      // Scene 3 (4.64–6.06s) — request-dots puncture in around the counter, then fling toward the server (spring-pop-entrance, no bounce).
+      tl.fromTo(server, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 4.7);
+      dots.forEach((dot, i) => {
+        const entryAt = 4.64 + i * 0.05;
+        const flingX = Number(dot.dataset.flingX);
+        const flingY = Number(dot.dataset.flingY);
+        tl.fromTo(dot, { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4, ease: "power3.out" }, entryAt);
+        tl.to(dot, { x: flingX, y: flingY, duration: 0.75, ease: "power3.out" }, entryAt + 0.3);
+      });
+
+      // Scene 4 (6.62–8.76s) — counter + dots settle and dim; the coined term assembles word by word (dynamic-content-sequencing).
+      tl.to([counterWrap, server, ...dots], { opacity: 0.6, duration: 0.35, ease: "power2.out" }, 6.62);
+      tl.fromTo(termCard, { opacity: 0, scale: 0.94 }, { opacity: 1, scale: 1, duration: 0.35, ease: "power2.out" }, 6.65);
+
+      const WORD_BASE = 0.22;
+      const WORD_SEC_PER_CHAR = 0.02;
+      let cursor = 6.8;
+      words.forEach((word) => {
+        tl.fromTo(word, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, cursor);
+        cursor += WORD_BASE + word.textContent.length * WORD_SEC_PER_CHAR;
+      });
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["01-hook"] = tl;
+    })();
+  </script>
+</div>
+</template>

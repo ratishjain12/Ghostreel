@@ -1,0 +1,179 @@
+<template>
+  <style>
+    @font-face { font-family: 'Newsreader'; src: url('assets/fonts/newsreader-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Hanken Grotesk'; src: url('assets/fonts/hanken-grotesk-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Hanken Grotesk'; src: url('assets/fonts/hanken-grotesk-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: block; }
+    @font-face { font-family: 'DM Mono'; src: url('assets/fonts/dm-mono-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+
+    #root {
+      container-type: size;
+      width: 1080px;
+      height: 1920px;
+      position: relative;
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .naming-it-bg {
+      position: absolute;
+      inset: 0;
+      background-color: #f0ebde;
+      background-image:
+        linear-gradient(rgba(31, 43, 224, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(31, 43, 224, 0.1) 1px, transparent 1px);
+      background-size: 2cqw 2cqw;
+      background-position: 0 0;
+    }
+
+    .naming-it-hairline {
+      position: absolute;
+      left: 4cqw;
+      right: 4cqw;
+      border-top: 0.12cqw solid #1f2be0;
+    }
+    .naming-it-hairline--top {
+      top: 3cqw;
+    }
+    .naming-it-hairline--bottom {
+      bottom: 3cqw;
+    }
+
+    .naming-it-kicker {
+      position: absolute;
+      top: 16cqh;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-family: "Hanken Grotesk", sans-serif;
+      font-weight: 600;
+      font-size: 16px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #1f2be0;
+      white-space: nowrap;
+      opacity: 0;
+    }
+
+    .naming-it-headline-wrap {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 34.17cqh;
+      height: 15.6cqh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .naming-it-headline {
+      display: flex;
+      flex-direction: row;
+      gap: 0.9cqw;
+      font-family: "Newsreader", serif;
+      font-weight: 400;
+      font-size: 6.8cqw;
+      line-height: 1;
+      letter-spacing: -0.005em;
+      color: #1f2be0;
+    }
+
+    .naming-it-word {
+      display: inline-block;
+      opacity: 0;
+    }
+
+    .naming-it-trailing {
+      margin-top: 1.4cqh;
+      font-family: "Newsreader", serif;
+      font-weight: 400;
+      font-size: 2.1cqw;
+      line-height: 1.05;
+      color: #1f2be0;
+      text-align: center;
+      min-height: 2.6cqw;
+    }
+  </style>
+
+  <div data-hf-id="hf-w988" id="root" data-composition-id="02-naming-it" data-width="1080" data-height="1920" data-duration="2.633">
+    <div data-hf-id="hf-oq3s" class="clip naming-it-bg" data-start="0" data-duration="2.633" data-track-index="0"></div>
+    <div data-hf-id="hf-3jsy" class="clip naming-it-hairline naming-it-hairline--top" data-start="0" data-duration="2.633" data-track-index="1"></div>
+    <div data-hf-id="hf-d1at" class="clip naming-it-hairline naming-it-hairline--bottom" data-start="0" data-duration="2.633" data-track-index="2"></div>
+
+    <div data-hf-id="hf-sp3e" class="clip naming-it-kicker" id="naming-it-kicker" data-start="0" data-duration="2.633" data-track-index="3">
+      THAT'S CALLED THE
+    </div>
+
+    <div data-hf-id="hf-0vay" class="clip naming-it-headline-wrap" data-start="0" data-duration="2.633" data-track-index="4">
+      <div data-hf-id="hf-s33z" class="naming-it-headline">
+        <span data-hf-id="hf-l4yn" class="naming-it-word" id="naming-it-word-1">Thundering</span>
+        <span data-hf-id="hf-ranv" class="naming-it-word" id="naming-it-word-2">Herd</span>
+      </div>
+      <div data-hf-id="hf-hp32" class="naming-it-trailing" id="naming-it-trailing"></div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+
+      // Scene 1 (0.0-0.9s): kicker fades up small, upper-third, on "That's the."
+      tl.fromTo(
+        "#naming-it-kicker",
+        { opacity: 0, y: 14 },
+        { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" },
+        0.15,
+      );
+
+      // Scene 2 (0.9-2.133s): headline assembles via per-word staggered reveal
+      // (dynamic-content-sequencing: word-by-word tagline assembly — each word
+      // is its own precomputed reveal beat on the shared timeline, no runtime
+      // recompute, fired in fixed sequence as the VO reaches "thundering herd").
+      tl.fromTo(
+        "#naming-it-word-1",
+        { opacity: 0, y: 18 },
+        { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" },
+        0.9,
+      );
+      tl.fromTo(
+        "#naming-it-word-2",
+        { opacity: 0, y: 18 },
+        { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" },
+        1.15,
+      );
+
+      // "Problem." lands a beat after as a hard-cut word-swap
+      // (discrete-text-sequence: sparse { t, text } states, reverse-search
+      // driver, instant jump — no tween on the text itself), then the frame
+      // holds fully still to the end — the deliberate breather beat.
+      const TOTAL_DURATION = 2.133;
+      const SEQUENCE = [
+        { t: 0, text: "" },
+        { t: 1.55, text: "Problem." },
+      ];
+      function textAt(time) {
+        for (let i = SEQUENCE.length - 1; i >= 0; i--) {
+          if (time >= SEQUENCE[i].t) return SEQUENCE[i].text;
+        }
+        return "";
+      }
+      const trailingEl = document.getElementById("naming-it-trailing");
+      const driver = { t: 0 };
+      tl.to(
+        driver,
+        {
+          t: TOTAL_DURATION,
+          duration: TOTAL_DURATION,
+          ease: "none",
+          onUpdate: () => {
+            trailingEl.textContent = textAt(driver.t);
+          },
+        },
+        0,
+      );
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["02-naming-it"] = tl;
+    })();
+  </script>
+</template>
