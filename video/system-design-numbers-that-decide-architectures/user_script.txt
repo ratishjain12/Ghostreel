@@ -1,0 +1,15 @@
+Most system design decisions come down to a handful of numbers. Know these, and half the architecture draws itself.
+
+First, reading from memory takes about a hundred nanoseconds. Reading from an SSD takes around a hundred microseconds. That thousand x gap is the whole reason caches exist.
+
+Second, a round trip inside one data center is about half a millisecond. Across continents, it's over a hundred. That's why you replicate data close to your users instead of calling home.
+
+Third, a single well tuned Postgres box handles tens of thousands of simple queries a second. Most apps never outgrow it, so shard last, not first.
+
+Fourth, Postgres connections are expensive. A few hundred is a practical ceiling, which is why every serious setup puts a connection pooler in front.
+
+Fifth, one server can hold tens of thousands of idle WebSocket connections. Memory per connection, not CPU, is what decides how many machines you need.
+
+When you're unsure about a design, do the math with these first. The numbers usually make the decision for you.
+
+Comment guide and I'll send you the full cheat sheet.

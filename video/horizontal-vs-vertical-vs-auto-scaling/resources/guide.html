@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Vertical vs Horizontal vs Auto-Scaling Guide</title>
+<style>
+  @font-face { font-family: 'Fraunces'; src: url('../assets/fonts/Fraunces-Variable.woff2') format('woff2'); font-weight: 400 700; font-style: normal; }
+  @font-face { font-family: 'Fraunces'; src: url('../assets/fonts/Fraunces-Italic.woff2') format('woff2'); font-weight: 400 700; font-style: italic; }
+  @font-face { font-family: 'IBM Plex Sans'; src: url('../assets/fonts/IBMPlexSans-Variable.woff2') format('woff2'); font-weight: 300 700; font-style: normal; }
+  @font-face { font-family: 'IBM Plex Mono'; src: url('../assets/fonts/IBMPlexMono-400.woff2') format('woff2'); font-weight: 400; font-style: normal; }
+  @font-face { font-family: 'IBM Plex Mono'; src: url('../assets/fonts/IBMPlexMono-500.woff2') format('woff2'); font-weight: 500; font-style: normal; }
+
+  :root {
+    --canvas: #0A0D12;
+    --canvas-raised: #12161C;
+    --canvas-raised-2: #181D24;
+    --ink: #EDEFF3;
+    --ink-dim: #8992A1;
+    --ink-faint: #4A525E;
+    --line: #232B33;
+    --line-strong: #2E3742;
+    --amber: #FF9F45;
+    --teal: #4DE8C2;
+    --violet: #B98CFF;
+  }
+
+  * { box-sizing: border-box; }
+
+  @page { size: A4; margin: 0; }
+
+  html, body {
+    background: var(--canvas);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', sans-serif;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    margin: 0;
+  }
+
+  body {
+    font-size: 12.5pt;
+    line-height: 1.6;
+    padding: 22mm 20mm;
+  }
+
+  .kicker {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 13pt;
+    color: var(--ink-dim);
+    margin: 0 0 6px 0;
+  }
+
+  .title {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 30pt;
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    margin: 0 0 10px 0;
+    color: var(--ink);
+  }
+
+  .title .amber { color: var(--amber); }
+  .title .teal { color: var(--teal); }
+  .title .violet { color: var(--violet); }
+
+  .subtitle {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-style: italic;
+    font-size: 15pt;
+    color: var(--ink-dim);
+    margin: 0 0 18px 0;
+    line-height: 1.4;
+  }
+
+  .hairline {
+    border: none;
+    border-top: 1px solid var(--line);
+    margin: 18px 0 26px 0;
+  }
+
+  .intro-block {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin-bottom: 8px;
+  }
+
+  .intro {
+    font-size: 12.5pt;
+    color: var(--ink);
+    max-width: 100%;
+  }
+
+  .sec-head-group {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  .sec {
+    margin-top: 30px;
+  }
+
+  .sec-tag {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 500;
+    font-size: 9pt;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--tag-color, var(--ink-dim));
+    border: 1px solid var(--line-strong);
+    border-left: 3px solid var(--tag-color, var(--ink-dim));
+    background: var(--canvas-raised);
+    padding: 3px 10px 3px 8px;
+    border-radius: 3px;
+    margin-bottom: 10px;
+  }
+
+  .sec.amber { --tag-color: var(--amber); }
+  .sec.teal { --tag-color: var(--teal); }
+  .sec.violet { --tag-color: var(--violet); }
+
+  h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 19pt;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin: 0 0 2px 0;
+    color: var(--ink);
+  }
+
+  h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 15pt;
+    line-height: 1.15;
+    margin: 0 0 10px 0;
+    color: var(--ink);
+  }
+
+  p {
+    margin: 0 0 12px 0;
+    color: var(--ink);
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  p:last-child { margin-bottom: 0; }
+
+  .lede {
+    color: var(--ink-dim);
+    font-size: 11.5pt;
+    margin: 0 0 12px 0;
+  }
+
+  .callout {
+    background: var(--canvas-raised);
+    border: 1px solid var(--line-strong);
+    border-radius: 6px;
+    padding: 16px 18px;
+    margin: 14px 0;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .callout .callout-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9pt;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    margin-bottom: 8px;
+  }
+
+  .callout p { margin-bottom: 8px; }
+  .callout p:last-child { margin-bottom: 0; }
+
+  ol.steps {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: step;
+  }
+
+  ol.steps li {
+    counter-increment: step;
+    position: relative;
+    padding: 10px 0 10px 44px;
+    margin: 0;
+    border-top: 1px solid var(--line);
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  ol.steps li:first-child { border-top: none; }
+
+  ol.steps li::before {
+    content: counter(step, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    top: 10px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10pt;
+    color: var(--step-color, var(--ink-dim));
+  }
+
+  ol.steps li.amber::before { color: var(--amber); }
+  ol.steps li.teal::before { color: var(--teal); }
+  ol.steps li.violet::before { color: var(--violet); }
+
+  ol.steps li strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  ul.recap {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  ul.recap li {
+    position: relative;
+    padding: 8px 0 8px 20px;
+    margin: 0 0 4px 0;
+    break-inside: avoid;
+    page-break-inside: avoid;
+    border-top: 1px solid var(--line);
+  }
+
+  ul.recap li:first-child { border-top: none; }
+
+  ul.recap li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 15px;
+    width: 8px;
+    height: 8px;
+    border-radius: 1px;
+    background: var(--dot-color, var(--ink-dim));
+  }
+
+  ul.recap li.amber::before { background: var(--amber); }
+  ul.recap li.teal::before { background: var(--teal); }
+  ul.recap li.violet::before { background: var(--violet); }
+
+  ul.recap li strong { color: var(--ink); font-weight: 600; }
+
+  .closer {
+    margin-top: 34px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .closer .closer-kicker {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9pt;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    margin-bottom: 6px;
+  }
+
+  .closer p {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-style: italic;
+    font-size: 13pt;
+    color: var(--ink-dim);
+  }
+</style>
+</head>
+<body>
+
+  <div class="intro-block">
+    <div class="kicker">Signal Path: companion guide</div>
+    <h1 class="title">Vertical, <span class="amber">horizontal</span>, and <span class="violet">auto-scaling</span></h1>
+    <div class="subtitle">Three separate decisions, and only one of them is really about automation.</div>
+    <hr class="hairline">
+    <p class="intro">
+      "We need to scale" gets treated like a single decision, but it's actually three
+      independent ones. Vertical scaling and horizontal scaling are two different ways to
+      get more capacity. Auto-scaling isn't a third way to get capacity at all: it's the
+      automation layer that decides when to use the other two. This guide walks through
+      each one on its own, then lays out a simple order for adopting them.
+    </p>
+  </div>
+
+  <div class="sec amber">
+    <div class="sec-head-group">
+      <div class="sec-tag">01 · Vertical scaling</div>
+      <h2>One machine, bigger</h2>
+    </div>
+    <p>
+      Vertical scaling means making one machine bigger: more CPU, more RAM, on the same box.
+    </p>
+    <p>
+      It's the simplest option. Nothing about your architecture has to change. But it has a
+      limit: you eventually hit a hardware ceiling, and there's still just one machine that
+      can go down.
+    </p>
+  </div>
+
+  <div class="sec teal">
+    <div class="sec-head-group">
+      <div class="sec-tag">02 · Horizontal scaling</div>
+      <h2>More machines, side by side</h2>
+    </div>
+    <p>
+      Horizontal scaling means adding more machines instead, running the same service side
+      by side.
+    </p>
+    <p>
+      There's no hard ceiling the way vertical scaling has, and you get redundancy for free:
+      if one instance dies, the others are still there.
+    </p>
+    <p>
+      The tradeoff: your app has to be built to run as multiple, coordinated copies.
+    </p>
+  </div>
+
+  <div class="sec violet">
+    <div class="sec-head-group">
+      <div class="sec-tag">03 · Auto-scaling</div>
+      <h2>The automation layer, not a third option</h2>
+    </div>
+    <p>
+      Auto-scaling isn't a third way to add capacity: it's the automation layer on top of
+      the other two.
+    </p>
+    <p>
+      It watches real demand and adds or removes capacity for you, instead of a human
+      deciding when to scale up or down.
+    </p>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head-group">
+      <h2>Capacity vs. decision</h2>
+    </div>
+    <p class="lede">Where each of the three actually sits in the decision.</p>
+    <div class="callout">
+      <div class="callout-label">The split</div>
+      <p>Vertical and horizontal scaling both answer <strong>how do we get more capacity</strong>.</p>
+      <p>Auto-scaling answers a different question: <strong>who decides when we need it, and how fast do we react</strong>.</p>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head-group">
+      <h2>Which one, when</h2>
+    </div>
+    <p class="lede">A simple order to adopt them in, cheapest and simplest first.</p>
+    <ol class="steps">
+      <li class="amber"><strong>Scale vertically first</strong>: it's the cheapest fix while you're small.</li>
+      <li class="teal"><strong>Move to horizontal</strong> once you need redundancy, or you're hitting the ceiling of a single machine.</li>
+      <li class="violet"><strong>Add auto-scaling</strong> once your traffic is unpredictable enough that manual scaling can't keep up.</li>
+    </ol>
+  </div>
+
+  <div class="closer">
+    <div class="closer-kicker">Key takeaways</div>
+    <ul class="recap">
+      <li class="amber"><strong>Vertical scaling</strong> is one machine getting bigger: simple, but capped, and still a single point of failure.</li>
+      <li class="teal"><strong>Horizontal scaling</strong> is many coordinated machines: no hard ceiling, redundancy for free, but it requires code built to run as multiple copies.</li>
+      <li class="violet"><strong>Auto-scaling</strong> is the decision layer, not a capacity mechanism: it automates when to reach for vertical or horizontal capacity.</li>
+    </ul>
+    <p>Scale vertically first, go horizontal for redundancy or ceiling, add auto-scaling only once traffic outpaces manual decisions.</p>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,13 @@
+Retry, circuit breaker, fallback. Three resilience patterns that show up together in almost every distributed system, and get used like they're one thing. They fire at completely different moments.
+
+A retry just tries again. A request fails, you wait a bit, maybe with backoff, and send it again, betting the failure was transient, a blip, not a real outage.
+
+A circuit breaker is what stops you from retrying forever into a dependency that's actually down. It watches the failure rate, and once it crosses a threshold, it trips, blocking new requests to that service entirely for a cooldown period. It protects the failing service from being hammered, and protects you from wasting time on calls that will fail anyway.
+
+A fallback is what you do instead, once retry has given up or the breaker is open. Return cached data, a default value, a degraded response, anything that keeps the system usable instead of returning an error.
+
+So the real sequence is, retry handles the blip, the circuit breaker handles the outage, and the fallback handles what the user actually sees while all of that is happening.
+
+Add retries for calls that can genuinely fail transiently, like a flaky network blip. Add a circuit breaker around any dependency that can go down for real, so you're not making things worse. Add a fallback wherever a failure would otherwise be user-facing.
+
+Comment guide and I'll send over the full breakdown.

@@ -1,0 +1,235 @@
+<template>
+  <style>
+    @font-face { font-family: "Inter"; font-weight: 400; font-style: normal; font-display: block; src: url("assets/fonts/Inter-400.woff2") format("woff2"); }
+    @font-face { font-family: "Inter"; font-weight: 600; font-style: normal; font-display: block; src: url("assets/fonts/Inter-600.woff2") format("woff2"); }
+    @font-face { font-family: "Space Grotesk"; font-weight: 500; font-style: normal; font-display: block; src: url("assets/fonts/Space-Grotesk-500.woff2") format("woff2"); }
+    @font-face { font-family: "Space Grotesk"; font-weight: 600; font-style: normal; font-display: block; src: url("assets/fonts/Space-Grotesk-600.woff2") format("woff2"); }
+    @font-face { font-family: "Space Grotesk"; font-weight: 700; font-style: normal; font-display: block; src: url("assets/fonts/Space-Grotesk-700.woff2") format("woff2"); }
+
+    #root {
+      position: relative;
+      width: 1080px;
+      height: 1080px;
+      overflow: hidden;
+      container-type: size;
+      font-family: "Inter", sans-serif;
+      background: #fdfae7;
+    }
+
+    .clip { position: absolute; inset: 0; }
+    .f5-bg { background: #fdfae7; }
+
+    .f5-wrap {
+      position: absolute;
+      left: 8cqw;
+      right: 8cqw;
+      top: 8cqw;
+      bottom: 9cqw;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .f5-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .f5-eyebrow {
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 600;
+      font-size: 1.85cqw;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #1e2bfa;
+    }
+    .f5-tag {
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 700;
+      font-size: 1.9cqw;
+      color: #fdfae7;
+      background: #1e2bfa;
+      border-radius: 50%;
+      width: 3.4cqw;
+      height: 3.4cqw;
+      min-width: 30px;
+      min-height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .f5-headline {
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 600;
+      font-size: 5.6cqw;
+      line-height: 1.16;
+      letter-spacing: -0.02em;
+      color: #111111;
+      margin-top: 3.2cqw;
+      max-width: 92%;
+    }
+
+    .f5-body {
+      font-family: "Inter", sans-serif;
+      font-weight: 400;
+      font-size: 2.55cqw;
+      line-height: 1.6;
+      color: #4d4d4d;
+      margin-top: 3cqw;
+      max-width: 96%;
+    }
+
+    .f5-diagram {
+      margin-top: 3.6cqw;
+      display: flex;
+      align-items: center;
+      gap: 1cqw;
+    }
+    .f5-claim {
+      flex: 1;
+      border-radius: 12px;
+      background: rgba(30,43,250,0.05);
+      border: 1.5px solid rgba(30,43,250,0.2);
+      padding: 1.6cqw 1.4cqw;
+      text-align: center;
+    }
+    .f5-claim-label {
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 600;
+      font-size: 1.3cqw;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #6b6b6b;
+      display: block;
+      margin-bottom: 0.6cqw;
+    }
+    .f5-claim-value {
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 600;
+      font-size: 1.7cqw;
+      color: #111111;
+    }
+    .f5-diagram-arrow {
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 600;
+      font-size: 1.7cqw;
+      color: rgba(30,43,250,0.4);
+      flex-shrink: 0;
+    }
+    .f5-merge {
+      flex-shrink: 0;
+      width: 8.4cqw;
+      height: 8.4cqw;
+      border-radius: 50%;
+      background: rgba(30,43,250,0.12);
+      border: 2px solid #1e2bfa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 700;
+      font-size: 2.4cqw;
+      color: #1e2bfa;
+    }
+
+    .f5-highlight {
+      margin-top: 3.6cqw;
+      background: rgba(30,43,250,0.04);
+      border: 1.5px solid rgba(30,43,250,0.2);
+      border-left: 4px solid #1e2bfa;
+      border-radius: 14px;
+      padding: 2.6cqw 3cqw;
+    }
+    .f5-highlight p {
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 500;
+      font-size: 2.7cqw;
+      line-height: 1.4;
+      color: #111111;
+      margin: 0;
+    }
+
+    .f5-footer {
+      position: absolute;
+      left: 8cqw;
+      right: 8cqw;
+      bottom: 4.2cqw;
+      display: flex;
+      align-items: center;
+      gap: 1.6cqw;
+    }
+    .f5-progress-track {
+      flex: 1;
+      height: 0.28cqw;
+      min-height: 3px;
+      border-radius: 6px;
+      background: rgba(30,43,250,0.15);
+      overflow: hidden;
+    }
+    .f5-progress-fill {
+      display: block;
+      width: 83.333%;
+      height: 100%;
+      background: #1e2bfa;
+    }
+    .f5-counter {
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 500;
+      font-size: 1.5cqw;
+      letter-spacing: 0.05em;
+      color: #5c5c5c;
+      white-space: nowrap;
+    }
+  </style>
+
+  <div id="root" data-composition-id="05-clash" data-width="1080" data-height="1080" data-duration="4">
+    <div class="clip f5-bg" data-start="0" data-duration="4" data-track-index="0"></div>
+
+    <div class="clip" data-start="0" data-duration="4" data-track-index="1">
+      <div class="f5-wrap">
+        <div class="f5-header">
+          <div class="f5-eyebrow">04 &middot; Context Clash</div>
+          <div class="f5-tag">04</div>
+        </div>
+
+        <div class="f5-headline">Contradictions the model can&rsquo;t resolve.</div>
+
+        <div class="f5-body">New information conflicts with something said turns ago. Instead of flagging it, the agent quietly blends both, and the output drifts from either.</div>
+
+        <div class="f5-diagram">
+          <div class="f5-claim">
+            <span class="f5-claim-label">Turn 6</span>
+            <span class="f5-claim-value">Limit: 50MB</span>
+          </div>
+          <span class="f5-diagram-arrow">&rsaquo;</span>
+          <div class="f5-merge">?</div>
+          <span class="f5-diagram-arrow">&lsaquo;</span>
+          <div class="f5-claim">
+            <span class="f5-claim-label">Turn 41</span>
+            <span class="f5-claim-value">Limit: 200MB</span>
+          </div>
+        </div>
+
+        <div class="f5-highlight">
+          <p>Stale facts don&rsquo;t disappear on their own. Somebody has to remove them.</p>
+        </div>
+      </div>
+
+      <div class="f5-footer">
+        <div class="f5-progress-track"><span class="f5-progress-fill"></span></div>
+        <div class="f5-counter">05 / 06</div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    (function () {
+      var root = document.querySelector('[data-composition-id="05-clash"]');
+      window.__timelines = window.__timelines || {};
+      window.__timelines["05-clash"] = gsap.timeline({ paused: true });
+    })();
+  </script>
+</template>

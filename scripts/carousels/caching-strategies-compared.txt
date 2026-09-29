@@ -1,0 +1,6 @@
+Hook: Cache-aside. Write-through. Write-behind. One of these is quietly risking your data.
+Cache-aside: app manages the cache directly, simple, but a stale-read window on writes.
+Write-through: every write goes through the cache first, consistent, but slower writes.
+Write-behind: cache absorbs the write and flushes later, fast, but risks data loss on a crash.
+Which one, when.
+CTA: Comment GUIDE for the full breakdown.

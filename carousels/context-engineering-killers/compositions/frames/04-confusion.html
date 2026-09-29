@@ -1,0 +1,211 @@
+<template>
+  <style>
+    @font-face { font-family: "Inter"; font-weight: 400; font-style: normal; font-display: block; src: url("assets/fonts/Inter-400.woff2") format("woff2"); }
+    @font-face { font-family: "Inter"; font-weight: 600; font-style: normal; font-display: block; src: url("assets/fonts/Inter-600.woff2") format("woff2"); }
+    @font-face { font-family: "Space Grotesk"; font-weight: 500; font-style: normal; font-display: block; src: url("assets/fonts/Space-Grotesk-500.woff2") format("woff2"); }
+    @font-face { font-family: "Space Grotesk"; font-weight: 600; font-style: normal; font-display: block; src: url("assets/fonts/Space-Grotesk-600.woff2") format("woff2"); }
+    @font-face { font-family: "Space Grotesk"; font-weight: 700; font-style: normal; font-display: block; src: url("assets/fonts/Space-Grotesk-700.woff2") format("woff2"); }
+
+    #root {
+      position: relative;
+      width: 1080px;
+      height: 1080px;
+      overflow: hidden;
+      container-type: size;
+      font-family: "Inter", sans-serif;
+      background: #fdfae7;
+    }
+
+    .clip { position: absolute; inset: 0; }
+    .f4-bg { background: #fdfae7; }
+
+    .f4-wrap {
+      position: absolute;
+      left: 8cqw;
+      right: 8cqw;
+      top: 8cqw;
+      bottom: 9cqw;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .f4-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .f4-eyebrow {
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 600;
+      font-size: 1.85cqw;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #1e2bfa;
+    }
+    .f4-tag {
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 700;
+      font-size: 1.9cqw;
+      color: #fdfae7;
+      background: #1e2bfa;
+      border-radius: 50%;
+      width: 3.4cqw;
+      height: 3.4cqw;
+      min-width: 30px;
+      min-height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .f4-headline {
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 600;
+      font-size: 5.6cqw;
+      line-height: 1.16;
+      letter-spacing: -0.02em;
+      color: #111111;
+      margin-top: 3.2cqw;
+      max-width: 92%;
+    }
+
+    .f4-body {
+      font-family: "Inter", sans-serif;
+      font-weight: 400;
+      font-size: 2.55cqw;
+      line-height: 1.6;
+      color: #4d4d4d;
+      margin-top: 3cqw;
+      max-width: 96%;
+    }
+
+    .f4-diagram {
+      margin-top: 3.6cqw;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1cqw;
+    }
+    .f4-chip {
+      display: flex;
+      align-items: center;
+      gap: 0.6cqw;
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 500;
+      font-size: 1.5cqw;
+      border-radius: 100px;
+      padding: 0.8cqw 1.6cqw;
+    }
+    .f4-chip--relevant {
+      color: #1e2bfa;
+      background: rgba(30,43,250,0.08);
+      border: 1.5px solid rgba(30,43,250,0.2);
+    }
+    .f4-chip--stale {
+      color: #6b6b6b;
+      background: transparent;
+      border: 1.5px solid rgba(30,43,250,0.08);
+    }
+    .f4-chip-icon {
+      width: 1.3cqw;
+      height: 1.3cqw;
+      min-width: 11px;
+      min-height: 11px;
+      flex-shrink: 0;
+    }
+
+    .f4-highlight {
+      margin-top: 3.6cqw;
+      background: rgba(30,43,250,0.04);
+      border: 1.5px solid rgba(30,43,250,0.2);
+      border-left: 4px solid #1e2bfa;
+      border-radius: 14px;
+      padding: 2.6cqw 3cqw;
+    }
+    .f4-highlight p {
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 500;
+      font-size: 2.7cqw;
+      line-height: 1.4;
+      color: #111111;
+      margin: 0;
+    }
+
+    .f4-footer {
+      position: absolute;
+      left: 8cqw;
+      right: 8cqw;
+      bottom: 4.2cqw;
+      display: flex;
+      align-items: center;
+      gap: 1.6cqw;
+    }
+    .f4-progress-track {
+      flex: 1;
+      height: 0.28cqw;
+      min-height: 3px;
+      border-radius: 6px;
+      background: rgba(30,43,250,0.15);
+      overflow: hidden;
+    }
+    .f4-progress-fill {
+      display: block;
+      width: 66.666%;
+      height: 100%;
+      background: #1e2bfa;
+    }
+    .f4-counter {
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 500;
+      font-size: 1.5cqw;
+      letter-spacing: 0.05em;
+      color: #5c5c5c;
+      white-space: nowrap;
+    }
+  </style>
+
+  <div id="root" data-composition-id="04-confusion" data-width="1080" data-height="1080" data-duration="4">
+    <div class="clip f4-bg" data-start="0" data-duration="4" data-track-index="0"></div>
+
+    <div class="clip" data-start="0" data-duration="4" data-track-index="1">
+      <div class="f4-wrap">
+        <div class="f4-header">
+          <div class="f4-eyebrow">03 &middot; Context Confusion</div>
+          <div class="f4-tag">03</div>
+        </div>
+
+        <div class="f4-headline">Irrelevant tools skew every decision.</div>
+
+        <div class="f4-body">Extra tool definitions, stale docs, unrelated examples sit in the window whether or not the task needs them. The model can reach for the wrong tool just because it&rsquo;s there.</div>
+
+        <div class="f4-diagram">
+          <span class="f4-chip f4-chip--relevant"><svg class="f4-chip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 10 17 19 6"></polyline></svg>search_docs</span>
+          <span class="f4-chip f4-chip--stale"><svg class="f4-chip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="6" x2="18" y2="18"></line><line x1="18" y1="6" x2="6" y2="18"></line></svg>legacy_api_v1</span>
+          <span class="f4-chip f4-chip--relevant"><svg class="f4-chip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 10 17 19 6"></polyline></svg>read_file</span>
+          <span class="f4-chip f4-chip--stale"><svg class="f4-chip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="6" x2="18" y2="18"></line><line x1="18" y1="6" x2="6" y2="18"></line></svg>old_changelog</span>
+          <span class="f4-chip f4-chip--relevant"><svg class="f4-chip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 10 17 19 6"></polyline></svg>deploy</span>
+          <span class="f4-chip f4-chip--stale"><svg class="f4-chip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="6" x2="18" y2="18"></line><line x1="18" y1="6" x2="6" y2="18"></line></svg>deprecated_tool</span>
+        </div>
+
+        <div class="f4-highlight">
+          <p>If it&rsquo;s not needed for this step, it shouldn&rsquo;t be in this step&rsquo;s context.</p>
+        </div>
+      </div>
+
+      <div class="f4-footer">
+        <div class="f4-progress-track"><span class="f4-progress-fill"></span></div>
+        <div class="f4-counter">04 / 06</div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    (function () {
+      var root = document.querySelector('[data-composition-id="04-confusion"]');
+      window.__timelines = window.__timelines || {};
+      window.__timelines["04-confusion"] = gsap.timeline({ paused: true });
+    })();
+  </script>
+</template>

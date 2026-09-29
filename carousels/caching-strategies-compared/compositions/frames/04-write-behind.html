@@ -1,0 +1,70 @@
+<template>
+<div id="root" data-composition-id="04-write-behind" data-width="1080" data-height="1080" data-duration="3">
+  <style>
+    @font-face { font-family: 'Space Grotesk'; src: url('assets/fonts/Space-Grotesk-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Space Grotesk'; src: url('assets/fonts/Space-Grotesk-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Space Grotesk'; src: url('assets/fonts/Space-Grotesk-700.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Inter'; src: url('assets/fonts/Inter-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Inter'; src: url('assets/fonts/Inter-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: block; }
+
+    #root { position: relative; width: 100%; height: 100%; overflow: hidden; background: #fdfae7; font-family: 'Inter', sans-serif; color: #111111; }
+
+    .eyebrow { position: absolute; left: 80px; top: 140px; width: 600px; font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #1e2bfa; }
+    .tag-pill { position: absolute; right: 80px; top: 136px; width: 160px; height: 32px; line-height: 32px; text-align: center; border-radius: 100px; background: rgba(30,43,250,0.08); color: #1e2bfa; font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; }
+    .h2 { position: absolute; left: 80px; top: 192px; width: 920px; font-family: 'Space Grotesk', sans-serif; font-size: 40px; font-weight: 600; line-height: 1.15; letter-spacing: -0.02em; color: #111111; }
+    .body { position: absolute; left: 80px; top: 282px; width: 920px; font-family: 'Inter', sans-serif; font-size: 26px; font-weight: 400; line-height: 1.6; color: #6b6b6b; }
+
+    /* Flow spans the full frame width (not left-clustered) for more visual weight. */
+    .node { position: absolute; width: 150px; height: 68px; border-radius: 10px; background: rgba(30,43,250,0.04); border: 1.5px solid rgba(30,43,250,0.2); box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    .node.risk { background: rgba(220,38,38,0.05); border-color: rgba(220,38,38,0.35); }
+    .node-label { font-family: 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 600; color: #111111; }
+    .node-sub { font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 400; color: #6b6b6b; margin-top: 3px; }
+    .flow-arrow { position: absolute; height: 2px; background: #1e2bfa; }
+    .flow-arrow.dashed { height: 0; border-top: 2px dashed #c81e1e; background: none; }
+    .flow-head { position: absolute; width: 0; height: 0; border-top: 5px solid transparent; border-bottom: 5px solid transparent; border-left: 8px solid #1e2bfa; }
+    .flow-head.risk { border-left-color: #c81e1e; }
+    .flow-label { position: absolute; width: 200px; text-align: center; font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: #c81e1e; }
+
+    /* Full-width alert banner, bigger and bolder than the highlight cards on Frames 2-3, stretched to fill down to the progress bar. */
+    .risk-banner { position: absolute; left: 80px; top: 600px; width: 920px; height: 320px; background: rgba(220,38,38,0.07); border: 1.5px solid rgba(220,38,38,0.35); border-radius: 14px; box-sizing: border-box; padding: 32px 40px; display: flex; align-items: center; gap: 28px; }
+    .risk-icon { flex-shrink: 0; }
+    .risk-text-col { display: flex; flex-direction: column; gap: 14px; }
+    .risk-headline { font-family: 'Space Grotesk', sans-serif; font-size: 27px; font-weight: 600; line-height: 1.4; color: #111111; }
+    .risk-chip { font-family: 'Space Grotesk', sans-serif; font-size: 19px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #c81e1e; }
+
+    .counter { position: absolute; right: 80px; top: 80px; width: 120px; text-align: right; font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 500; letter-spacing: 0.05em; color: #595959; }
+    .bar-track { position: absolute; left: 80px; top: 985px; width: 920px; height: 3px; background: rgba(30,43,250,0.15); }
+    .bar-fill { position: absolute; left: 80px; top: 985px; width: 613px; height: 3px; background: #1e2bfa; }
+  </style>
+
+  <div class="eyebrow">03: Write-Behind</div>
+  <div class="tag-pill">Write Path</div>
+  <div class="h2">The write outruns the database</div>
+  <div class="body">The app writes to the cache only. The cache queues the change and flushes it to the database later, in the background. The app has already moved on.</div>
+
+  <div class="node" style="left:80px; top:440px;"><div class="node-label">App</div></div>
+  <div class="flow-arrow" style="left:245px; top:473px; width:200px;"></div>
+  <div class="flow-head" style="left:445px; top:469px;"></div>
+  <div class="node" style="left:465px; top:440px;"><div class="node-label">Cache</div><div class="node-sub">acked instantly</div></div>
+  <div class="flow-label" style="left:630px; top:416px;">later</div>
+  <div class="flow-arrow dashed" style="left:630px; top:473px; width:200px;"></div>
+  <div class="flow-head risk" style="left:830px; top:469px;"></div>
+  <div class="node risk" style="left:850px; top:440px;"><div class="node-label">Database</div><div class="node-sub">not yet durable</div></div>
+
+  <div class="risk-banner">
+    <svg class="risk-icon" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#c81e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+      <line x1="12" y1="9" x2="12" y2="13"/>
+      <line x1="12" y1="17" x2="12.01" y2="17"/>
+    </svg>
+    <div class="risk-text-col">
+      <div class="risk-headline">Fast, until the cache crashes before that flush runs.</div>
+      <div class="risk-chip">Data Loss Risk</div>
+    </div>
+  </div>
+
+  <div class="counter">04 / 06</div>
+  <div class="bar-track"></div>
+  <div class="bar-fill"></div>
+</div>
+</template>

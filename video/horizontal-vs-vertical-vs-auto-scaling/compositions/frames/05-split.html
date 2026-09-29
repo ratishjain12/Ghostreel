@@ -1,0 +1,305 @@
+<template>
+<style>
+  @font-face { font-family: 'Fraunces'; src: url('assets/fonts/Fraunces-Variable.woff2') format('woff2'); font-weight: 400 700; font-style: normal; font-display: block; }
+  @font-face { font-family: 'Fraunces'; src: url('assets/fonts/Fraunces-Italic.woff2') format('woff2'); font-weight: 400 700; font-style: italic; font-display: block; }
+  @font-face { font-family: 'IBM Plex Sans'; src: url('assets/fonts/IBMPlexSans-Variable.woff2') format('woff2'); font-weight: 300 700; font-style: normal; font-display: block; }
+  @font-face { font-family: 'IBM Plex Mono'; src: url('assets/fonts/IBMPlexMono-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+  @font-face { font-family: 'IBM Plex Mono'; src: url('assets/fonts/IBMPlexMono-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: block; }
+
+  #root {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    container-type: size;
+    container-name: h05;
+    background: transparent;
+    overflow: hidden;
+    --canvas: #0A0D12;
+    --canvas-raised: #12161C;
+    --canvas-raised-2: #181D24;
+    --ink: #EDEFF3;
+    --ink-dim: #8992A1;
+    --ink-faint: #4A525E;
+    --line: #232B33;
+    --line-strong: #2E3742;
+    --amber: #FF9F45;
+    --teal: #4DE8C2;
+    --violet: #B98CFF;
+  }
+
+  #root .clip { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+  .h05-bg {
+    background-color: var(--canvas);
+    background-image:
+      repeating-linear-gradient(to right, rgba(35,43,51,0.13) 0px, rgba(35,43,51,0.13) 1px, transparent 1px, transparent 54px),
+      repeating-linear-gradient(to bottom, rgba(35,43,51,0.13) 0px, rgba(35,43,51,0.13) 1px, transparent 1px, transparent 54px);
+  }
+
+  .h05-stack {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    padding: 190px 64px 0 64px;
+  }
+
+  .h05-card {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    min-height: 150px;
+    background: var(--canvas-raised);
+    border: 1.5px solid rgba(137,146,161,0.4);
+    border-radius: 8px;
+    padding: 20px 30px;
+    opacity: 0;
+  }
+  .h05-card--violet { min-height: 230px; margin-top: 110px; align-items: flex-start; padding-top: 26px; }
+  .h05-card--teal { margin-top: 110px; }
+
+  .h05-glyph { width: 176px; height: 84px; flex: 0 0 auto; overflow: visible; }
+  .h05-node { fill: var(--canvas-raised-2); stroke: rgba(137,146,161,0.4); stroke-width: 1.5; }
+
+  .h05-textcol { display: flex; flex-direction: column; gap: 8px; padding-top: 2px; }
+
+  .h05-label {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 38px;
+    line-height: 1.12;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+
+  .h05-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 500;
+    font-size: 19px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .h05-tag--amber { color: var(--amber); }
+  .h05-tag--teal { color: var(--teal); }
+  .h05-tag--violet { color: var(--violet); }
+
+  .h05-emphasis-wrap { margin-top: 4px; opacity: 0; }
+  .h05-emphasis {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 29px;
+    line-height: 1.2;
+    letter-spacing: -0.005em;
+    color: var(--ink);
+  }
+  .h05-word { display: inline-block; transform-origin: 50% 60%; }
+  .h05-word--key { color: var(--ink); }
+
+  .h05-bracket-wrap { display: flex; flex-direction: column; align-items: center; }
+  .h05-bracket-wrap--capacity { margin-top: 90px; }
+  .h05-bracket-wrap--decision { margin-top: 90px; }
+  .h05-bracket-svg { width: 100%; height: 46px; display: block; overflow: visible; }
+  .h05-bracket-tick { fill: none; stroke-width: 3; stroke-linecap: square; }
+  .h05-bracket-bar { fill: none; stroke: var(--line-strong); stroke-width: 2.5; stroke-linecap: square; }
+
+  .h05-bracket-label {
+    margin-top: 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 500;
+    font-size: 29px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink);
+    opacity: 0;
+  }
+</style>
+
+<div id="root" data-composition-id="05-split" data-width="1080" data-height="1920" data-duration="9.033">
+  <div class="clip h05-bg" data-start="0" data-duration="9.033" data-track-index="0"></div>
+
+  <div class="clip h05-stack" data-start="0" data-duration="9.033" data-track-index="1">
+
+    <div class="h05-card h05-card--amber">
+      <svg class="h05-glyph" viewBox="0 0 200 100">
+        <rect class="h05-node" x="70" y="20" width="60" height="60" rx="4"/>
+        <g stroke="var(--amber)" stroke-width="4" stroke-linecap="round">
+          <line x1="58" y1="16" x2="44" y2="2"/>
+          <line x1="142" y1="16" x2="156" y2="2"/>
+          <line x1="58" y1="84" x2="44" y2="98"/>
+          <line x1="142" y1="84" x2="156" y2="98"/>
+        </g>
+        <g fill="var(--amber)">
+          <circle cx="44" cy="2" r="4"/>
+          <circle cx="156" cy="2" r="4"/>
+          <circle cx="44" cy="98" r="4"/>
+          <circle cx="156" cy="98" r="4"/>
+        </g>
+      </svg>
+      <div class="h05-textcol">
+        <div class="h05-label">Gets bigger</div>
+        <div class="h05-tag h05-tag--amber">Vertical scaling</div>
+      </div>
+    </div>
+
+    <div class="h05-card h05-card--teal">
+      <svg class="h05-glyph" viewBox="0 0 200 100">
+        <rect class="h05-node" x="14" y="32" width="40" height="36" rx="4"/>
+        <rect class="h05-node" x="140" y="8" width="40" height="32" rx="4"/>
+        <rect class="h05-node" x="140" y="60" width="40" height="32" rx="4"/>
+        <line x1="54" y1="50" x2="136" y2="24" stroke="var(--teal)" stroke-width="4"/>
+        <line x1="54" y1="50" x2="136" y2="76" stroke="var(--teal)" stroke-width="4"/>
+      </svg>
+      <div class="h05-textcol">
+        <div class="h05-label">Gets copies</div>
+        <div class="h05-tag h05-tag--teal">Horizontal scaling</div>
+      </div>
+    </div>
+
+    <div class="h05-bracket-wrap h05-bracket-wrap--capacity">
+      <svg class="h05-bracket-svg" viewBox="0 0 952 46" preserveAspectRatio="none">
+        <path id="h05-cap-tick-l" class="h05-bracket-tick" d="M 16 0 L 16 38" stroke="var(--amber)"/>
+        <path id="h05-cap-bar" class="h05-bracket-bar" d="M 16 38 L 936 38"/>
+        <path id="h05-cap-tick-r" class="h05-bracket-tick" d="M 936 38 L 936 0" stroke="var(--teal)"/>
+      </svg>
+      <div class="h05-bracket-label">Capacity</div>
+    </div>
+
+    <div class="h05-card h05-card--violet">
+      <svg class="h05-glyph" viewBox="0 0 200 100">
+        <polygon class="h05-node" points="40,26 58,50 40,74 22,50"/>
+        <line x1="40" y1="50" x2="40" y2="38" stroke="var(--violet)" stroke-width="3" stroke-linecap="round"/>
+        <line x1="40" y1="50" x2="48" y2="50" stroke="var(--violet)" stroke-width="3" stroke-linecap="round"/>
+        <line x1="58" y1="50" x2="82" y2="50" stroke="var(--violet)" stroke-width="4"/>
+        <rect class="h05-node" x="82" y="30" width="56" height="44" rx="4"/>
+      </svg>
+      <div class="h05-textcol">
+        <div class="h05-label">Decides when</div>
+        <div class="h05-tag h05-tag--violet">Auto-scaling</div>
+        <div class="h05-emphasis-wrap">
+          <div class="h05-emphasis">
+            <span class="h05-word">how</span>
+            <span class="h05-word">&nbsp;</span>
+            <span class="h05-word h05-word--key" id="h05-word-fast">fast</span>
+            <span class="h05-word">&nbsp;do&nbsp;we&nbsp;react?</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="h05-bracket-wrap h05-bracket-wrap--decision">
+      <svg class="h05-bracket-svg" viewBox="0 0 952 46" preserveAspectRatio="none">
+        <path id="h05-dec-tick-l" class="h05-bracket-tick" d="M 16 0 L 16 38" stroke="var(--violet)"/>
+        <path id="h05-dec-bar" class="h05-bracket-bar" d="M 16 38 L 936 38"/>
+        <path id="h05-dec-tick-r" class="h05-bracket-tick" d="M 936 38 L 936 0" stroke="var(--violet)"/>
+      </svg>
+      <div class="h05-bracket-label">Decision</div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function () {
+  const root = document.querySelector('[data-composition-id="05-split"]');
+  const tl = gsap.timeline({ paused: true });
+
+  // --- SVG self-draw setup: measure real geometry, never guess ---
+  const drawPaths = [
+    '#h05-cap-tick-l', '#h05-cap-bar', '#h05-cap-tick-r',
+    '#h05-dec-tick-l', '#h05-dec-bar', '#h05-dec-tick-r'
+  ].map((sel) => root.querySelector(sel));
+  drawPaths.forEach((p) => {
+    const len = p.getTotalLength();
+    p.style.strokeDasharray = String(len);
+    p.style.strokeDashoffset = String(len);
+  });
+
+  const cardAmber = root.querySelector('.h05-card--amber');
+  const cardTeal = root.querySelector('.h05-card--teal');
+  const cardViolet = root.querySelector('.h05-card--violet');
+
+  // Scene 1 (0.0-1.77s): amber + teal glyphs land — cluster-expansion, converging
+  // apart from a shared middle point into their stacked resting slots.
+  const CLUSTER_OFFSET = 120;
+  tl.fromTo(cardAmber,
+    { opacity: 0, y: CLUSTER_OFFSET, scale: 0.72 },
+    { opacity: 1, y: 0, scale: 1, duration: 0.55, ease: 'power3.out' }, 0.0);
+  tl.fromTo(cardTeal,
+    { opacity: 0, y: -CLUSTER_OFFSET, scale: 0.72 },
+    { opacity: 1, y: 0, scale: 1, duration: 0.55, ease: 'power3.out' }, 0.2);
+
+  // Scene 2 (1.77-4.07s): "CAPACITY" bracket self-draws beneath the amber+teal pair.
+  tl.to('#h05-cap-tick-l', { strokeDashoffset: 0, duration: 0.35, ease: 'power2.out' }, 1.9);
+  tl.to('#h05-cap-bar', { strokeDashoffset: 0, duration: 0.5, ease: 'power2.out' }, 2.16);
+  tl.to('#h05-cap-tick-r', { strokeDashoffset: 0, duration: 0.3, ease: 'power2.out' }, 2.54);
+  tl.fromTo(root.querySelectorAll('.h05-bracket-wrap--capacity .h05-bracket-label'),
+    { opacity: 0, y: -6 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power1.out' }, 3.04);
+
+  // Scene 3 (4.07-7.27s): violet glyph lands third, then "DECISION" bracket draws.
+  tl.fromTo(cardViolet,
+    { opacity: 0, y: 40, scale: 0.85 },
+    { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: 'power3.out' }, 4.1);
+  tl.to('#h05-dec-tick-l', { strokeDashoffset: 0, duration: 0.3, ease: 'power2.out' }, 4.85);
+  tl.to('#h05-dec-bar', { strokeDashoffset: 0, duration: 0.4, ease: 'power2.out' }, 5.075);
+  tl.to('#h05-dec-tick-r', { strokeDashoffset: 0, duration: 0.25, ease: 'power2.out' }, 5.375);
+  tl.fromTo(root.querySelectorAll('.h05-bracket-wrap--decision .h05-bracket-label'),
+    { opacity: 0, y: -6 }, { opacity: 1, y: 0, duration: 0.45, ease: 'power1.out' }, 5.825);
+
+  // Scene 4 (7.27-8.533s): emphasis line lands beside the violet glyph; "fast" glows.
+  tl.fromTo(root.querySelector('.h05-emphasis-wrap'),
+    { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.35, ease: 'power2.out' }, 7.3);
+
+  const fastWord = root.querySelector('#h05-word-fast');
+  const REST_RGB = { r: 237, g: 239, b: 243 };   // --ink
+  const PEAK_RGB = { r: 185, g: 140, b: 255 };   // --violet
+  const ATTACK_DUR = 0.15;
+  const RELEASE = 0.35;
+  const REST_LEVEL = 0.25;
+  const MAX_BLUR = 20;
+  const MAX_SCALE_BOOST = 0.08;
+  const FAST_TIMING = { start: 0.2, end: 0.5 };
+
+  function envelope(t, start, end) {
+    if (t < start) return 0;
+    if (t < end) return Math.min((t - start) / ATTACK_DUR, 1);
+    const releaseEnd = end + RELEASE;
+    if (t < releaseEnd) return 1 - ((t - end) / RELEASE) * (1 - REST_LEVEL);
+    return REST_LEVEL;
+  }
+  function lerp(a, b, p) { return Math.round(a + (b - a) * p); }
+
+  const glowDriver = { t: 0 };
+  tl.to(glowDriver, {
+    t: 1.2,
+    duration: 1.2,
+    ease: 'none',
+    onUpdate: () => {
+      const env = envelope(glowDriver.t, FAST_TIMING.start, FAST_TIMING.end);
+      const r = lerp(REST_RGB.r, PEAK_RGB.r, env);
+      const g = lerp(REST_RGB.g, PEAK_RGB.g, env);
+      const b = lerp(REST_RGB.b, PEAK_RGB.b, env);
+      fastWord.style.color = `rgb(${r}, ${g}, ${b})`;
+      fastWord.style.textShadow = `0 0 ${(MAX_BLUR * env).toFixed(1)}px rgba(185, 140, 255, ${(0.7 * env).toFixed(2)})`;
+      fastWord.style.transform = `scale(${(1 + MAX_SCALE_BOOST * env).toFixed(3)})`;
+    }
+  }, 7.3);
+
+  // Final hold: subtle jitter only (no repeat/yoyo — single phase-driven pass).
+  const stackEl = root.querySelector('.h05-stack');
+  const jitterPhase = { p: 0 };
+  tl.to(jitterPhase, {
+    p: Math.PI * 2,
+    duration: 0.45,
+    ease: 'none',
+    onUpdate: () => {
+      const s = Math.sin(jitterPhase.p);
+      stackEl.style.transform = `translateY(${(s * 1.5).toFixed(2)}px)`;
+    }
+  }, 8.0);
+
+  window.__timelines = window.__timelines || {};
+  window.__timelines['05-split'] = tl;
+  tl.seek(0);
+})();
+</script>
+</template>

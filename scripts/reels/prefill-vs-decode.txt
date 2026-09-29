@@ -1,0 +1,11 @@
+Why does ChatGPT pause for a second before the first word, and then stream the rest almost instantly? Because generating a response is two completely different jobs.
+
+The first job is prefill. The model reads your whole prompt at once. Every token is processed in parallel, so the GPU is doing as much math as it can. Prefill is compute bound. A longer prompt means a longer pause before anything appears.
+
+The second job is decode. Now the model produces one token at a time, and each new token depends on the one before it. There's very little math per step, but the GPU has to reload the model's weights and your conversation's cache from memory every single time. Decode is memory bound.
+
+This split explains a lot. It's why input tokens are priced cheaper than output tokens. It's why providers batch many users together during decode. And it's why time to first token and tokens per second are measured separately.
+
+Long prompt, slow start. Long answer, slow finish. Different bottleneck, different fix.
+
+Comment guide and I'll send you the full breakdown.

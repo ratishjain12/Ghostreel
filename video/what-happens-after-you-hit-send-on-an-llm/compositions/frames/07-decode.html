@@ -1,0 +1,149 @@
+<template id="07-decode-template">
+  <div id="root" data-composition-id="07-decode" data-width="1080" data-height="1920" data-duration="7.8">
+    <style>
+      @font-face { font-family: "EB Garamond"; src: url("assets/fonts/EBGaramond-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: block; }
+      @font-face { font-family: "EB Garamond"; src: url("assets/fonts/EBGaramond-700.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: block; }
+      @font-face { font-family: "Inter"; src: url("assets/fonts/Inter-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: block; }
+      @font-face { font-family: "Inter"; src: url("assets/fonts/Inter-700.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: block; }
+      @font-face { font-family: "JetBrains Mono"; src: url("assets/fonts/JetBrainsMono-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: block; }
+      @font-face { font-family: "JetBrains Mono"; src: url("assets/fonts/JetBrainsMono-700.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: block; }
+
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; }
+      #root [class*="07-decode-"] { position: absolute; }
+
+      #\30 7-decode-bg { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; background: #FAF9F5; }
+      #\30 7-decode-stage { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+
+      /* request-path spine (shared with frames 02-06) */
+      .\30 7-decode-spine-line { left: 300px; top: 229px; width: 480px; height: 1px; background: rgba(20,20,19,0.2); }
+      .\30 7-decode-dot { top: 216px; width: 28px; height: 28px; border-radius: 9999px; box-sizing: border-box; }
+      .\30 7-decode-dot-past { background: #B4B3AF; }
+      .\30 7-decode-dot-current { background: #FAF9F5; border: 1px solid rgba(20,20,19,0.3); }
+      .\30 7-decode-dot-fill { left: -1px; top: -1px; width: 28px; height: 28px; border-radius: 9999px; background: #CC785C; }
+
+      .\30 7-decode-kicker { left: 0; top: 282px; width: 1080px; height: 36px; text-align: center; font-family: "JetBrains Mono", monospace; font-weight: 400; font-size: 28px; line-height: 36px; letter-spacing: 0.16em; text-transform: uppercase; color: #141413; }
+      #root .\30 7-decode-spike { position: static; color: #CC785C; }
+      .\30 7-decode-display { left: 0; top: 350px; width: 1080px; height: 160px; text-align: center; font-family: "EB Garamond", serif; font-weight: 400; font-size: 160px; line-height: 160px; letter-spacing: -0.022em; color: #141413; }
+
+      /* response panel */
+      .\30 7-decode-panel { left: 108px; top: 590px; width: 864px; height: 512px; background: #181715; border: 1px solid rgba(250,249,245,0.14); border-radius: 8px; box-sizing: border-box; overflow: hidden; }
+      .\30 7-decode-bar { left: 0; top: 0; width: 862px; height: 64px; background: #252320; border-bottom: 1px solid rgba(250,249,245,0.14); box-sizing: border-box; }
+      .\30 7-decode-bar-dot { top: 26px; width: 12px; height: 12px; border-radius: 9999px; background: rgba(250,249,245,0.2); }
+      .\30 7-decode-counter { left: 562px; top: 0; width: 260px; height: 64px; text-align: right; font-family: "JetBrains Mono", monospace; font-weight: 400; font-size: 24px; line-height: 64px; letter-spacing: 0.02em; color: #FAF9F5; }
+      .\30 7-decode-flow { left: 40px; top: 120px; width: 784px; height: 336px; }
+      .\30 7-decode-chip { height: 96px; border-radius: 6px; background: #252320; border: 2px solid rgba(250,249,245,0.14); box-sizing: border-box; text-align: center; font-family: "JetBrains Mono", monospace; font-weight: 400; font-size: 56px; line-height: 92px; letter-spacing: 0; color: #FAF9F5; white-space: nowrap; }
+
+      /* streamed-to-you rail */
+      .\30 7-decode-rail { left: 108px; top: 1172px; width: 864px; height: 40px; overflow: visible; }
+      .\30 7-decode-tick { left: 108px; top: 1182px; width: 6px; height: 20px; border-radius: 2px; background: #CC785C; }
+      .\30 7-decode-rail-label { left: 108px; top: 1240px; width: 864px; height: 36px; text-align: center; font-family: "JetBrains Mono", monospace; font-weight: 400; font-size: 26px; line-height: 36px; letter-spacing: 0.16em; text-transform: uppercase; color: #141413; }
+    </style>
+
+    <div id="07-decode-bg" class="clip" data-start="0" data-duration="7.8" data-track-index="0"></div>
+
+    <div id="07-decode-stage" class="clip" data-start="0" data-duration="7.8" data-track-index="1">
+      <div class="07-decode-spine-line"></div>
+      <div class="07-decode-dot 07-decode-dot-past" style="left:286px"></div>
+      <div class="07-decode-dot 07-decode-dot-past" style="left:382px"></div>
+      <div class="07-decode-dot 07-decode-dot-past" style="left:478px"></div>
+      <div class="07-decode-dot 07-decode-dot-past" style="left:574px"></div>
+      <div class="07-decode-dot 07-decode-dot-past" style="left:670px"></div>
+      <div class="07-decode-dot 07-decode-dot-current" style="left:766px"><div id="07-decode-dotfill" class="07-decode-dot-fill"></div></div>
+
+      <div id="07-decode-kicker" class="07-decode-kicker"><span class="07-decode-spike">✱</span> STEP 06 / 06</div>
+      <div id="07-decode-display" class="07-decode-display">Decode</div>
+
+      <div id="07-decode-panel" class="07-decode-panel">
+        <div class="07-decode-bar">
+          <div class="07-decode-bar-dot" style="left:32px"></div>
+          <div class="07-decode-bar-dot" style="left:54px"></div>
+          <div class="07-decode-bar-dot" style="left:76px"></div>
+          <div id="07-decode-counter" class="07-decode-counter">tokens: 0</div>
+        </div>
+        <div id="07-decode-flow" class="07-decode-flow"></div>
+      </div>
+
+      <svg id="07-decode-rail" class="07-decode-rail" width="864" height="40" viewBox="0 0 864 40">
+        <line id="07-decode-rail-line" x1="0" y1="20" x2="858" y2="20" stroke="#141413" stroke-opacity="0.45" stroke-width="1.5" />
+        <polyline id="07-decode-rail-head" points="844,8 858,20 844,32" fill="none" stroke="#141413" stroke-opacity="0.45" stroke-width="1.5" />
+      </svg>
+      <div id="07-decode-tick-0" class="07-decode-tick"></div>
+      <div id="07-decode-tick-1" class="07-decode-tick"></div>
+      <div id="07-decode-tick-2" class="07-decode-tick"></div>
+      <div id="07-decode-raillabel" class="07-decode-rail-label">Streamed to you</div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script>
+      (function () {
+        var root = document.querySelector('[data-composition-id="07-decode"]');
+        var q = function (id) { return root.querySelector('[id="07-decode-' + id + '"]'); };
+        var flow = q("flow");
+        var counter = q("counter");
+
+        // JetBrains Mono advance = 0.6em; 56px -> 33.6px/char, 28px side padding.
+        var words = ["The", "model", "generates", "one", "token", "at", "a", "time"];
+        var CHAR = 33.6, PAD = 56, GAP = 16, ROW_H = 96, ROW_GAP = 24, MAX_W = 784;
+        var chips = [];
+        var x = 0, row = 0;
+        words.forEach(function (w, i) {
+          var cw = Math.ceil(w.length * CHAR + PAD);
+          if (x > 0 && x + cw > MAX_W) { x = 0; row++; }
+          var el = document.createElement("div");
+          el.className = "07-decode-chip";
+          el.id = "07-decode-chip-" + i;
+          el.textContent = w;
+          el.style.left = x + "px";
+          el.style.top = row * (ROW_H + ROW_GAP) + "px";
+          el.style.width = cw + "px";
+          flow.appendChild(el);
+          chips.push(el);
+          x += cw + GAP;
+        });
+
+        var tl = gsap.timeline({ paused: true });
+
+        // Scene 1: dot 6 pops coral, kicker, "Decode" rises on "decode".
+        tl.fromTo(q("dotfill"), { scale: 0.3, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.35, ease: "power3.out" }, 0);
+        tl.fromTo(q("kicker"), { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }, 0.1);
+        tl.fromTo(q("display"), { opacity: 0, y: 48 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 0.72);
+
+        // Scene 2: navy response panel, then chips stream in one per beat.
+        tl.fromTo(q("panel"), { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 1.75);
+
+        var START = 2.2, STEP = 0.64;
+        var CORAL = "#CC785C", QUIET = "rgba(250,249,245,0.14)";
+        chips.forEach(function (el, i) {
+          var at = START + i * STEP;
+          tl.fromTo(el,
+            { opacity: 0, y: 18, scale: 0.94, borderColor: CORAL },
+            { opacity: 1, y: 0, scale: 1, borderColor: CORAL, duration: 0.3, ease: "power2.out" }, at);
+          tl.set(counter, { textContent: "tokens: " + (i + 1) }, at);
+          if (i > 0) {
+            tl.fromTo(chips[i - 1], { borderColor: CORAL }, { borderColor: QUIET, duration: 0.2, ease: "power1.out", immediateRender: false }, at);
+          }
+        });
+
+        // Scene 3: "streamed back to you" rail draws; each later chip sends a coral tick along it.
+        var RAIL_AT = 4.8;
+        tl.fromTo(q("rail-line"), { attr: { "stroke-dasharray": 858, "stroke-dashoffset": 858 } }, { attr: { "stroke-dasharray": 858, "stroke-dashoffset": 0 }, duration: 0.55, ease: "power2.inOut" }, RAIL_AT);
+        tl.fromTo(q("rail-head"), { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "power1.out" }, RAIL_AT + 0.45);
+        tl.fromTo(q("raillabel"), { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, RAIL_AT + 0.15);
+
+        // Ticks land side by side just before the arrowhead: received tokens pile up at "you".
+        var landX = [816, 798, 780];
+        [5, 6, 7].forEach(function (ci, k) {
+          var at = START + ci * STEP;
+          var tick = q("tick-" + k);
+          tl.fromTo(tick, { opacity: 0 }, { opacity: 1, duration: 0.08, ease: "none" }, at);
+          tl.fromTo(tick, { x: 0 }, { x: landX[k], duration: 0.5, ease: "power2.inOut" }, at);
+        });
+
+        tl.set({}, {}, 7.3);
+
+        window.__timelines = window.__timelines || {};
+        window.__timelines["07-decode"] = tl;
+      })();
+    </script>
+  </div>
+</template>

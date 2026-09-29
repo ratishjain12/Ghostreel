@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Context Window vs. Memory vs. RAG</title>
+<style>
+  @font-face { font-family: 'Fraunces'; src: url('../assets/fonts/Fraunces-Variable.woff2') format('woff2'); font-weight: 400 700; font-style: normal; }
+  @font-face { font-family: 'Fraunces'; src: url('../assets/fonts/Fraunces-Italic.woff2') format('woff2'); font-weight: 400 700; font-style: italic; }
+  @font-face { font-family: 'IBM Plex Sans'; src: url('../assets/fonts/IBMPlexSans-Variable.woff2') format('woff2'); font-weight: 300 700; font-style: normal; }
+  @font-face { font-family: 'IBM Plex Mono'; src: url('../assets/fonts/IBMPlexMono-400.woff2') format('woff2'); font-weight: 400; font-style: normal; }
+  @font-face { font-family: 'IBM Plex Mono'; src: url('../assets/fonts/IBMPlexMono-500.woff2') format('woff2'); font-weight: 500; font-style: normal; }
+
+  :root {
+    --ink: #171A20;
+    --ink-dim: #565F6B;
+    --paper: #FCFBF8;
+    --panel: #F3F1EB;
+    --line: #DDD9CE;
+    --amber: #C97A2B;
+    --teal: #1C8C74;
+    --violet: #6E4FA6;
+  }
+
+  * { box-sizing: border-box; }
+
+  html {
+    margin: 0;
+    padding: 0;
+    background: var(--paper);
+  }
+
+  body {
+    margin: 0;
+    padding: 22mm 20mm 24mm 20mm;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 12.5pt;
+    line-height: 1.6;
+  }
+
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  .page-body {
+    max-width: 100%;
+  }
+
+  /* ---- Cover / masthead ---- */
+  .kicker {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9.5pt;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    margin: 0 0 10px 0;
+  }
+
+  h1.title {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 27pt;
+    line-height: 1.12;
+    letter-spacing: -0.01em;
+    margin: 0 0 14px 0;
+    color: var(--ink);
+  }
+
+  .dek {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 12.5pt;
+    color: var(--ink-dim);
+    max-width: 92%;
+    margin: 0 0 6px 0;
+  }
+
+  .masthead-rule {
+    display: flex;
+    height: 4px;
+    width: 100%;
+    margin: 18px 0 26px 0;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .masthead-rule span { flex: 1; }
+  .masthead-rule .a { background: var(--amber); }
+  .masthead-rule .b { background: var(--teal); }
+  .masthead-rule .c { background: var(--violet); }
+
+  /* ---- Intro ---- */
+  .intro {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 14pt;
+    line-height: 1.5;
+    color: var(--ink);
+    margin: 0 0 30px 0;
+    padding: 0 0 0 16px;
+    border-left: 3px solid var(--ink);
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* ---- Sections ---- */
+  section.block {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin-bottom: 26px;
+  }
+
+  .section-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9pt;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin: 0 0 6px 0;
+  }
+  .tag-amber { color: var(--amber); }
+  .tag-teal { color: var(--teal); }
+  .tag-violet { color: var(--violet); }
+
+  h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 17.5pt;
+    line-height: 1.2;
+    letter-spacing: -0.005em;
+    margin: 0 0 10px 0;
+    color: var(--ink);
+  }
+
+  .accent-bar-amber { border-left: 3px solid var(--amber); padding-left: 16px; }
+  .accent-bar-teal { border-left: 3px solid var(--teal); padding-left: 16px; }
+  .accent-bar-violet { border-left: 3px solid var(--violet); padding-left: 16px; }
+
+  section.block p {
+    margin: 0 0 10px 0;
+  }
+  section.block p:last-child { margin-bottom: 0; }
+
+  /* ---- Synthesis panel ---- */
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 18px 20px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin-bottom: 26px;
+  }
+  .panel h2 { font-size: 15.5pt; margin-bottom: 12px; }
+  .panel p { margin: 0 0 8px 0; }
+  .panel p:last-child { margin-bottom: 0; }
+  .panel .row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 8px;
+    align-items: baseline;
+  }
+  .panel .row:last-child { margin-bottom: 0; }
+  .swatch {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9pt;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    flex: 0 0 auto;
+    padding: 2px 8px;
+    border-radius: 3px;
+    color: #fff;
+  }
+  .swatch.amber { background: var(--amber); }
+  .swatch.teal { background: var(--teal); }
+  .swatch.violet { background: var(--violet); }
+  .row-text { flex: 1 1 auto; }
+
+  /* ---- Guidance list ---- */
+  ul.rules {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  ul.rules li {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    display: flex;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  ul.rules li:first-child { padding-top: 0; }
+  ul.rules li:last-child { border-bottom: none; padding-bottom: 0; }
+  ul.rules .idx {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9pt;
+    font-weight: 500;
+    color: var(--ink-dim);
+    flex: 0 0 20px;
+    padding-top: 2px;
+  }
+  ul.rules .rule-text { flex: 1 1 auto; }
+  ul.rules .rule-text strong { font-weight: 600; }
+
+  /* ---- Takeaways / closing ---- */
+  .takeaways {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+  }
+  .takeaways h2 { font-size: 15.5pt; margin-bottom: 12px; }
+  .takeaways ul {
+    margin: 0 0 16px 0;
+    padding-left: 18px;
+  }
+  .takeaways li {
+    margin-bottom: 6px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .closing {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 13pt;
+    color: var(--ink);
+    margin-top: 14px;
+  }
+
+  strong.k-amber { color: var(--amber); font-weight: 600; }
+  strong.k-teal { color: var(--teal); font-weight: 600; }
+  strong.k-violet { color: var(--violet); font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="page-body">
+
+  <p class="kicker">AI Engineering &middot; Companion Guide</p>
+  <h1 class="title">Context Window vs. Memory vs. RAG</h1>
+  <p class="dek">What actually earns a spot in front of the model, and why mixing these three up leaves you with a system that either forgets everything or drowns in irrelevant context.</p>
+  <div class="masthead-rule"><span class="a"></span><span class="b"></span><span class="c"></span></div>
+
+  <p class="intro">Context window, memory, and RAG all end up doing the same physical thing: putting text in front of the model. But they answer three completely different questions, and confusing them is exactly how a system ends up forgetting everything it was told, or drowning in context that has nothing to do with the task at hand.</p>
+
+  <section class="block accent-bar-amber">
+    <p class="section-tag tag-amber">01 &middot; The Space</p>
+    <h2>The Context Window</h2>
+    <p>The context window is just the raw space: the token budget for a single call. Whatever is inside it, the model can see. Whatever is outside it, the model has never heard of, full stop. It is not a decision-maker; it is the container everything else has to compete for room in.</p>
+  </section>
+
+  <section class="block accent-bar-teal">
+    <p class="section-tag tag-teal">02 &middot; What Fills It From the Past</p>
+    <h2>Memory</h2>
+    <p>Memory is what decides which pieces from past turns, or past sessions, get carried forward and re-inserted into that window. Without memory, every new call starts from zero: the model has no idea what you said five messages ago unless something explicitly put it back in front of it.</p>
+  </section>
+
+  <section class="block accent-bar-violet">
+    <p class="section-tag tag-violet">03 &middot; What Fills It From Outside</p>
+    <h2>RAG</h2>
+    <p>RAG isn&rsquo;t about the past conversation at all. It&rsquo;s about knowledge the model was never told in the first place. It retrieves relevant documents from an external source based on the current query, and injects them into the same context window, right alongside the conversation history.</p>
+  </section>
+
+  <div class="panel">
+    <h2>How the Three Fit Together</h2>
+    <p>The context window is the space. Memory and RAG are two different answers to the same question: what earns a spot inside that space.</p>
+    <div class="row"><span class="swatch teal">Memory</span><span class="row-text">decides what from the conversation&rsquo;s own history earns a spot in that space.</span></div>
+    <div class="row"><span class="swatch violet">RAG</span><span class="row-text">decides what from outside the conversation entirely earns a spot in that same space.</span></div>
+  </div>
+
+  <section class="block">
+    <p class="section-tag">04 &middot; When to Reach for Each</p>
+    <h2>Adding Them to a System</h2>
+    <ul class="rules">
+      <li><span class="idx">A</span><span class="rule-text">You <strong>always</strong> have a context window, that&rsquo;s just the constraint every call operates under.</span></li>
+      <li><span class="idx">B</span><span class="rule-text">Add <strong>memory</strong> the moment your app needs to remember something across turns or sessions.</span></li>
+      <li><span class="idx">C</span><span class="rule-text">Add <strong>RAG</strong> the moment the model needs facts it was never given: from your docs, your database, wherever.</span></li>
+    </ul>
+  </section>
+
+  <div class="takeaways">
+    <h2>Key Takeaways</h2>
+    <ul>
+      <li><strong class="k-amber">Context window</strong>: the token budget for one call; inside it is visible, outside it doesn&rsquo;t exist.</li>
+      <li><strong class="k-teal">Memory</strong>: chooses what from the conversation&rsquo;s past earns a spot in that window.</li>
+      <li><strong class="k-violet">RAG</strong>: chooses what from outside the conversation earns a spot in that same window.</li>
+    </ul>
+    <p class="closing">Get this straight and each piece does one job. Confuse them, and you end up with a system that either forgets everything or drowns in irrelevant context.</p>
+  </div>
+
+</div>
+</body>
+</html>

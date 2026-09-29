@@ -1,0 +1,350 @@
+<template>
+  <div id="root" data-composition-id="06-dmesg" data-width="1080" data-height="1920" data-duration="6.12">
+    <style>
+      @font-face { font-family: "EB Garamond"; src: url("assets/fonts/EBGaramond-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: block; }
+      @font-face { font-family: "EB Garamond"; src: url("assets/fonts/EBGaramond-700.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: block; }
+      @font-face { font-family: "Inter"; src: url("assets/fonts/Inter-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: block; }
+      @font-face { font-family: "Inter"; src: url("assets/fonts/Inter-700.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: block; }
+      @font-face { font-family: "JetBrains Mono"; src: url("assets/fonts/JetBrainsMono-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: block; }
+      @font-face { font-family: "JetBrains Mono"; src: url("assets/fonts/JetBrainsMono-700.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: block; }
+
+      #root {
+        position: absolute;
+        inset: 0;
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        font-family: "Inter", sans-serif;
+        color: #141413;
+      }
+      .f06-bg {
+        position: absolute;
+        inset: 0;
+        background: #FAF9F5;
+      }
+      .f06-stage {
+        position: absolute;
+        inset: 0;
+      }
+      .f06-lockup {
+        position: absolute;
+        left: 80px;
+        top: 170px;
+        height: 200px;
+        display: flex;
+        align-items: baseline;
+        gap: 18px;
+      }
+      .f06-num {
+        font-family: "EB Garamond", serif;
+        font-weight: 400;
+        font-size: 200px;
+        line-height: 1;
+        letter-spacing: -0.025em;
+        color: #141413;
+      }
+      .f06-unit {
+        font-family: "JetBrains Mono", monospace;
+        font-weight: 400;
+        font-size: 40px;
+        line-height: 1;
+        color: rgba(20, 20, 19, 0.55);
+      }
+      .f06-kicker {
+        position: absolute;
+        right: 80px;
+        top: 205px;
+        font-family: "JetBrains Mono", monospace;
+        font-weight: 700;
+        font-size: 30px;
+        line-height: 1.2;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: #141413;
+        white-space: nowrap;
+      }
+      .f06-spike { color: #CC785C; }
+      .f06-rail {
+        position: absolute;
+        left: 80px;
+        top: 400px;
+        width: 920px;
+        height: 56px;
+        display: flex;
+        gap: 12px;
+      }
+      .f06-chip {
+        flex: 1 1 0;
+        height: 56px;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "JetBrains Mono", monospace;
+        font-weight: 400;
+        font-size: 24px;
+        line-height: 1;
+      }
+      .f06-chip-done { background: #141413; color: #FAF9F5; }
+      .f06-chip-now { background: #CC785C; color: #FAF9F5; }
+      .f06-chip-next { background: transparent; border: 1px solid rgba(20, 20, 19, 0.20); color: rgba(20, 20, 19, 0.45); }
+
+      .f06-term {
+        position: absolute;
+        left: 80px;
+        top: 500px;
+        width: 920px;
+        height: 620px;
+        background: #181715;
+        border: 1px solid rgba(250, 249, 245, 0.14);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      .f06-bar {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 64px;
+        background: #252320;
+        border-bottom: 1px solid rgba(250, 249, 245, 0.14);
+      }
+      .f06-dot {
+        position: absolute;
+        top: 25px;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: rgba(250, 249, 245, 0.22);
+      }
+      .f06-title {
+        position: absolute;
+        left: 130px;
+        top: 0;
+        height: 64px;
+        line-height: 64px;
+        font-family: "JetBrains Mono", monospace;
+        font-weight: 400;
+        font-size: 24px;
+        color: rgba(250, 249, 245, 0.55);
+      }
+      .f06-body {
+        position: absolute;
+        left: 44px;
+        top: 108px;
+        width: 832px;
+        font-family: "JetBrains Mono", monospace;
+        font-weight: 400;
+        font-size: 38px;
+        line-height: 1.5;
+        color: #FAF9F5;
+      }
+      .f06-line {
+        position: relative;
+        height: 57px;
+        white-space: pre;
+      }
+      .f06-glyph { color: #5DB872; }
+      .f06-caret {
+        display: inline-block;
+        width: 20px;
+        height: 42px;
+        margin-left: 6px;
+        background: #FAF9F5;
+        vertical-align: -8px;
+      }
+      .f06-noise {
+        position: absolute;
+        left: 0;
+        top: 19.5px;
+        height: 18px;
+        border-radius: 4px;
+        background: rgba(250, 249, 245, 0.18);
+      }
+      .f06-band {
+        position: absolute;
+        left: -20px;
+        top: 0;
+        width: 872px;
+        height: 57px;
+        background: rgba(198, 69, 69, 0.12);
+        border-top: 1px solid rgba(198, 69, 69, 0.55);
+        border-bottom: 1px solid rgba(198, 69, 69, 0.55);
+        box-sizing: border-box;
+      }
+      .f06-evtext { position: relative; }
+      .f06-warn { color: #C64545; }
+
+      .f06-rule {
+        position: absolute;
+        left: 80px;
+        top: 1196px;
+        width: 920px;
+        height: 1px;
+        background: rgba(20, 20, 19, 0.12);
+        transform-origin: left center;
+      }
+      .f06-take {
+        position: absolute;
+        left: 80px;
+        top: 1236px;
+        width: 920px;
+        font-family: "EB Garamond", serif;
+        font-weight: 400;
+        font-style: italic;
+        font-size: 76px;
+        line-height: 1.08;
+        letter-spacing: -0.018em;
+        color: #141413;
+        white-space: nowrap;
+      }
+      .f06-word { display: inline-block; }
+    </style>
+
+    <div class="clip f06-bg" data-start="0" data-duration="6.12" data-track-index="0"></div>
+
+    <div class="clip f06-stage" data-start="0" data-duration="6.12" data-track-index="1">
+      <div class="f06-lockup f06-chrome">
+        <span class="f06-num">5</span><span class="f06-unit">/ 7</span>
+      </div>
+      <div class="f06-kicker f06-chrome"><span class="f06-spike">✱</span> KERNEL</div>
+
+      <div class="f06-rail f06-chrome">
+        <div class="f06-chip f06-chip-done">01</div>
+        <div class="f06-chip f06-chip-done">02</div>
+        <div class="f06-chip f06-chip-done">03</div>
+        <div class="f06-chip f06-chip-done">04</div>
+        <div class="f06-chip f06-chip-now">05</div>
+        <div class="f06-chip f06-chip-next">06</div>
+        <div class="f06-chip f06-chip-next">07</div>
+      </div>
+
+      <div class="f06-term">
+        <div class="f06-bar">
+          <span class="f06-dot" style="left: 28px"></span>
+          <span class="f06-dot" style="left: 54px"></span>
+          <span class="f06-dot" style="left: 80px"></span>
+          <span class="f06-title">prod · ssh</span>
+        </div>
+        <div class="f06-body">
+          <div class="f06-line"><span class="f06-glyph">$</span> <span class="f06-cmd"></span><span class="f06-caret f06-caret-cmd"></span></div>
+          <div class="f06-line f06-out"><span class="f06-noise" style="width: 640px"></span></div>
+          <div class="f06-line f06-out"><span class="f06-noise" style="width: 470px"></span></div>
+          <div class="f06-line f06-out"><span class="f06-noise" style="width: 720px"></span></div>
+          <div class="f06-line f06-out"><span class="f06-noise" style="width: 550px"></span></div>
+          <div class="f06-line f06-ev">
+            <span class="f06-band"></span><span class="f06-evtext">Out of memory: <span class="f06-warn">Killed process</span></span>
+          </div>
+          <div class="f06-line f06-tail"><span class="f06-glyph">$</span> <span class="f06-caret f06-caret-tail"></span></div>
+        </div>
+      </div>
+
+      <div class="f06-rule"></div>
+      <div class="f06-take"><span class="f06-word f06-w1">The only place</span> <span class="f06-word f06-w2">it says so.</span></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script>
+      (function () {
+        "use strict";
+        var root = document.querySelector('[data-composition-id="06-dmesg"]');
+        var q = function (s) { return root.querySelector(s); };
+        var qa = function (s) { return Array.prototype.slice.call(root.querySelectorAll(s)); };
+
+        var DURATION = 6.12;
+        var chrome = qa(".f06-chrome");
+        var term = q(".f06-term");
+        var cmd = q(".f06-cmd");
+        var caretCmd = q(".f06-caret-cmd");
+        var caretTail = q(".f06-caret-tail");
+        var noise = qa(".f06-out");
+        var ev = q(".f06-ev");
+        var band = q(".f06-band");
+        var warn = q(".f06-warn");
+        var tail = q(".f06-tail");
+        var rule = q(".f06-rule");
+        var w1 = q(".f06-w1");
+        var w2 = q(".f06-w2");
+
+        var COMMAND = "dmesg";
+        var TYPE_START = 0.72;
+        var EXEC_AT = 1.3;
+        var TAIL_AT = 4.1;
+
+        // Typed-prompt law: chars-at-time table built once, seeded per frame.
+        var lcg = 0x06d3e59;
+        function rnd() {
+          lcg = (Math.imul(1664525, lcg) + 1013904223) >>> 0;
+          return lcg / 4294967296;
+        }
+        var rows = [{ t: 0, n: 0 }];
+        (function () {
+          var t = TYPE_START;
+          var n = 0;
+          while (n < COMMAND.length) {
+            var k = Math.min(COMMAND.length - n, 1 + Math.floor(rnd() * 2));
+            n += k;
+            rows.push({ t: t, n: n });
+            t += k * (0.05 + rnd() * 0.03);
+          }
+        })();
+        var TYPE_END = rows[rows.length - 1].t;
+        function charsAt(time) {
+          for (var i = rows.length - 1; i >= 0; i -= 1) {
+            if (time >= rows[i].t - 0.001) return rows[i].n;
+          }
+          return 0;
+        }
+        function blinkOn(time) {
+          return Math.floor(time / 0.5) % 2 === 0;
+        }
+        function render(time) {
+          cmd.textContent = COMMAND.slice(0, charsAt(time));
+          var cmdCaret;
+          if (time >= EXEC_AT) cmdCaret = false;
+          else if (time >= TYPE_START - 0.001 && time <= TYPE_END + 0.2) cmdCaret = true;
+          else cmdCaret = blinkOn(time);
+          caretCmd.style.opacity = cmdCaret ? "1" : "0";
+          caretTail.style.opacity = time >= TAIL_AT && blinkOn(time - TAIL_AT) ? "1" : "0";
+        }
+
+        render(0);
+        var tl = gsap.timeline({ paused: true });
+
+        // Scene 1: stage chrome seated, terminal settles.
+        tl.fromTo(chrome, { opacity: 0.4 }, { opacity: 1, duration: 0.3, ease: "power3.out" }, 0);
+        tl.fromTo(term, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" }, 0);
+
+        // Scenes 2 to 5: time-driven typing + caret state.
+        var driver = { t: 0 };
+        tl.fromTo(driver, { t: 0 }, {
+          t: DURATION,
+          duration: DURATION,
+          ease: "none",
+          onUpdate: function () { render(driver.t); }
+        }, 0);
+
+        // Scene 3: noise lines print on "If the kernel".
+        var noiseAt = [1.33, 1.47, 1.61, 1.76];
+        noise.forEach(function (el, i) {
+          tl.fromTo(el, { opacity: 0 }, { opacity: 1, duration: 0.12, ease: "none" }, noiseAt[i]);
+        });
+
+        // Scene 4: the evidence line prints; highlight band settles in behind it.
+        tl.fromTo(ev, { opacity: 0 }, { opacity: 1, duration: 0.12, ease: "none" }, 2.62);
+        tl.fromTo(band, { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power3.out" }, 2.72);
+        tl.fromTo(warn, { color: "#FAF9F5" }, { color: "#C64545", duration: 0.4, ease: "power3.out" }, 2.82);
+
+        // Scene 5 lead-in: fresh prompt returns, then the takeaway reveals by word group.
+        tl.fromTo(tail, { opacity: 0 }, { opacity: 1, duration: 0.12, ease: "none" }, TAIL_AT);
+        tl.fromTo(rule, { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power3.out" }, 4.5);
+        tl.fromTo(w1, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 4.55);
+        tl.fromTo(w2, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 5.25);
+
+        tl.seek(0);
+        window.__timelines = window.__timelines || {};
+        window.__timelines["06-dmesg"] = tl;
+      })();
+    </script>
+  </div>
+</template>

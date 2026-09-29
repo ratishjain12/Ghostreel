@@ -1,0 +1,5 @@
+{
+  "message": "Comment \"GUIDE\" and I'll send you the full breakdown.\n\n5 numbers that make most system design decisions for you: memory vs SSD latency, cross-region round trips, what one Postgres box handles, connection limits, and WebSockets per server.\n\n#systemdesign #softwareengineering #backenddevelopment #distributedsystems",
+  "angle": "system-design",
+  "hook_style": "number-promise"
+}

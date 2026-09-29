@@ -1,3 +1,5 @@
 {
-  "message": "Most AI agents are just a for loop with a prompt.\n\nHere are the 8 patterns that actually make them work \u2014 4 for a single agent (tool use, ReAct, plan & execute, agentic RAG), 4 for getting multiple agents to work together (sequential, parallel, router, orchestrator-worker).\n\nI wrote all 8 up with code examples and the exact way each one breaks in production.\n\nComment \"guide\" and I'll send it over."
+  "message": "Most AI agents are just a for loop with a prompt.\n\nHere are the 8 patterns that actually make them work: 4 for a single agent (tool use, ReAct, plan & execute, agentic RAG), 4 for getting multiple agents to work together (sequential, parallel, router, orchestrator-worker).\n\nI wrote all 8 up with code examples and the exact way each one breaks in production.\n\nComment \"guide\" and I'll send it over.",
+  "angle": "ai-engineering",
+  "hook_style": "contrarian"
 }

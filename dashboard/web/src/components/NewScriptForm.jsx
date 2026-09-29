@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ScriptForm from "./ScriptForm";
 
-const EMPTY = { name: "", text: "", message: "", aspect: "" };
+const EMPTY = { name: "", text: "", message: "", aspect: "", pillar: "", hook_style: "" };
 
 export default function NewScriptForm({ onCreated }) {
   const [open, setOpen] = useState(false);

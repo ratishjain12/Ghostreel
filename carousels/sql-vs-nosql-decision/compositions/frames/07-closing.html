@@ -1,0 +1,94 @@
+<template>
+<div id="root" data-composition-id="07-closing" data-width="1080" data-height="1080" data-duration="6">
+  <style>
+    @font-face { font-family: 'Space Grotesk'; src: url('assets/fonts/Space-Grotesk-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Space Grotesk'; src: url('assets/fonts/Space-Grotesk-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Space Grotesk'; src: url('assets/fonts/Space-Grotesk-700.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Inter'; src: url('assets/fonts/Inter-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Inter'; src: url('assets/fonts/Inter-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: block; }
+
+    #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: 'Inter', sans-serif; color: #111111; }
+    #root .clip { position: absolute; }
+
+    .cl-bg { inset: 0; background: #fdfae7; }
+    .cl-card { left: 56px; top: 66px; width: 968px; height: 430px; border-radius: 32px; background: #1e2bfa; }
+
+    .cl-accent { left: 510px; top: 141px; width: 60px; height: 4px; border-radius: 2px; background: #fdfae7; }
+    .cl-eyebrow {
+      left: 140px; top: 165px; width: 800px; text-align: center;
+      font-family: 'Space Grotesk', sans-serif; font-size: 17px; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase; color: rgb(195,197,239);
+    }
+    .cl-h1 {
+      left: 140px; top: 201px; width: 800px; text-align: center;
+      font-family: 'Space Grotesk', sans-serif; font-size: 54px; font-weight: 700;
+      line-height: 1.15; letter-spacing: -0.02em; color: #fdfae7;
+    }
+    .cl-sub {
+      left: 190px; top: 357px; width: 700px; text-align: center;
+      font-family: 'Inter', sans-serif; font-size: 22px; font-weight: 400;
+      line-height: 1.45; color: rgb(224,226,250);
+    }
+
+    .cl-btn { top: 700px; width: 380px; height: 84px; border-radius: 16px; }
+    .cl-btn-save { left: 148px; background: #1e2bfa; }
+    .cl-btn-follow { left: 552px; background: #fdfae7; border: 2px solid #1e2bfa; }
+
+    .cl-icon { width: 40px; height: 40px; }
+    .cl-icon-save { left: 176px; top: 722px; }
+    .cl-icon-follow { left: 580px; top: 722px; }
+
+    .cl-bookmark { position: absolute; left: 10px; top: 6px; width: 20px; height: 27px; background: #fdfae7; clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 76%, 0 100%); }
+
+    .cl-person-head { position: absolute; left: 14px; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: #1e2bfa; }
+    .cl-person-body { position: absolute; left: 8px; top: 20px; width: 24px; height: 14px; border-radius: 12px 12px 0 0; background: #1e2bfa; }
+    .cl-person-plus-h { position: absolute; left: 26px; top: 6px; width: 10px; height: 2px; background: #1e2bfa; }
+    .cl-person-plus-v { position: absolute; left: 30px; top: 2px; width: 2px; height: 10px; background: #1e2bfa; }
+
+    .cl-label { top: 728px; width: 280px; font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 600; letter-spacing: -0.01em; }
+    .cl-label-save { left: 232px; color: #fdfae7; }
+    .cl-label-follow { left: 636px; color: #1e2bfa; }
+
+    .cl-caption {
+      left: 190px; top: 840px; width: 700px; text-align: center;
+      font-family: 'Inter', sans-serif; font-size: 18px; font-weight: 400;
+      letter-spacing: 0.01em; color: #6b6b6b;
+    }
+  </style>
+
+  <div class="clip cl-bg" data-start="0" data-duration="6" data-track-index="0"></div>
+  <div class="clip cl-card" data-start="0" data-duration="6" data-track-index="1"></div>
+
+  <div class="clip cl-accent" data-start="0" data-duration="6" data-track-index="4"></div>
+  <div class="clip cl-eyebrow" data-start="0" data-duration="6" data-track-index="5">Before you scroll on</div>
+  <div class="clip cl-h1" data-start="0" data-duration="6" data-track-index="6">Save this. Follow for more.</div>
+  <div class="clip cl-sub" data-start="0" data-duration="6" data-track-index="7">A repeatable framework beats a religious war every time.</div>
+
+  <div class="clip cl-btn cl-btn-save" data-start="0" data-duration="6" data-track-index="8"></div>
+  <div class="clip cl-btn cl-btn-follow" data-start="0" data-duration="6" data-track-index="8"></div>
+
+  <div class="clip cl-icon cl-icon-save" data-start="0" data-duration="6" data-track-index="9">
+    <div class="cl-bookmark"></div>
+  </div>
+  <div class="clip cl-label cl-label-save" data-start="0" data-duration="6" data-track-index="9">Save this</div>
+
+  <div class="clip cl-icon cl-icon-follow" data-start="0" data-duration="6" data-track-index="9">
+    <div class="cl-person-head"></div>
+    <div class="cl-person-body"></div>
+    <div class="cl-person-plus-h"></div>
+    <div class="cl-person-plus-v"></div>
+  </div>
+  <div class="clip cl-label cl-label-follow" data-start="0" data-duration="6" data-track-index="9">Follow @ratish.ai</div>
+
+  <div class="clip cl-caption" data-start="0" data-duration="6" data-track-index="10">For more system design breakdowns.</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      window.__timelines = window.__timelines || {};
+      window.__timelines["07-closing"] = tl;
+    })();
+  </script>
+</div>
+</template>

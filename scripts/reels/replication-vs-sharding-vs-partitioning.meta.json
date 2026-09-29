@@ -1,0 +1,5 @@
+{
+  "message": "Comment \"GUIDE\" and I'll send you the full breakdown.\n\nReplication, sharding, partitioning: \"scale the database\" isn't one decision, it's three different problems wearing the same name. I broke down which one actually fixes what.\n\n#systemdesign #softwareengineering #databases #backenddevelopment",
+  "angle": "system-design",
+  "hook_style": "contrarian"
+}

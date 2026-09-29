@@ -1,0 +1,301 @@
+<template>
+  <style>
+    @font-face { font-family: 'Fraunces'; src: url('assets/fonts/Fraunces-Variable.woff2') format('woff2'); font-weight: 400 700; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Fraunces'; src: url('assets/fonts/Fraunces-Italic.woff2') format('woff2'); font-weight: 400 700; font-style: italic; font-display: block; }
+    @font-face { font-family: 'IBM Plex Sans'; src: url('assets/fonts/IBMPlexSans-Variable.woff2') format('woff2'); font-weight: 300 700; font-style: normal; font-display: block; }
+    @font-face { font-family: 'IBM Plex Mono'; src: url('assets/fonts/IBMPlexMono-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+    @font-face { font-family: 'IBM Plex Mono'; src: url('assets/fonts/IBMPlexMono-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: block; }
+
+    #root {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      container-type: size;
+      background: transparent;
+      font-family: 'IBM Plex Sans', sans-serif;
+      color: #EDEFF3;
+    }
+
+    .clip { position: absolute; inset: 0; }
+
+    .dlock04-bgfill { background: #0A0D12; }
+    .dlock04-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(0deg, rgba(35, 43, 51, 0.14) 0px, rgba(35, 43, 51, 0.14) 1px, transparent 1px, transparent 60px),
+        repeating-linear-gradient(90deg, rgba(35, 43, 51, 0.14) 0px, rgba(35, 43, 51, 0.14) 1px, transparent 1px, transparent 60px);
+    }
+
+    .dlock04-scene { position: absolute; inset: 0; }
+
+    #dlock04-kicker {
+      position: absolute;
+      left: 80px;
+      top: 158px;
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-weight: 500;
+      font-size: 2.4cqw;
+      line-height: 1.1;
+      color: #B98CFF;
+      opacity: 0;
+    }
+
+    #dlock04-headline {
+      position: absolute;
+      left: 80px;
+      top: 206px;
+      font-family: 'Fraunces', serif;
+      font-weight: 600;
+      font-size: 6.6cqw;
+      line-height: 1.0;
+      letter-spacing: -0.015em;
+      color: #EDEFF3;
+      opacity: 0;
+      margin: 0;
+    }
+
+    .dlock04-underline {
+      position: absolute;
+      left: 80px;
+      top: 340px;
+      width: 170px;
+      height: 4px;
+      background: #B98CFF;
+      transform-origin: left center;
+      transform: scaleX(0);
+    }
+
+    .dlock04-worker {
+      position: absolute;
+      width: 260px;
+      height: 130px;
+      left: 70px;
+      background: #12161C;
+      border: 1.5px solid rgba(137, 146, 161, 0.4);
+      border-radius: 4px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      opacity: 0;
+    }
+    #dlock04-worker-a { top: 495px; }
+    #dlock04-worker-b { top: 815px; }
+    #dlock04-worker-c { top: 1135px; }
+
+    #dlock04-critical {
+      position: absolute;
+      left: 660px;
+      top: 760px;
+      width: 360px;
+      height: 240px;
+      background: #181D24;
+      border: 1.5px solid rgba(137, 146, 161, 0.4);
+      border-radius: 4px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      opacity: 0;
+    }
+
+    .dlock04-node-tag {
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      font-size: 1.5cqw;
+      color: #EDEFF3;
+    }
+    #dlock04-critical .dlock04-node-tag { font-size: 2.0cqw; }
+
+    .dlock04-node-caption {
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-size: 18px;
+      color: #8992A1;
+    }
+
+    .dlock04-edges { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+    .dlock04-edge {
+      fill: none;
+      stroke: #B98CFF;
+      stroke-width: 3;
+      stroke-linecap: round;
+    }
+
+    .dlock04-dot {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #B98CFF;
+      opacity: 0;
+    }
+    #dlock04-dot-a { left: 322px; top: 552px; }
+    #dlock04-dot-b { left: 322px; top: 872px; }
+    #dlock04-dot-c { left: 322px; top: 1192px; }
+
+    #dlock04-gate-label {
+      position: absolute;
+      left: 570px;
+      top: 838px;
+      width: 100px;
+      text-align: center;
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-size: 18px;
+      color: #8992A1;
+    }
+
+    .dlock04-waiting {
+      position: absolute;
+      width: 130px;
+      text-align: center;
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-size: 18px;
+      color: #8992A1;
+      opacity: 0;
+    }
+    #dlock04-waiting-a { left: 452px; top: 758px; }
+    #dlock04-waiting-c { left: 452px; top: 964px; }
+  </style>
+
+  <div id="root" data-composition-id="04-distributed-lock" data-width="1080" data-height="1920" data-duration="13.98">
+    <div class="clip dlock04-bgfill" data-start="0" data-duration="13.98" data-track-index="0">
+      <div class="dlock04-grid"></div>
+    </div>
+
+    <div class="clip dlock04-scene" data-start="0" data-duration="13.98" data-track-index="1">
+      <div id="dlock04-kicker">reframe</div>
+      <h1 id="dlock04-headline">Concurrency</h1>
+      <div class="dlock04-underline"></div>
+
+      <svg class="dlock04-edges" viewBox="0 0 1080 1920" preserveAspectRatio="none">
+        <path id="dlock04-path-a" class="dlock04-edge" d="M 330 560 L 550 880"></path>
+        <path id="dlock04-path-b1" class="dlock04-edge" d="M 330 880 L 550 880"></path>
+        <path id="dlock04-path-c" class="dlock04-edge" d="M 330 1200 L 550 880"></path>
+        <path id="dlock04-path-b2" class="dlock04-edge" d="M 550 880 L 660 880"></path>
+        <rect id="dlock04-gate" x="539" y="869" width="22" height="22" rx="3" fill="#181D24" stroke="#8992A1" stroke-width="1.5"></rect>
+      </svg>
+
+      <div id="dlock04-dot-a" class="dlock04-dot"></div>
+      <div id="dlock04-dot-b" class="dlock04-dot"></div>
+      <div id="dlock04-dot-c" class="dlock04-dot"></div>
+
+      <div id="dlock04-gate-label">Lock</div>
+
+      <div id="dlock04-worker-a" class="dlock04-worker">
+        <div class="dlock04-node-tag">Worker A</div>
+        <div class="dlock04-node-caption">Machine</div>
+      </div>
+      <div id="dlock04-worker-b" class="dlock04-worker">
+        <div class="dlock04-node-tag">Worker B</div>
+        <div class="dlock04-node-caption">Machine</div>
+      </div>
+      <div id="dlock04-worker-c" class="dlock04-worker">
+        <div class="dlock04-node-tag">Worker C</div>
+        <div class="dlock04-node-caption">Machine</div>
+      </div>
+
+      <div id="dlock04-critical">
+        <div class="dlock04-node-tag">Critical Section</div>
+        <div class="dlock04-node-caption">Shared Resource</div>
+      </div>
+
+      <div id="dlock04-waiting-a" class="dlock04-waiting">Waiting</div>
+      <div id="dlock04-waiting-c" class="dlock04-waiting">Waiting</div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var root = document.querySelector('[data-composition-id="04-distributed-lock"]');
+      if (!root) return;
+
+      var edgePaths = root.querySelectorAll('.dlock04-edge');
+      var lens = {};
+      edgePaths.forEach(function (p) {
+        var len = p.getTotalLength();
+        lens[p.id] = len;
+        p.style.strokeDasharray = len;
+        p.style.strokeDashoffset = len;
+      });
+
+      var tl = gsap.timeline({ paused: true });
+
+      // explicit resting baseline for #dlock04-critical — it's targeted by two later
+      // fromTo() calls (Scene 1 arrival, Scene 3 lit-pulse); without this, GSAP applies
+      // whichever fromTo was AUTHORED LAST as the pre-tween resting state on any seek
+      // before Scene 1 actually runs.
+      tl.set('#dlock04-critical', { opacity: 0, scale: 0.94 }, 0);
+
+      // Scene 1 (0.0-2.7s) — headline reframe + nodes arrive, edge stubs extend
+      tl.fromTo('#dlock04-kicker', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, 0.1);
+      tl.fromTo('#dlock04-headline', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.55, ease: 'power2.out' }, 0.3);
+      tl.fromTo('.dlock04-underline', { scaleX: 0 }, { scaleX: 1, duration: 0.35, ease: 'power2.out' }, 0.75);
+
+      tl.fromTo('#dlock04-worker-a', { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, 0.55);
+      tl.fromTo('#dlock04-worker-b', { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, 0.7);
+      tl.fromTo('#dlock04-worker-c', { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, 0.85);
+      tl.fromTo('#dlock04-critical', { opacity: 0, scale: 0.94 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'power2.out' }, 1.05);
+
+      tl.to('#dlock04-path-a', { strokeDashoffset: lens['dlock04-path-a'] * 0.82, duration: 0.4, ease: 'power2.out' }, 1.6);
+      tl.to('#dlock04-path-b1', { strokeDashoffset: lens['dlock04-path-b1'] * 0.82, duration: 0.4, ease: 'power2.out' }, 1.75);
+      tl.to('#dlock04-path-c', { strokeDashoffset: lens['dlock04-path-c'] * 0.82, duration: 0.4, ease: 'power2.out' }, 1.9);
+
+      // Scene 2 (2.7-6.5s) — all three edges draw fully to the gate, dots converge, crowding beat
+      tl.to('#dlock04-path-a', { strokeDashoffset: 0, duration: 0.8, ease: 'power2.out' }, 2.7);
+      tl.to('#dlock04-path-b1', { strokeDashoffset: 0, duration: 0.8, ease: 'power2.out' }, 2.7);
+      tl.to('#dlock04-path-c', { strokeDashoffset: 0, duration: 0.8, ease: 'power2.out' }, 2.7);
+
+      tl.fromTo('#dlock04-dot-a', { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.3, ease: 'back.out(1.6)' }, 2.8);
+      tl.fromTo('#dlock04-dot-b', { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.3, ease: 'back.out(1.6)' }, 2.8);
+      tl.fromTo('#dlock04-dot-c', { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.3, ease: 'back.out(1.6)' }, 2.8);
+
+      tl.to('#dlock04-dot-a', { x: 220, y: 320, duration: 1.6, ease: 'power1.inOut' }, 2.9);
+      tl.to('#dlock04-dot-b', { x: 220, y: 0, duration: 1.6, ease: 'power1.inOut' }, 2.9);
+      tl.to('#dlock04-dot-c', { x: 220, y: -320, duration: 1.6, ease: 'power1.inOut' }, 2.9);
+
+      // Scene 3 (6.5-10.5s) — the lock resolves, only Worker B passes through
+      tl.fromTo('#dlock04-gate',
+        { attr: { fill: '#181D24', stroke: '#8992A1', 'stroke-width': 1.5 } },
+        { attr: { fill: '#B98CFF', stroke: '#B98CFF', 'stroke-width': 3 }, duration: 0.3, ease: 'power2.out', immediateRender: false },
+        6.5);
+      tl.to('#dlock04-gate', { attr: { 'stroke-width': 1.5 }, duration: 0.25, ease: 'power2.in' }, 6.8);
+      tl.to('#dlock04-gate-label', { color: '#B98CFF', duration: 0.3, ease: 'power2.out' }, 6.5);
+      tl.to('#dlock04-worker-b', { borderColor: '#B98CFF', duration: 0.3, ease: 'power2.out' }, 6.5);
+
+      tl.to('#dlock04-path-b2', { strokeDashoffset: 0, duration: 0.4, ease: 'power2.out' }, 6.6);
+      tl.to('#dlock04-dot-b', { x: 410, y: 0, duration: 0.6, ease: 'power2.out' }, 6.6);
+
+      tl.to('#dlock04-critical', { backgroundColor: '#B98CFF', borderColor: '#B98CFF', duration: 0.5, ease: 'power2.out' }, 7.1);
+      tl.fromTo('#dlock04-critical', { scale: 1 }, { scale: 1.06, duration: 0.25, ease: 'power2.out', immediateRender: false }, 7.1);
+      tl.to('#dlock04-critical', { scale: 1, duration: 0.3, ease: 'power2.inOut' }, 7.35);
+      tl.to('#dlock04-critical .dlock04-node-tag, #dlock04-critical .dlock04-node-caption', { color: '#0A0D12', duration: 0.3, ease: 'power2.out' }, 7.1);
+
+      // Scene 4 (10.5-13.48s) — Worker A and C hold at the gate, dim and waiting
+      tl.to('#dlock04-dot-a', { x: 187, y: 272, opacity: 0.4, duration: 0.5, ease: 'power2.inOut' }, 10.5);
+      tl.to('#dlock04-dot-c', { x: 187, y: -272, opacity: 0.4, duration: 0.5, ease: 'power2.inOut' }, 10.5);
+      tl.to('#dlock04-path-a, #dlock04-path-c', { opacity: 0.35, duration: 0.5, ease: 'power2.inOut' }, 10.5);
+      tl.to('#dlock04-worker-a, #dlock04-worker-c', { opacity: 0.55, duration: 0.5, ease: 'power2.inOut' }, 10.5);
+
+      tl.fromTo('#dlock04-waiting-a', { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' }, 10.9);
+      tl.fromTo('#dlock04-waiting-c', { opacity: 0, y: -8 }, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' }, 11.05);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['04-distributed-lock'] = tl;
+    })();
+  </script>
+</template>

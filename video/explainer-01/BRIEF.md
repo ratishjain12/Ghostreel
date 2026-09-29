@@ -2,7 +2,7 @@
 workflow: faceless-explainer
 flow: automation
 storyboard: no
-message: "A cache expiring under load doesn't fail quietly — it floods your database, unless you coalesce the requests."
+message: "A cache expiring under load doesn't fail quietly: it floods your database, unless you coalesce the requests."
 destination: reels
 aspect: 1080x1920
 language: en

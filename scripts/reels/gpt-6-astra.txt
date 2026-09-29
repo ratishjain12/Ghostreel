@@ -1,0 +1,13 @@
+OpenAI just shipped a model that doesn't want to just answer you — it wants to operate your computer. Meet GPT-6 Astra, released September third, 2026.
+
+Astra's actual pitch is different: it browses, it codes, it uses apps, it builds websites, it runs its own QA, and, this stopped people mid-scroll, it can model a house in Blender and turn it into a walkable Unreal Engine 5 scene.
+
+On OSWorld 2.0, a real computer-use benchmark, Astra scored 72.6%, in about 40 minutes per task. On BenchCAD, its 3D and CAD reasoning benchmark, it hit 95.9%.
+
+Then there's the part that isn't a flex. Astra is OpenAI's first model to cross the "Critical" cybersecurity threshold in their own safety framework, meaning it can find previously unknown vulnerabilities and build exploits for them, without a person guiding each step. It scored 100% on ExploitBench.
+
+OpenAI also says an internal version contributed to progress on ten long-standing problems in math and computer science, though one of those results is explicitly conditional on unproven assumptions, not an unconditional proof, so that claim needs the asterisk.
+
+Astra doesn't win everything, Claude Fable 5.1 still beats it on Humanity's Last Exam. This isn't AGI. But it's a model built to operate, not just to answer, and that's a real shift.
+
+Comment guide and I'll send over the full benchmark breakdown, sources included.

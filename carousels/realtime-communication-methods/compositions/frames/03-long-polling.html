@@ -1,0 +1,296 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face {
+          font-family: "Space Grotesk";
+          font-weight: 500;
+          font-style: normal;
+          font-display: block;
+          src: url("assets/fonts/Space-Grotesk-500.woff2") format("woff2");
+        }
+        @font-face {
+          font-family: "Space Grotesk";
+          font-weight: 600;
+          font-style: normal;
+          font-display: block;
+          src: url("assets/fonts/Space-Grotesk-600.woff2") format("woff2");
+        }
+        @font-face {
+          font-family: "Space Grotesk";
+          font-weight: 700;
+          font-style: normal;
+          font-display: block;
+          src: url("assets/fonts/Space-Grotesk-700.woff2") format("woff2");
+        }
+        @font-face {
+          font-family: "Inter";
+          font-weight: 400;
+          font-style: normal;
+          font-display: block;
+          src: url("assets/fonts/Inter-400.woff2") format("woff2");
+        }
+        @font-face {
+          font-family: "Inter";
+          font-weight: 600;
+          font-style: normal;
+          font-display: block;
+          src: url("assets/fonts/Inter-600.woff2") format("woff2");
+        }
+
+        #root {
+          position: relative;
+          width: 1080px;
+          height: 1080px;
+          overflow: hidden;
+          container-type: size;
+          font-family: "Inter", sans-serif;
+        }
+
+        .f03-bg {
+          position: absolute;
+          inset: 0;
+          background: #fdfae7;
+        }
+
+        .f03-content {
+          position: absolute;
+          inset: 80px;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .f03-header-row {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 18px;
+        }
+        .f03-eyebrow {
+          font-family: "Space Grotesk", sans-serif;
+          font-weight: 600;
+          font-size: 1.7cqw;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          color: #1e2bfa;
+        }
+        .f03-pill {
+          font-family: "Space Grotesk", sans-serif;
+          font-weight: 500;
+          font-size: 1.35cqw;
+          color: #1e2bfa;
+          background: rgba(30, 43, 250, 0.08);
+          border-radius: 100px;
+          padding: 9px 22px;
+        }
+        .f03-h2 {
+          font-family: "Space Grotesk", sans-serif;
+          font-weight: 600;
+          font-size: 4.6cqw;
+          letter-spacing: -0.02em;
+          line-height: 1.15;
+          color: #111111;
+          margin-bottom: 44px;
+        }
+
+        .f03-body {
+          display: flex;
+          gap: 44px;
+          align-items: center;
+          flex: 1;
+        }
+        .f03-left {
+          width: 56%;
+          display: flex;
+          flex-direction: column;
+        }
+        .f03-mechanism {
+          font-family: "Inter", sans-serif;
+          font-weight: 400;
+          font-size: 2.05cqw;
+          line-height: 1.6;
+          color: #6b6b6b;
+          margin-bottom: 40px;
+        }
+
+        .f03-diagram {
+          display: flex;
+          align-items: center;
+          gap: 14px;
+        }
+        .f03-node {
+          font-family: "Space Grotesk", sans-serif;
+          font-weight: 600;
+          font-size: 1.45cqw;
+          color: #111111;
+          background: rgba(30, 43, 250, 0.04);
+          border: 1.5px solid rgba(30, 43, 250, 0.2);
+          border-radius: 12px;
+          padding: 14px 20px;
+          white-space: nowrap;
+        }
+        .f03-connector {
+          position: relative;
+          flex: 1;
+          height: 24px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .f03-connector::before {
+          content: "";
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 50%;
+          border-top: 2px solid rgba(30, 43, 250, 0.35);
+        }
+        .f03-wait {
+          position: relative;
+          width: 26px;
+          height: 26px;
+          border-radius: 50%;
+          background: #fdfae7;
+          border: 2px solid #1e2bfa;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 3px;
+        }
+        .f03-wait span {
+          width: 3px;
+          height: 10px;
+          background: #1e2bfa;
+          border-radius: 1px;
+        }
+
+        .f03-right {
+          width: 44%;
+        }
+        .f03-highlight {
+          background: rgba(30, 43, 250, 0.08);
+          border-left: 4px solid #1e2bfa;
+          border-radius: 12px;
+          padding: 28px 30px;
+        }
+        .f03-highlight-label {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          font-family: "Space Grotesk", sans-serif;
+          font-weight: 600;
+          font-size: 1.35cqw;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          color: #1e2bfa;
+          margin-bottom: 12px;
+        }
+        .f03-highlight-icon {
+          position: relative;
+          width: 16px;
+          height: 16px;
+          border-radius: 50%;
+          border: 2px solid #1e2bfa;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 2px;
+        }
+        .f03-highlight-icon span {
+          width: 2px;
+          height: 6px;
+          background: #1e2bfa;
+          border-radius: 1px;
+        }
+        .f03-highlight-body {
+          font-family: "Inter", sans-serif;
+          font-weight: 400;
+          font-size: 2.0cqw;
+          line-height: 1.5;
+          color: #111111;
+        }
+
+        .f03-chrome {
+          position: absolute;
+          left: 80px;
+          right: 80px;
+          bottom: 80px;
+        }
+        .f03-counter {
+          font-family: "Space Grotesk", sans-serif;
+          font-weight: 500;
+          font-size: 1.35cqw;
+          letter-spacing: 0.05em;
+          color: #9a9a9a;
+          margin-bottom: 10px;
+        }
+        .f03-progress-track {
+          width: 100%;
+          height: 3px;
+          background: rgba(30, 43, 250, 0.15);
+        }
+        .f03-progress-fill {
+          width: 42.9%;
+          height: 100%;
+          background: #1e2bfa;
+        }
+      </style>
+
+      <div id="root" data-composition-id="03-long-polling" data-width="1080" data-height="1080">
+        <div class="clip f03-bg" data-start="0" data-duration="6" data-track-index="0"></div>
+
+        <div class="clip f03-content" data-start="0" data-duration="6" data-track-index="1">
+          <div class="f03-header-row">
+            <div class="f03-eyebrow">Method 2 of 4</div>
+            <div class="f03-pill">LONG POLLING</div>
+          </div>
+          <div class="f03-h2">Ask, then wait</div>
+
+          <div class="f03-body">
+            <div class="f03-left">
+              <div class="f03-mechanism">
+                The client sends one request. The server holds it open until there's
+                news, or a timeout. The client immediately re-asks after every reply.
+              </div>
+              <div class="f03-diagram">
+                <div class="f03-node">CLIENT</div>
+                <div class="f03-connector">
+                  <div class="f03-wait"><span></span><span></span></div>
+                </div>
+                <div class="f03-node">SERVER</div>
+              </div>
+            </div>
+            <div class="f03-right">
+              <div class="f03-highlight">
+                <div class="f03-highlight-label">
+                  <span class="f03-highlight-icon"><span></span><span></span></span>
+                  Hides
+                </div>
+                <div class="f03-highlight-body">
+                  A held-open connection per waiting client, plus an instant
+                  re-request loop after every reply.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="clip f03-chrome" data-start="0" data-duration="6" data-track-index="2">
+          <div class="f03-counter">3 / 7</div>
+          <div class="f03-progress-track">
+            <div class="f03-progress-fill"></div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        window.__timelines = window.__timelines || {};
+        window.__timelines["03-long-polling"] = gsap.timeline({ paused: true });
+      </script>
+    </template>
+  </body>
+</html>

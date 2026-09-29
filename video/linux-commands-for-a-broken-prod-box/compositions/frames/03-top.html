@@ -1,0 +1,295 @@
+<template>
+  <div id="root" data-composition-id="03-top" data-width="1080" data-height="1920" data-duration="5.75" data-fps="30">
+    <style>
+      @font-face { font-family: "EB Garamond"; src: url("assets/fonts/EBGaramond-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: block; }
+      @font-face { font-family: "EB Garamond"; src: url("assets/fonts/EBGaramond-700.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: block; }
+      @font-face { font-family: "Inter"; src: url("assets/fonts/Inter-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: block; }
+      @font-face { font-family: "Inter"; src: url("assets/fonts/Inter-700.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: block; }
+      @font-face { font-family: "JetBrains Mono"; src: url("assets/fonts/JetBrainsMono-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: block; }
+      @font-face { font-family: "JetBrains Mono"; src: url("assets/fonts/JetBrainsMono-700.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: block; }
+
+      #root {
+        position: absolute;
+        inset: 0;
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        color: #141413;
+      }
+      #root *, #root *::before, #root *::after { box-sizing: border-box; }
+
+      .f03-ground { position: absolute; inset: 0; background: #FAF9F5; }
+      .f03-layer { position: absolute; inset: 0; }
+
+      .f03-lockup {
+        position: absolute; left: 80px; top: 170px;
+        display: flex; align-items: baseline; height: 200px;
+      }
+      .f03-num {
+        font-family: "EB Garamond", serif; font-weight: 400; font-size: 200px;
+        line-height: 1; letter-spacing: -0.025em; color: #141413;
+      }
+      .f03-unit {
+        margin-left: 18px;
+        font-family: "JetBrains Mono", monospace; font-weight: 400; font-size: 40px;
+        line-height: 1; color: rgba(20,20,19,0.55);
+      }
+      .f03-kicker {
+        position: absolute; right: 80px; top: 205px; white-space: nowrap;
+        font-family: "JetBrains Mono", monospace; font-weight: 700; font-size: 30px;
+        line-height: 1.2; letter-spacing: 0.16em; text-transform: uppercase; color: #141413;
+      }
+      .f03-spike { color: #CC785C; }
+
+      .f03-rail {
+        position: absolute; left: 80px; top: 400px; width: 920px; height: 56px;
+        display: flex; gap: 12px;
+      }
+      .f03-chip {
+        position: relative; flex: 1 1 0; height: 56px; border-radius: 6px; overflow: hidden;
+        display: flex; align-items: center; justify-content: center;
+        font-family: "JetBrains Mono", monospace; font-weight: 400; font-size: 24px; line-height: 1;
+      }
+      .f03-chip-done { background: #141413; color: #FAF9F5; }
+      .f03-chip-future { border: 1px solid rgba(20,20,19,0.20); color: rgba(20,20,19,0.45); }
+      .f03-chip-now { color: #FAF9F5; }
+      .f03-chip-fill {
+        position: absolute; inset: 0; background: #CC785C; border-radius: 6px;
+        transform-origin: 0% 50%;
+      }
+      .f03-chip-label { position: relative; }
+
+      .f03-term {
+        position: absolute; left: 80px; top: 500px; width: 920px; height: 620px;
+        background: #181715; border: 1px solid rgba(250,249,245,0.14); border-radius: 8px;
+        overflow: hidden;
+      }
+      .f03-bar {
+        position: absolute; left: 0; top: 0; width: 100%; height: 64px; background: #252320;
+        border-bottom: 1px solid rgba(250,249,245,0.14);
+      }
+      .f03-dot {
+        position: absolute; top: 25px; width: 14px; height: 14px; border-radius: 50%;
+        background: rgba(250,249,245,0.22);
+      }
+      .f03-title {
+        position: absolute; left: 130px; top: 0; height: 64px; display: flex; align-items: center;
+        font-family: "JetBrains Mono", monospace; font-weight: 400; font-size: 24px;
+        color: rgba(250,249,245,0.55);
+      }
+      .f03-body {
+        position: absolute; left: 44px; top: 108px; width: 832px; height: 468px;
+        font-family: "JetBrains Mono", monospace; font-weight: 400; font-size: 38px;
+        line-height: 1.5; color: #FAF9F5;
+      }
+      .f03-cmdrow { position: absolute; left: 0; top: 0; width: 832px; height: 57px; white-space: pre; }
+      .f03-prompt { color: #5DB872; }
+      .f03-caret {
+        display: inline-block; width: 20px; height: 42px; margin-left: 6px;
+        background: #FAF9F5; vertical-align: -9px;
+      }
+      .f03-alt {
+        position: absolute; left: 230px; top: 7px; height: 43px; padding: 0 14px;
+        display: flex; align-items: center; gap: 14px; white-space: nowrap;
+        border: 1px solid rgba(250,249,245,0.22); border-radius: 6px;
+        font-size: 28px; line-height: 1;
+      }
+      .f03-alt-or { color: rgba(250,249,245,0.55); }
+      .f03-alt-cmd { color: #FAF9F5; }
+
+      .f03-row, .f03-head {
+        position: absolute; left: 0; width: 832px; height: 48px; padding: 0 14px;
+        border: 2px solid rgba(198,69,69,0); border-radius: 6px;
+        display: grid; grid-template-columns: 250px 1fr 1fr; column-gap: 20px; align-items: center;
+      }
+      .f03-head {
+        font-size: 28px; line-height: 1; letter-spacing: 0.08em; color: rgba(250,249,245,0.55);
+      }
+      .f03-row { background: #181715; }
+      .f03-name { font-size: 34px; line-height: 1; color: #FAF9F5; white-space: nowrap; }
+      .f03-meter {
+        display: block; height: 18px; border-radius: 4px; background: rgba(250,249,245,0.18);
+        transform-origin: 0% 50%;
+      }
+
+      .f03-take {
+        position: absolute; left: 80px; top: 1200px; width: 920px;
+        font-family: "EB Garamond", serif; font-weight: 400; font-size: 76px;
+        line-height: 1.08; letter-spacing: -0.018em; color: #141413;
+      }
+      .f03-take-line { display: block; white-space: nowrap; }
+    </style>
+
+    <div class="f03-ground clip" data-start="0" data-duration="5.75" data-track-index="0"></div>
+
+    <div class="f03-layer clip" data-start="0" data-duration="5.75" data-track-index="1">
+      <div class="f03-lockup">
+        <span class="f03-num">2</span><span class="f03-unit">/ 7</span>
+      </div>
+      <div class="f03-kicker"><span class="f03-spike">✱</span> CPU</div>
+
+      <div class="f03-rail">
+        <div class="f03-chip f03-chip-done"><span class="f03-chip-label">01</span></div>
+        <div class="f03-chip f03-chip-now"><span class="f03-chip-fill"></span><span class="f03-chip-label">02</span></div>
+        <div class="f03-chip f03-chip-future"><span class="f03-chip-label">03</span></div>
+        <div class="f03-chip f03-chip-future"><span class="f03-chip-label">04</span></div>
+        <div class="f03-chip f03-chip-future"><span class="f03-chip-label">05</span></div>
+        <div class="f03-chip f03-chip-future"><span class="f03-chip-label">06</span></div>
+        <div class="f03-chip f03-chip-future"><span class="f03-chip-label">07</span></div>
+      </div>
+
+      <div class="f03-term">
+        <div class="f03-bar">
+          <span class="f03-dot" style="left:28px"></span>
+          <span class="f03-dot" style="left:52px"></span>
+          <span class="f03-dot" style="left:76px"></span>
+          <span class="f03-title">prod · ssh</span>
+        </div>
+        <div class="f03-body">
+          <div class="f03-cmdrow"><span class="f03-prompt">$</span> <span class="f03-cmd"></span><span class="f03-caret"></span>
+            <span class="f03-alt"><span class="f03-alt-or">or</span><span class="f03-alt-cmd">htop</span></span>
+          </div>
+
+          <div class="f03-head" style="top:71px">
+            <span>PROCESS</span><span class="f03-h-cpu">CPU</span><span class="f03-h-mem">MEM</span>
+          </div>
+
+          <div class="f03-row" data-slot="0" style="top:128px">
+            <span class="f03-name">process-a</span>
+            <span><span class="f03-meter" style="width:70px"></span></span>
+            <span><span class="f03-meter" style="width:95px"></span></span>
+          </div>
+          <div class="f03-row" data-slot="1" style="top:185px">
+            <span class="f03-name">process-b</span>
+            <span><span class="f03-meter" style="width:120px"></span></span>
+            <span><span class="f03-meter" style="width:60px"></span></span>
+          </div>
+          <div class="f03-row" data-slot="2" style="top:242px">
+            <span class="f03-name">process-c</span>
+            <span><span class="f03-meter" style="width:45px"></span></span>
+            <span><span class="f03-meter" style="width:130px"></span></span>
+          </div>
+          <div class="f03-row f03-guilty" data-slot="3" style="top:299px">
+            <span class="f03-name">process-d</span>
+            <span><span class="f03-meter f03-g-cpu" style="width:228px"></span></span>
+            <span><span class="f03-meter f03-g-mem" style="width:214px"></span></span>
+          </div>
+          <div class="f03-row" data-slot="4" style="top:356px">
+            <span class="f03-name">process-e</span>
+            <span><span class="f03-meter" style="width:90px"></span></span>
+            <span><span class="f03-meter" style="width:50px"></span></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="f03-take">
+        <span class="f03-take-line f03-take-1">Who is eating it,</span>
+        <span class="f03-take-line f03-take-2">right now.</span>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script>
+      (function () {
+        "use strict";
+        var FRAME = "03-top";
+        var DUR = 5.75;
+        var root = document.querySelector('[data-composition-id="' + FRAME + '"]');
+        if (!root) return;
+        var q = function (s) { return root.querySelector(s); };
+        var qa = function (s) { return Array.prototype.slice.call(root.querySelectorAll(s)); };
+
+        var term = q(".f03-term");
+        var chipFill = q(".f03-chip-fill");
+        var cmd = q(".f03-cmd");
+        var caret = q(".f03-caret");
+        var alt = q(".f03-alt");
+        var head = q(".f03-head");
+        var hCpu = q(".f03-h-cpu");
+        var hMem = q(".f03-h-mem");
+        var rows = qa(".f03-row");
+        var guilty = q(".f03-guilty");
+        var gCpu = q(".f03-g-cpu");
+        var gMem = q(".f03-g-mem");
+        var take1 = q(".f03-take-1");
+        var take2 = q(".f03-take-2");
+
+        // Typed-prompt law: chars-at-time table built once, seeded human cadence.
+        var FULL = "top";
+        var lcg = 0x03f0a1b3;
+        function rnd() { lcg = (Math.imul(1664525, lcg) + 1013904223) >>> 0; return lcg / 4294967296; }
+        var TYPE_START = 1.12;
+        var typeRows = [{ t: 0, n: 0 }];
+        var tt = TYPE_START;
+        for (var i = 1; i <= FULL.length; i += 1) {
+          tt += 0.05 + rnd() * 0.04;
+          typeRows.push({ t: tt, n: i });
+        }
+        var TYPE_END = tt;
+        var EXEC = 2.55;
+        function charsAt(t) {
+          for (var k = typeRows.length - 1; k >= 0; k -= 1) {
+            if (t >= typeRows[k].t - 0.001) return typeRows[k].n;
+          }
+          return 0;
+        }
+        function caretOn(t) {
+          if (t >= EXEC) return false;
+          if (t >= TYPE_START && t <= TYPE_END + 0.25) return true;
+          return Math.floor(t / 0.5) % 2 === 0;
+        }
+        cmd.textContent = "";
+
+        var tl = gsap.timeline({ paused: true });
+
+        // Scene 1: chrome seated, coral chip draws on, terminal settles.
+        tl.fromTo(chipFill, { scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: "power3.out" }, 0.1);
+        tl.fromTo(term, { y: 14 }, { y: 0, duration: 0.3, ease: "power3.out" }, 0);
+
+        // Typing + caret, both pure functions of the driver time.
+        var drive = { t: 0 };
+        tl.to(drive, {
+          t: DUR, duration: DUR, ease: "none",
+          onUpdate: function () {
+            cmd.textContent = FULL.slice(0, charsAt(drive.t));
+            caret.style.opacity = caretOn(drive.t) ? "1" : "0";
+          }
+        }, 0);
+
+        // Scene 2: "or htop" tag.
+        tl.fromTo(alt, { opacity: 0, x: -12 }, { opacity: 1, x: 0, duration: 0.35, ease: "power3.out" }, 1.61);
+
+        // Scene 3: header then five rows print quickly, bars draw left to right.
+        tl.fromTo(head, { opacity: 0 }, { opacity: 1, duration: 0.12, ease: "none" }, 2.61);
+        rows.forEach(function (row, idx) {
+          var at = 2.74 + idx * 0.13;
+          tl.fromTo(row, { opacity: 0 }, { opacity: 1, duration: 0.12, ease: "none" }, at);
+          var meters = Array.prototype.slice.call(row.querySelectorAll(".f03-meter"));
+          tl.fromTo(meters, { scaleX: 0 }, { scaleX: 1, duration: 0.32, ease: "power3.out", stagger: 0.04 }, at);
+        });
+
+        // Scene 4: the guilty row rises to the top slot (lift out, others push down, land on top).
+        var STEP = 57;
+        var others = rows.filter(function (r) { return r !== guilty && Number(r.getAttribute("data-slot")) < 3; });
+        tl.fromTo(guilty, { opacity: 1, y: 0 }, { opacity: 0, y: -6, duration: 0.14, ease: "power2.in", immediateRender: false }, 3.57);
+        tl.fromTo(others, { y: 0 }, { y: STEP, duration: 0.3, ease: "power3.out", immediateRender: false }, 3.62);
+        tl.set(guilty, { y: -3 * STEP + 8 }, 3.9);
+        tl.fromTo(guilty, { opacity: 0, y: -3 * STEP + 8 }, { opacity: 1, y: -3 * STEP, duration: 0.32, ease: "power3.out", immediateRender: false }, 3.9);
+        tl.fromTo(guilty, { borderColor: "rgba(198,69,69,0)" }, { borderColor: "rgba(198,69,69,1)", duration: 0.25, ease: "power2.out", immediateRender: false }, 3.92);
+
+        tl.fromTo(hCpu, { color: "rgba(250,249,245,0.55)" }, { color: "#5DB8A6", duration: 0.25, ease: "power2.out", immediateRender: false }, 3.97);
+        tl.fromTo(gCpu, { backgroundColor: "rgba(250,249,245,0.18)" }, { backgroundColor: "#5DB8A6", duration: 0.3, ease: "power2.out", immediateRender: false }, 3.97);
+        tl.fromTo(hMem, { color: "rgba(250,249,245,0.55)" }, { color: "#5DB8A6", duration: 0.25, ease: "power2.out", immediateRender: false }, 4.63);
+        tl.fromTo(gMem, { backgroundColor: "rgba(250,249,245,0.18)" }, { backgroundColor: "#5DB8A6", duration: 0.3, ease: "power2.out", immediateRender: false }, 4.63);
+
+        // Scene 5: takeaway in two word groups, then hold.
+        tl.fromTo(take1, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 4.85);
+        tl.fromTo(take2, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }, 5.21);
+
+        tl.seek(0);
+        window.__timelines = window.__timelines || {};
+        window.__timelines[FRAME] = tl;
+      })();
+    </script>
+  </div>
+</template>

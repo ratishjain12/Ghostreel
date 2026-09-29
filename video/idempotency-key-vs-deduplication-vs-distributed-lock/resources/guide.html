@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Idempotency Key vs Deduplication vs Distributed Lock</title>
+<style>
+  @font-face { font-family: 'Fraunces'; src: url('../assets/fonts/Fraunces-Variable.woff2') format('woff2'); font-weight: 400 700; font-style: normal; }
+  @font-face { font-family: 'Fraunces'; src: url('../assets/fonts/Fraunces-Italic.woff2') format('woff2'); font-weight: 400 700; font-style: italic; }
+  @font-face { font-family: 'IBM Plex Sans'; src: url('../assets/fonts/IBMPlexSans-Variable.woff2') format('woff2'); font-weight: 300 700; font-style: normal; }
+  @font-face { font-family: 'IBM Plex Mono'; src: url('../assets/fonts/IBMPlexMono-400.woff2') format('woff2'); font-weight: 400; font-style: normal; }
+  @font-face { font-family: 'IBM Plex Mono'; src: url('../assets/fonts/IBMPlexMono-500.woff2') format('woff2'); font-weight: 500; font-style: normal; }
+
+  :root {
+    --canvas: #0A0D12;
+    --canvas-raised: #12161C;
+    --canvas-raised-2: #181D24;
+    --ink: #EDEFF3;
+    --ink-dim: #8992A1;
+    --ink-faint: #4A525E;
+    --line: #232B33;
+    --line-strong: #2E3742;
+    --amber: #FF9F45;
+    --teal: #4DE8C2;
+    --violet: #B98CFF;
+  }
+
+  * { box-sizing: border-box; }
+
+  /* Full bleed: @page margin must stay 0 with a non-white canvas, or the
+     browser's page-margin box never receives the body background and every
+     page reads as a white-bordered inset panel. All spacing below is done
+     with padding on elements, not @page margin. */
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  html, body {
+    background: var(--canvas);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 11.3pt;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    padding-left: 20mm;
+    padding-right: 20mm;
+    padding-top: 20mm;
+    padding-bottom: 20mm;
+  }
+
+  /* ---- Cover ---- */
+  .cover {
+    min-height: 257mm;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    page-break-after: always;
+    break-after: page;
+  }
+  .cover .kicker {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 15pt;
+    color: var(--amber);
+    margin-bottom: 10mm;
+  }
+  .cover h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 30pt;
+    line-height: 1.12;
+    letter-spacing: -0.015em;
+    margin: 0 0 8mm 0;
+    color: var(--ink);
+  }
+  .cover h1 .amber { color: var(--amber); }
+  .cover h1 .teal { color: var(--teal); }
+  .cover h1 .violet { color: var(--violet); }
+  .cover .dek {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 12.5pt;
+    color: var(--ink-dim);
+    max-width: 130mm;
+    line-height: 1.55;
+  }
+  .cover .legend {
+    display: flex;
+    gap: 10mm;
+    margin-top: 16mm;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8.5pt;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+  }
+  .legend .dot { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 5px; vertical-align: middle; }
+  .dot.amber { background: var(--amber); }
+  .dot.teal { background: var(--teal); }
+  .dot.violet { background: var(--violet); }
+
+  /* ---- Body typography ---- */
+  h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 18pt;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin: 0 0 2mm 0;
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+  h2 .index {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 500;
+    font-size: 9pt;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 3mm;
+  }
+  h2.amber .index { color: var(--amber); }
+  h2.teal .index { color: var(--teal); }
+  h2.violet .index { color: var(--violet); }
+
+  h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 13pt;
+    color: var(--ink);
+    margin: 0 0 3mm 0;
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+
+  p { margin: 0 0 4mm 0; color: var(--ink); }
+  .lead { font-size: 12.5pt; color: var(--ink); }
+  .dim { color: var(--ink-dim); }
+
+  section.block {
+    /* padding-top, not margin-top: a forced/automatic page break zeroes
+       margins at the start of the new fragment, but padding survives,
+       so this is what actually gives a fresh page top breathing room. */
+    padding-top: 14mm;
+    margin-bottom: 10mm;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* Keep each heading glued to its opening lines */
+  .section-head {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .rule {
+    border: none;
+    border-top: 1px solid var(--line);
+    margin: 10mm 0;
+  }
+
+  .concept-card {
+    border: 1.5px solid var(--line-strong);
+    background: var(--canvas-raised);
+    border-radius: 8px;
+    padding: 6mm 7mm;
+    margin: 4mm 0 5mm 0;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  .concept-card .label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8pt;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    margin-bottom: 2mm;
+  }
+  .concept-card.amber { border-left: 3px solid var(--amber); }
+  .concept-card.teal { border-left: 3px solid var(--teal); }
+  .concept-card.violet { border-left: 3px solid var(--violet); }
+
+  ul.rules {
+    margin: 3mm 0 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  ul.rules li {
+    display: flex;
+    gap: 4mm;
+    padding: 4mm 0;
+    border-top: 1px solid var(--line);
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  ul.rules li:first-child { border-top: none; }
+  ul.rules li .tick {
+    flex: 0 0 auto;
+    width: 9px;
+    height: 9px;
+    border-radius: 2px;
+    margin-top: 5.5px;
+  }
+  ul.rules li.amber .tick { background: var(--amber); }
+  ul.rules li.teal .tick { background: var(--teal); }
+  ul.rules li.violet .tick { background: var(--violet); }
+  ul.rules li .txt strong { color: var(--ink); font-weight: 600; }
+  ul.rules li .txt { color: var(--ink-dim); }
+
+  .callout {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9.5pt;
+    line-height: 1.6;
+    color: var(--ink);
+    background: var(--canvas-raised-2);
+    border: 1px solid var(--line-strong);
+    border-radius: 8px;
+    padding: 5mm 6mm;
+    margin: 5mm 0;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .takeaways {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  .takeaways ol {
+    margin: 3mm 0 0 0;
+    padding-left: 5mm;
+  }
+  .takeaways li {
+    margin-bottom: 3mm;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  footer {
+    margin-top: 14mm;
+    padding-top: 5mm;
+    border-top: 1px solid var(--line);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8pt;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+</style>
+</head>
+<body>
+
+  <div class="cover">
+    <div class="kicker">A field guide</div>
+    <h1><span class="amber">Idempotency key</span> vs <span class="teal">deduplication</span> vs <span class="violet">distributed lock</span></h1>
+    <p class="dek">Three ways to stop the same thing from happening twice, solving three genuinely different problems.</p>
+    <div class="legend">
+      <span><span class="dot amber"></span>idempotency key</span>
+      <span><span class="dot teal"></span>deduplication</span>
+      <span><span class="dot violet"></span>distributed lock</span>
+    </div>
+  </div>
+
+  <section class="block">
+    <div class="section-head">
+      <h2>Why these three keep getting confused</h2>
+      <p class="lead">Idempotency key, deduplication, and distributed lock are three ways to stop the same thing from happening twice, but they solve three genuinely different versions of that problem. Mixing them up usually means reaching for the wrong tool at the wrong layer of the system.</p>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="section-head">
+      <h2 class="amber"><span class="index">01 &middot; client side</span>Idempotency key</h2>
+      <p>An idempotency key is something the <strong>client</strong> attaches to a request: a unique ID for that specific logical operation. If the same request gets sent twice, because of a retry, a flaky network, or something else entirely, the server sees the same key and knows to return the original result instead of doing the work again.</p>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="section-head">
+      <h2 class="teal"><span class="index">02 &middot; consumer side</span>Deduplication</h2>
+      <p>Deduplication is the <strong>system's own job</strong>, not the client's. It's for event and message pipelines, where the same message can arrive more than once through no fault of the sender, and the consumer has to recognize it's already processed that exact message ID and skip it.</p>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="section-head">
+      <h2 class="violet"><span class="index">03 &middot; concurrency, not duplicates</span>Distributed lock</h2>
+      <p>A distributed lock isn't really about duplicates at all. It's about <strong>concurrency</strong>: it makes sure that when multiple processes across multiple machines could all try to do the same critical section of work at the same time, only one of them actually gets to.</p>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <section class="block">
+    <div class="section-head">
+      <h2>How the three relate</h2>
+      <p>Idempotency keys and deduplication both stop the <strong>same operation</strong> from running twice: one from the client side, one from the consumer side. A distributed lock stops <strong>different processes</strong> from colliding while doing that operation in the first place.</p>
+    </div>
+
+    <div class="concept-card amber">
+      <div class="label">Idempotency key</div>
+      Client-side. Same request, sent twice by the same caller (retry, flaky network) &rarr; server returns the original result instead of repeating the work.
+    </div>
+    <div class="concept-card teal">
+      <div class="label">Deduplication</div>
+      Consumer-side. Same message, delivered twice by the pipeline (at-least-once delivery) &rarr; consumer recognizes the message ID and skips it.
+    </div>
+    <div class="concept-card violet">
+      <div class="label">Distributed lock</div>
+      Cross-process. Different workers, same critical section, same moment &rarr; only one is allowed to proceed.
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="section-head">
+      <h2>Choosing the right tool</h2>
+      <p class="dim">Match the mechanism to where the duplication risk actually lives:</p>
+    </div>
+    <ul class="rules">
+      <li class="amber">
+        <span class="tick"></span>
+        <span class="txt"><strong>Idempotency key</strong>: for any client-initiated write that might get retried, payments especially.</span>
+      </li>
+      <li class="teal">
+        <span class="tick"></span>
+        <span class="txt"><strong>Deduplication</strong>: for any message or event pipeline where at-least-once delivery is possible.</span>
+      </li>
+      <li class="violet">
+        <span class="tick"></span>
+        <span class="txt"><strong>Distributed lock</strong>: for when multiple workers could pick up the same job simultaneously and you need exactly one of them to win.</span>
+      </li>
+    </ul>
+  </section>
+
+  <hr class="rule">
+
+  <section class="block takeaways">
+    <div class="section-head">
+      <h2>Key takeaways</h2>
+    </div>
+    <ol>
+      <li><strong>Idempotency key</strong>, the client's guard against its own retries.</li>
+      <li><strong>Deduplication</strong>, the system's guard against duplicate delivery it didn't cause.</li>
+      <li><strong>Distributed lock</strong>, the guard against two processes racing into the same critical section at once.</li>
+      <li>The first two protect against repeating an operation. The third protects against colliding while performing it.</li>
+    </ol>
+  </section>
+
+  <footer>Idempotency key &middot; Deduplication &middot; Distributed lock: companion guide</footer>
+
+</body>
+</html>

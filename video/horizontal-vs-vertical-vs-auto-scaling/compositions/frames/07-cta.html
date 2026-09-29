@@ -1,0 +1,133 @@
+<template>
+  <style>
+    @font-face { font-family: 'Fraunces'; src: url('assets/fonts/Fraunces-Variable.woff2') format('woff2'); font-weight: 400 700; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Fraunces'; src: url('assets/fonts/Fraunces-Italic.woff2') format('woff2'); font-weight: 400 700; font-style: italic; font-display: block; }
+    @font-face { font-family: 'IBM Plex Sans'; src: url('assets/fonts/IBMPlexSans-Variable.woff2') format('woff2'); font-weight: 300 700; font-style: normal; font-display: block; }
+    @font-face { font-family: 'IBM Plex Mono'; src: url('assets/fonts/IBMPlexMono-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+    @font-face { font-family: 'IBM Plex Mono'; src: url('assets/fonts/IBMPlexMono-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: block; }
+
+    #root {
+      width: 100%;
+      height: 100%;
+      container-type: size;
+      overflow: hidden;
+      position: relative;
+      font-family: 'IBM Plex Sans', sans-serif;
+    }
+
+    .h07-bg {
+      position: absolute;
+      inset: 0;
+      background-color: #0A0D12;
+      background-image:
+        linear-gradient(to right, rgba(35, 43, 51, 0.16) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(35, 43, 51, 0.16) 1px, transparent 1px);
+      background-size: 6.5cqw 6.5cqw;
+    }
+
+    .h07-glow {
+      position: absolute;
+      left: 50%;
+      top: 44%;
+      width: 72cqw;
+      height: 72cqw;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle, rgba(255, 159, 69, 0.5) 0%, rgba(255, 159, 69, 0) 70%);
+      filter: blur(6cqw);
+      pointer-events: none;
+    }
+
+    .h07-content {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.4cqw;
+      padding: 0 8cqw;
+      text-align: center;
+    }
+
+    .h07-line {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: center;
+      column-gap: 1cqw;
+      row-gap: 0.6cqw;
+      font-family: 'Fraunces', serif;
+      font-weight: 600;
+      font-size: 4.4cqw;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      color: #EDEFF3;
+    }
+
+    .h07-word {
+      display: inline-block;
+      transform-origin: 50% 50%;
+    }
+
+    .h07-word.h07-guide {
+      color: #FF9F45;
+      text-shadow: 0 0 0 rgba(255, 159, 69, 0);
+    }
+
+    .h07-sub {
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 500;
+      font-size: 1.3cqw;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #8992A1;
+    }
+  </style>
+
+  <div id="root" data-composition-id="07-cta" data-width="1080" data-height="1920">
+    <div class="clip h07-bg" data-start="0" data-duration="2.429" data-track-index="0"></div>
+    <div class="clip h07-glow" data-start="0" data-duration="2.429" data-track-index="1"></div>
+    <div class="clip h07-content" data-start="0" data-duration="2.429" data-track-index="2">
+      <div class="h07-line">
+        <span class="h07-word" id="h07-w-comment">Comment</span>
+        <span class="h07-word h07-guide" id="h07-w-guide">&ldquo;guide&rdquo;</span>
+        <span class="h07-word" id="h07-w-below">below</span>
+      </div>
+      <div class="h07-sub" id="h07-sub">Full breakdown incoming</div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var root = document.querySelector('[data-composition-id="07-cta"]');
+      var glow = root.querySelector('.h07-glow');
+      var wComment = root.querySelector('#h07-w-comment');
+      var wGuide = root.querySelector('#h07-w-guide');
+      var wBelow = root.querySelector('#h07-w-below');
+      var sub = root.querySelector('#h07-sub');
+
+      gsap.set(glow, { opacity: 0 });
+      gsap.set(wComment, { opacity: 0, y: 16 });
+      gsap.set(wGuide, { opacity: 0, y: 14, scale: 0.85 });
+      gsap.set(wBelow, { opacity: 0, y: 12 });
+      gsap.set(sub, { opacity: 0, y: 10 });
+
+      var tl = gsap.timeline({ paused: true });
+
+      // Scene 1 (0.0-1.08s): void canvas, "Comment" slides up as the VO begins.
+      tl.to(glow, { opacity: 0.35, duration: 0.6, ease: 'power2.out' }, 0)
+        .fromTo(wComment, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out' }, 0)
+        // Scene 2 (1.08-2.28s): "guide" lands in amber with a keyword-glow attack/release envelope.
+        .fromTo(wGuide, { opacity: 0, y: 14, scale: 0.85 }, { opacity: 1, y: 0, scale: 1.12, duration: 0.28, ease: 'power2.out' }, 1.08)
+        .to(wGuide, { textShadow: '0 0 28px rgba(255, 159, 69, 0.55)', duration: 0.18, ease: 'power1.out' }, 1.08)
+        .to(wGuide, { scale: 1, textShadow: '0 0 10px rgba(255, 159, 69, 0.3)', duration: 0.35, ease: 'power2.out' }, 1.36)
+        // rest of the line completes via per-word staggered reveal
+        .fromTo(wBelow, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' }, 1.3)
+        // small mono sub-line settles beneath, then holds fully still to the final frame
+        .fromTo(sub, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.35, ease: 'power2.out' }, 1.55);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['07-cta'] = tl;
+    })();
+  </script>
+</template>

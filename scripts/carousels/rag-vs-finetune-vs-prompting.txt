@@ -1,0 +1,6 @@
+Hook: RAG. Fine-tuning. Prompting. Picking wrong wastes weeks.
+Prompting wins when: general task, model already knows the domain, speed matters.
+RAG wins when: knowledge changes often, you need citations/freshness, no behavior change needed.
+Fine-tuning wins when: format/style/behavior must change, domain is narrow and stable, cost matters at scale.
+The one-question test: does the model need new knowledge, or a new voice?
+CTA: Full decision framework. Comment GUIDE.

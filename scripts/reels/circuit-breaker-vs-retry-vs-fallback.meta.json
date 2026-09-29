@@ -1,0 +1,5 @@
+{
+  "message": "Comment \"GUIDE\" and I'll send you the full breakdown.\n\nRetry, circuit breaker, fallback: three resilience patterns people use together and treat as one thing. They actually fire at completely different moments in a failure. I broke down the real sequence.\n\n#systemdesign #softwareengineering #backenddevelopment #distributedsystems",
+  "angle": "system-design",
+  "hook_style": "contrarian"
+}

@@ -1,0 +1,455 @@
+<template>
+<style>
+  @font-face { font-family: 'Fraunces'; src: url('assets/fonts/Fraunces-Variable.woff2') format('woff2'); font-weight: 400 700; font-style: normal; font-display: block; }
+  @font-face { font-family: 'Fraunces'; src: url('assets/fonts/Fraunces-Italic.woff2') format('woff2'); font-weight: 400 700; font-style: italic; font-display: block; }
+  @font-face { font-family: 'IBM Plex Sans'; src: url('assets/fonts/IBMPlexSans-Variable.woff2') format('woff2'); font-weight: 300 700; font-style: normal; font-display: block; }
+  @font-face { font-family: 'IBM Plex Mono'; src: url('assets/fonts/IBMPlexMono-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+  @font-face { font-family: 'IBM Plex Mono'; src: url('assets/fonts/IBMPlexMono-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: block; }
+
+  #root {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    container-type: size;
+    font-family: 'IBM Plex Sans', sans-serif;
+    color: #EDEFF3;
+  }
+
+  .clip { position: absolute; inset: 0; }
+
+  .dedup-bg {
+    background-color: #0A0D12;
+    background-image:
+      linear-gradient(to right, rgba(35,43,51,0.14) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(35,43,51,0.14) 1px, transparent 1px);
+    background-size: 5.6cqw 5.6cqw;
+    opacity: 0;
+  }
+
+  .dedup-stage { }
+
+  /* — Producer / queue (quiet, low emphasis) — */
+  .dedup-producer {
+    position: absolute;
+    left: 8cqw;
+    top: 8.6cqh;
+    opacity: 0;
+    transform: scale(0);
+    transform-origin: 0% 50%;
+  }
+  .dedup-producer-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #4A525E;
+  }
+  .dedup-producer-sub {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #4A525E;
+    opacity: 0.6;
+    margin-top: 0.4cqh;
+  }
+  .dedup-queue-icon {
+    position: absolute;
+    left: -1.6cqw;
+    top: 3.2cqh;
+    display: flex;
+    gap: 3px;
+  }
+  .dedup-queue-icon span {
+    width: 7px;
+    height: 7px;
+    background: #4A525E;
+    border-radius: 1px;
+    opacity: 0.5;
+  }
+
+  /* — Edge (producer -> consumer) — */
+  .dedup-edge {
+    position: absolute;
+    left: 22cqw;
+    top: 19cqh;
+    width: 54cqw;
+    height: 3px;
+    background: #4DE8C2;
+    transform-origin: 0% 50%;
+    transform: scaleX(0);
+    opacity: 0;
+  }
+
+  /* — connector: consumer -> processed (always-quiet, part of fixed anchor) — */
+  .dedup-connector-main {
+    position: absolute;
+    left: 83cqw;
+    top: 24cqh;
+    width: 2px;
+    height: 22cqh;
+    background: rgba(74,82,94,0.5);
+    transform-origin: 50% 0%;
+    transform: scaleY(0);
+    opacity: 0;
+  }
+
+  /* — connector: gate -> skipped (dim by default, brightens on divert) — */
+  .dedup-connector-skip {
+    position: absolute;
+    left: 47.6cqw;
+    top: 19cqh;
+    width: 2px;
+    height: 27cqh;
+    background-color: rgba(74,82,94,0.4);
+    transform-origin: 50% 0%;
+    transform: scaleY(0);
+    opacity: 0;
+  }
+
+  /* — Gate-tick (focal) — */
+  .dedup-gate {
+    position: absolute;
+    left: 49cqw;
+    top: 19cqh;
+    width: 5cqw;
+    height: 2.7cqh;
+    margin-left: -2.5cqw;
+    margin-top: -1.35cqh;
+    border: 1.5px solid rgba(137,146,161,0.4);
+    border-radius: 4px;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: scale(0);
+  }
+  .dedup-gate-mark {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 1.3cqw;
+    font-weight: 500;
+    color: #8992A1;
+  }
+  .dedup-gate-caption {
+    position: absolute;
+    left: 49cqw;
+    top: 22.3cqh;
+    transform: translate(-50%, 0%);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 1.05cqw;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #8992A1;
+    opacity: 0;
+    white-space: nowrap;
+  }
+
+  /* — Comparison glyph (flashes at gate on repeat catch) — */
+  .dedup-compare {
+    position: absolute;
+    left: 49cqw;
+    top: 12.4cqh;
+    transform: translate(-50%, -50%);
+    display: flex;
+    opacity: 0;
+  }
+  .dedup-compare-chip {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 1.1cqw;
+    font-weight: 500;
+    color: #4DE8C2;
+    background: rgba(18,22,28,0.9);
+    border: 1px solid rgba(77,232,194,0.6);
+    border-radius: 4px;
+    padding: 0.5cqh 1cqw;
+    white-space: nowrap;
+  }
+  .dedup-compare-chip:nth-child(2) { margin-left: -1.4cqw; margin-top: 0.6cqh; }
+
+  /* — Node boxes — */
+  .dedup-node {
+    position: absolute;
+    background-color: #12161C;
+    border: 1.5px solid rgba(137,146,161,0.4);
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4cqh;
+    opacity: 0;
+    transform: scale(0);
+  }
+  .dedup-node--consumer {
+    left: 76cqw; width: 14cqw;
+    top: 14cqh; height: 10cqh;
+  }
+  .dedup-node--processed {
+    left: 76cqw; width: 14cqw;
+    top: 46cqh; height: 11cqh;
+  }
+  .dedup-node--skipped {
+    left: 40cqw; width: 14cqw;
+    top: 46cqh; height: 11cqh;
+    border-style: dashed;
+    border-color: rgba(74,82,94,0.5);
+  }
+  .dedup-node-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 1.3cqw;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: #EDEFF3;
+  }
+  .dedup-node--skipped .dedup-node-label { color: #8992A1; }
+  .dedup-node-caption {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 1.05cqw;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #8992A1;
+  }
+  .dedup-count {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 3.2cqw;
+    font-weight: 600;
+    color: #4DE8C2;
+    line-height: 1;
+    margin-top: 0.2cqh;
+  }
+  .dedup-node--skipped .dedup-count {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 1.1cqw;
+    font-weight: 500;
+    color: #4A525E;
+  }
+
+  /* — Message dots — */
+  .dedup-dot {
+    position: absolute;
+    left: 22cqw;
+    top: 19cqh;
+    width: 3.6cqw;
+    height: 3.6cqw;
+    margin-left: -1.8cqw;
+    margin-top: -1.8cqw;
+    border-radius: 50%;
+    background: #181D24;
+    border: 1.5px solid #4DE8C2;
+    opacity: 0;
+    transform: scale(0);
+  }
+  .dedup-dot-tag {
+    position: absolute;
+    left: 50%;
+    top: -3.2cqh;
+    transform: translateX(-50%);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 1cqw;
+    font-weight: 500;
+    color: #EDEFF3;
+    white-space: nowrap;
+  }
+
+  /* — Finale kicker — */
+  .dedup-kicker {
+    position: absolute;
+    left: 8cqw;
+    right: 8cqw;
+    top: 63cqh;
+    text-align: center;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 2cqw;
+    line-height: 1.1;
+    color: #8992A1;
+    opacity: 0;
+    transform: scale(0.94);
+  }
+</style>
+
+<div id="root" data-composition-id="03-deduplication" data-width="1080" data-height="1920" data-duration="15.15">
+  <div class="clip dedup-bg" data-start="0" data-duration="15.15" data-track-index="0"></div>
+
+  <div class="clip dedup-stage" data-start="0" data-duration="15.15" data-track-index="1">
+    <div class="dedup-producer">
+      <div class="dedup-queue-icon"><span></span><span></span><span></span></div>
+      <div class="dedup-producer-label">Producer</div>
+      <div class="dedup-producer-sub">Queue</div>
+    </div>
+
+    <div class="dedup-edge"></div>
+    <div class="dedup-connector-main"></div>
+    <div class="dedup-connector-skip"></div>
+
+    <div class="dedup-gate-caption">Seen-Set</div>
+    <div class="dedup-gate"><span class="dedup-gate-mark">?</span></div>
+    <div class="dedup-compare">
+      <div class="dedup-compare-chip">MSG-42</div>
+      <div class="dedup-compare-chip">MSG-42</div>
+    </div>
+
+    <div class="dedup-node dedup-node--consumer">
+      <div class="dedup-node-label">Consumer</div>
+      <div class="dedup-node-caption">Handler</div>
+    </div>
+
+    <div class="dedup-node dedup-node--processed">
+      <div class="dedup-node-label">Processed</div>
+      <div class="dedup-count">0</div>
+    </div>
+
+    <div class="dedup-node dedup-node--skipped">
+      <div class="dedup-node-label">Skipped</div>
+      <div class="dedup-count">&mdash;</div>
+    </div>
+
+    <div class="dedup-dot dedup-dot-a"><span class="dedup-dot-tag">MSG-41</span></div>
+    <div class="dedup-dot dedup-dot-b"><span class="dedup-dot-tag">MSG-42</span></div>
+    <div class="dedup-dot dedup-dot-c"><span class="dedup-dot-tag">MSG-42</span></div>
+
+    <div class="dedup-kicker">correct behavior, not an error.</div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var root = document.querySelector('[data-composition-id="03-deduplication"]');
+  var CW = function () { return root.clientWidth; };
+  var CH = function () { return root.clientHeight; };
+  var CQW = function (v) { return (CW() * v) / 100; };
+  var CQH = function (v) { return (CH() * v) / 100; };
+
+  var $ = function (sel) { return root.querySelector(sel); };
+
+  var bg = $('.dedup-bg');
+  var producer = $('.dedup-producer');
+  var edge = $('.dedup-edge');
+  var connectorMain = $('.dedup-connector-main');
+  var connectorSkip = $('.dedup-connector-skip');
+  var gate = $('.dedup-gate');
+  var gateMark = $('.dedup-gate-mark');
+  var gateCaption = $('.dedup-gate-caption');
+  var compare = $('.dedup-compare');
+  var consumerNode = $('.dedup-node--consumer');
+  var processedNode = $('.dedup-node--processed');
+  var processedCount = processedNode.querySelector('.dedup-count');
+  var skippedNode = $('.dedup-node--skipped');
+  var skippedCount = skippedNode.querySelector('.dedup-count');
+  var kicker = $('.dedup-kicker');
+
+  var dotA = $('.dedup-dot-a');
+  var dotB = $('.dedup-dot-b');
+  var dotC = $('.dedup-dot-c');
+
+  // Waypoints in cqw/cqh (matching the CSS layout above); dots originate at (22,19).
+  var ORIGIN_X = 22, ORIGIN_Y = 19;
+  var GATE_X = 49, GATE_Y = 19;
+  var CONSUMER_X = 83, CONSUMER_Y = 19;
+  var PROCESSED_X = 83, PROCESSED_Y = 51.5;
+  var SKIPPED_X = 47, SKIPPED_Y = 51.5;
+
+  function dx(x) { return CQW(x - ORIGIN_X); }
+  function dy(y) { return CQH(y - ORIGIN_Y); }
+
+  var tl = gsap.timeline({ paused: true });
+
+  // — Scene 1 (0.0-3.0s): the anchor lands and pins — producer, edge, gate, nodes. —
+  tl.to(bg, { opacity: 1, duration: 0.4, ease: "power1.out" }, 0.0);
+
+  tl.fromTo(producer, { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.3, ease: "power3.out" }, 0.1);
+
+  tl.fromTo(edge, { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.5, ease: "power2.out" }, 0.15);
+
+  tl.fromTo(gate, { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.3, ease: "power3.out" }, 0.2);
+  tl.fromTo(gateCaption, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 0.25);
+
+  tl.fromTo(consumerNode, { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.4, ease: "power3.out" }, 0.4);
+
+  tl.fromTo(connectorMain, { opacity: 0, scaleY: 0 }, { opacity: 1, scaleY: 1, duration: 0.4, ease: "power2.out" }, 0.55);
+  tl.fromTo(processedNode, { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.35, ease: "power3.out" }, 0.7);
+
+  tl.fromTo(connectorSkip, { opacity: 0, scaleY: 0 }, { opacity: 0.4, scaleY: 1, duration: 0.4, ease: "power2.out" }, 0.85);
+  tl.fromTo(skippedNode, { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.35, ease: "power3.out" }, 0.95);
+
+  // — Scene 2 (3.0-7.0s): dot A and dot B flow through cleanly, PROCESSED ticks 1, 2. —
+
+  function launchDot(dot, atTime) {
+    tl.fromTo(dot, { opacity: 0, scale: 0, x: 0, y: 0 }, { opacity: 1, scale: 1, duration: 0.25, ease: "power3.out" }, atTime);
+  }
+
+  function travelTo(dot, x, y, atTime, dur, ease) {
+    tl.to(dot, { x: dx(x), y: dy(y), duration: dur, ease: ease || "power1.inOut" }, atTime);
+  }
+
+  function gatePulse(atTime) {
+    tl.to(gate, { scale: 1.15, duration: 0.1, ease: "power1.out" }, atTime);
+    tl.to(gate, { scale: 1, duration: 0.1, ease: "power1.in" }, atTime + 0.1);
+  }
+
+  function shrinkAt(dot, atTime) {
+    tl.to(dot, { scale: 0.85, duration: 0.15, ease: "power1.inOut" }, atTime);
+  }
+
+  function landAndCount(dot, atTime, countEl, value) {
+    tl.to(dot, { opacity: 0, scale: 0.6, duration: 0.2, ease: "power1.in" }, atTime);
+    tl.call(function () { countEl.textContent = value; }, null, atTime);
+    tl.fromTo(processedNode, { scale: 1 }, { scale: 1.06, duration: 0.12, ease: "power1.out", yoyo: false }, atTime);
+    tl.to(processedNode, { scale: 1, duration: 0.14, ease: "power1.in" }, atTime + 0.12);
+  }
+
+  // Dot A — MSG-41
+  launchDot(dotA, 3.2);
+  travelTo(dotA, GATE_X, GATE_Y, 3.45, 0.5);
+  gatePulse(3.95);
+  travelTo(dotA, CONSUMER_X, CONSUMER_Y, 3.95, 0.5);
+  shrinkAt(dotA, 4.45);
+  travelTo(dotA, PROCESSED_X, PROCESSED_Y, 4.6, 0.35);
+  landAndCount(dotA, 4.95, processedCount, "1");
+
+  // Dot B — MSG-42 (first sighting)
+  launchDot(dotB, 5.3);
+  travelTo(dotB, GATE_X, GATE_Y, 5.55, 0.5);
+  gatePulse(6.05);
+  travelTo(dotB, CONSUMER_X, CONSUMER_Y, 6.05, 0.5);
+  shrinkAt(dotB, 6.55);
+  travelTo(dotB, PROCESSED_X, PROCESSED_Y, 6.7, 0.35);
+  landAndCount(dotB, 7.05, processedCount, "2");
+
+  // — Scene 3 (7.0-11.0s): dot C repeats MSG-42 — the gate recognizes it. —
+  launchDot(dotC, 7.6);
+  travelTo(dotC, GATE_X, GATE_Y, 7.85, 0.8, "power2.inOut");
+
+  tl.to(gate, { backgroundColor: "#4DE8C2", borderColor: "#4DE8C2", scale: 1.2, duration: 0.3, ease: "power2.out" }, 8.65);
+  tl.to(gate, { scale: 1, duration: 0.2, ease: "power1.out" }, 8.95);
+  tl.call(function () { gateMark.textContent = "✓"; gateMark.style.color = "#0A0D12"; }, null, 8.65);
+  tl.to(dotC, { borderColor: "#EDEFF3", duration: 0.2, ease: "power1.out" }, 8.65);
+
+  tl.fromTo(compare, { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.2, ease: "power3.out" }, 8.7);
+  tl.to(compare, { opacity: 0, duration: 0.3, ease: "power1.in" }, 9.5);
+
+  // Dot C holds at the gate through the recognition beat (stillness before the divert).
+
+  // — Scene 4 (11.0-14.75s): the repeat diverts into SKIPPED; PROCESSED stays put. —
+  tl.to(connectorSkip, { opacity: 0.85, backgroundColor: "rgba(77,232,194,0.5)", duration: 0.2, ease: "power1.out" }, 11.0);
+  travelTo(dotC, SKIPPED_X, SKIPPED_Y, 11.1, 0.6, "power2.inOut");
+  tl.to(dotC, { scale: 0.7, opacity: 0.55, duration: 0.3, ease: "power1.inOut" }, 11.7);
+
+  tl.call(function () { skippedCount.textContent = "MSG-42"; }, null, 11.85);
+  tl.to(skippedNode, { backgroundColor: "#181D24", duration: 0.3, ease: "power1.inOut" }, 11.85);
+  tl.to(skippedNode, { backgroundColor: "#12161C", duration: 0.3, ease: "power1.inOut" }, 12.15);
+
+  tl.fromTo(kicker, { opacity: 0, scale: 0.94 }, { opacity: 1, scale: 1, duration: 0.4, ease: "power3.out" }, 12.3);
+
+  window.__timelines = window.__timelines || {};
+  window.__timelines["03-deduplication"] = tl;
+})();
+</script>
+</template>

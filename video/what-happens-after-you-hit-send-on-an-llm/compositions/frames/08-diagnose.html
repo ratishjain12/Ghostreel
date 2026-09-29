@@ -1,0 +1,91 @@
+<template id="08-diagnose-template">
+  <div id="root" data-composition-id="08-diagnose" data-width="1080" data-height="1920" data-duration="5.4">
+    <style>
+      @font-face { font-family: "EB Garamond"; src: url("assets/fonts/EBGaramond-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: block; }
+      @font-face { font-family: "EB Garamond"; src: url("assets/fonts/EBGaramond-700.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: block; }
+      @font-face { font-family: "Inter"; src: url("assets/fonts/Inter-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: block; }
+      @font-face { font-family: "Inter"; src: url("assets/fonts/Inter-700.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: block; }
+      @font-face { font-family: "JetBrains Mono"; src: url("assets/fonts/JetBrainsMono-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: block; }
+      @font-face { font-family: "JetBrains Mono"; src: url("assets/fonts/JetBrainsMono-700.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: block; }
+
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: "Inter", sans-serif; color: #141413; }
+      [class~="08-diagnose-bg"] { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; background: #FAF9F5; }
+      [class~="08-diagnose-stage"] { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+
+      [class~="08-diagnose-head"] { position: absolute; left: 60px; top: 190px; width: 960px; height: 110px; text-align: center; font-family: "EB Garamond", serif; font-weight: 400; font-size: 88px; line-height: 110px; letter-spacing: -0.02em; color: #141413; white-space: nowrap; }
+
+      [class~="08-diagnose-spine"] { position: absolute; left: 214px; top: 440px; width: 1px; height: 600px; background: rgba(20, 20, 19, 0.2); transform-origin: 50% 0%; }
+      [class~="08-diagnose-row"] { position: absolute; left: 186px; width: 640px; height: 80px; }
+      [class~="08-diagnose-dot"] { position: absolute; left: 14px; top: 26px; width: 28px; height: 28px; box-sizing: border-box; border-radius: 9999px; background: #FAF9F5; border: 1px solid rgba(20, 20, 19, 0.3); }
+      [class~="08-diagnose-dotfill"] { position: absolute; left: -1px; top: -1px; width: 28px; height: 28px; border-radius: 9999px; background: #141413; }
+      [class~="08-diagnose-text"] { position: absolute; left: 74px; top: 0; width: 566px; height: 80px; }
+      [class~="08-diagnose-idx"] { position: absolute; left: 0; top: 0; width: 70px; height: 80px; font-family: "JetBrains Mono", monospace; font-weight: 400; font-size: 32px; line-height: 80px; letter-spacing: 0.02em; color: #141413; white-space: nowrap; }
+      [class~="08-diagnose-name"] { position: absolute; left: 100px; top: 0; width: 466px; height: 80px; font-family: "EB Garamond", serif; font-weight: 400; font-size: 64px; line-height: 80px; letter-spacing: -0.015em; color: #141413; white-space: nowrap; }
+
+      [class~="08-diagnose-q"] { position: absolute; left: 860px; top: 650px; width: 120px; height: 180px; text-align: center; font-family: "EB Garamond", serif; font-weight: 400; font-size: 170px; line-height: 180px; color: #CC785C; transform-origin: 50% 50%; }
+
+      [class~="08-diagnose-ask"] { position: absolute; left: 90px; top: 1190px; width: 900px; height: 100px; text-align: center; font-family: "EB Garamond", serif; font-weight: 400; font-size: 80px; line-height: 100px; letter-spacing: -0.018em; color: #141413; white-space: nowrap; }
+    </style>
+
+    <div class="clip 08-diagnose-bg" data-start="0" data-duration="5.4" data-track-index="0"></div>
+
+    <div class="clip 08-diagnose-stage" data-start="0" data-duration="5.4" data-track-index="1">
+      <div class="08-diagnose-head">When an LLM feels slow,</div>
+
+      <div class="08-diagnose-spine"></div>
+
+      <div class="08-diagnose-row" style="top:400px;"><div class="08-diagnose-dot"><span class="08-diagnose-dotfill"></span></div><div class="08-diagnose-text"><div class="08-diagnose-idx">01</div><div class="08-diagnose-name">API gateway</div></div></div>
+      <div class="08-diagnose-row" style="top:520px;"><div class="08-diagnose-dot"><span class="08-diagnose-dotfill"></span></div><div class="08-diagnose-text"><div class="08-diagnose-idx">02</div><div class="08-diagnose-name">Cache lookup</div></div></div>
+      <div class="08-diagnose-row" style="top:640px;"><div class="08-diagnose-dot"><span class="08-diagnose-dotfill"></span></div><div class="08-diagnose-text"><div class="08-diagnose-idx">03</div><div class="08-diagnose-name">Router</div></div></div>
+      <div class="08-diagnose-row" style="top:760px;"><div class="08-diagnose-dot"><span class="08-diagnose-dotfill"></span></div><div class="08-diagnose-text"><div class="08-diagnose-idx">04</div><div class="08-diagnose-name">Batching queue</div></div></div>
+      <div class="08-diagnose-row" style="top:880px;"><div class="08-diagnose-dot"><span class="08-diagnose-dotfill"></span></div><div class="08-diagnose-text"><div class="08-diagnose-idx">05</div><div class="08-diagnose-name">Prefill</div></div></div>
+      <div class="08-diagnose-row" style="top:1000px;"><div class="08-diagnose-dot"><span class="08-diagnose-dotfill"></span></div><div class="08-diagnose-text"><div class="08-diagnose-idx">06</div><div class="08-diagnose-name">Decode</div></div></div>
+
+      <div class="08-diagnose-q">?</div>
+
+      <div class="08-diagnose-ask">Which step is slow?</div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script>
+      (function () {
+        var root = document.querySelector('[data-composition-id="08-diagnose"]');
+        function all(n) { return Array.prototype.slice.call(root.getElementsByClassName(n)); }
+        function one(n) { return root.getElementsByClassName(n)[0]; }
+
+        var rows = all("08-diagnose-row");
+        var texts = all("08-diagnose-text");
+        var fills = all("08-diagnose-dotfill");
+        var q = one("08-diagnose-q");
+        // q box center sits at y=740; row centers are at 440 + 120*i
+        var rowY = [-300, -180, -60, 60, 180, 300];
+
+        var tl = gsap.timeline({ paused: true });
+
+        tl.fromTo(one("08-diagnose-head"), { opacity: 0, y: 36 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 0.1);
+
+        tl.fromTo(one("08-diagnose-spine"), { scaleY: 0 }, { scaleY: 1, duration: 0.7, ease: "power2.inOut" }, 0.45);
+        tl.fromTo(rows, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out", stagger: 0.09 }, 0.5);
+        tl.fromTo(texts, { opacity: 0.4 }, { opacity: 0.4, duration: 0.01 }, 0.5);
+        tl.fromTo(fills, { opacity: 0 }, { opacity: 0, duration: 0.01 }, 0.5);
+
+        var t0 = 2.4, step = 0.25;
+        tl.fromTo(q, { opacity: 0, scale: 0.4, y: rowY[0] }, { opacity: 1, scale: 0.4, y: rowY[0], duration: 0.15, ease: "power2.out" }, t0);
+        for (var i = 0; i < 6; i++) {
+          var t = t0 + i * step;
+          if (i > 0) {
+            tl.fromTo(q, { y: rowY[i - 1] }, { y: rowY[i], duration: 0.14, ease: "power3.inOut", immediateRender: false }, t - 0.02);
+          }
+          tl.fromTo(texts[i], { opacity: 0.4 }, { opacity: 1, duration: 0.18, ease: "power2.out", immediateRender: false }, t + 0.06);
+          tl.fromTo(fills[i], { opacity: 0 }, { opacity: 0.35, duration: 0.18, ease: "power2.out", immediateRender: false }, t + 0.06);
+        }
+
+        tl.fromTo(q, { y: rowY[5], scale: 0.4 }, { y: 0, scale: 1, duration: 0.55, ease: "power3.inOut", immediateRender: false }, 4.1);
+        tl.fromTo(one("08-diagnose-ask"), { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 4.25);
+
+        window.__timelines = window.__timelines || {};
+        window.__timelines["08-diagnose"] = tl;
+      })();
+    </script>
+  </div>
+</template>

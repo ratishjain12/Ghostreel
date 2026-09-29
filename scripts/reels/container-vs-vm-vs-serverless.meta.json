@@ -1,0 +1,5 @@
+{
+  "message": "Comment \"GUIDE\" and I'll send you the full breakdown.\n\nContainer, VM, serverless: three ways to run your code, and the real difference isn't performance, it's how much control you're giving up. I broke down what each one actually virtualizes, and when to reach for which.\n\n#systemdesign #softwareengineering #devops #cloudcomputing",
+  "angle": "system-design",
+  "hook_style": "contrarian"
+}

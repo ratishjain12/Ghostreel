@@ -1,0 +1,146 @@
+<template>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+
+<style data-brand-tokens>
+  @font-face { font-family: 'Space Grotesk'; src: url('assets/fonts/Space-Grotesk-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: block; }
+  @font-face { font-family: 'Inter'; src: url('assets/fonts/Inter-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+</style>
+
+<style>
+  #root {
+    position: relative;
+    width: 1080px;
+    height: 1920px;
+    overflow: hidden;
+  }
+
+  .clip { position: absolute; inset: 0; }
+
+  /* ---- permanent cream ground, always on ---- */
+  .f07cta-bg {
+    background-color: #fdfae7;
+  }
+
+  /* ---- concentric closing-rings (supporting atmosphere), centered behind the button ---- */
+  .f07cta-rings {
+    left: 50%;
+    top: 780px;
+    right: auto;
+    bottom: auto;
+    width: 0;
+    height: 0;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+  }
+  .f07cta-ring {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    border-radius: 50%;
+    border: 2px solid #1e2bfa;
+    transform: translate(-50%, -50%);
+  }
+  .f07cta-ring--outer  { width: 900px; height: 900px; opacity: 0.08; }
+  .f07cta-ring--mid    { width: 680px; height: 680px; opacity: 0.11; }
+  .f07cta-ring--inner  { width: 460px; height: 460px; opacity: 0.15; }
+
+  /* ---- CTA button pill (focal, foreground subject) ---- */
+  .f07cta-button {
+    left: 50%;
+    top: 780px;
+    right: auto;
+    bottom: auto;
+    width: auto;
+    height: auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 42px 70px;
+    background: #1e2bfa;
+    border-radius: 100px;
+    box-shadow: none;
+    white-space: nowrap;
+  }
+  .f07cta-button-label {
+    font-family: 'Space Grotesk';
+    font-weight: 600;
+    font-size: 44px;
+    letter-spacing: -0.01em;
+    color: #fdfae7;
+  }
+
+  /* ---- sub-line (supporting) ---- */
+  .f07cta-subline {
+    left: 50%;
+    top: 940px;
+    right: auto;
+    bottom: auto;
+    width: 760px;
+    height: auto;
+    text-align: center;
+  }
+  .f07cta-subline-text {
+    display: inline-block;
+    font-family: 'Inter';
+    font-weight: 400;
+    font-size: 34px;
+    line-height: 1.4;
+    color: #6b6b6b;
+  }
+</style>
+
+<div id="root" data-composition-id="07-cta" data-start="0" data-duration="2.475" data-width="1080" data-height="1920">
+  <div id="f07cta-bg" class="clip f07cta-bg" data-start="0" data-duration="2.475" data-track-index="0"></div>
+
+  <div id="f07cta-rings" class="clip f07cta-rings" data-start="0" data-duration="2.475" data-track-index="1">
+    <div class="f07cta-ring f07cta-ring--outer"></div>
+    <div class="f07cta-ring f07cta-ring--mid"></div>
+    <div class="f07cta-ring f07cta-ring--inner"></div>
+  </div>
+
+  <div id="f07cta-button" class="clip f07cta-button" data-start="0" data-duration="2.475" data-track-index="2">
+    <span class="f07cta-button-label">Comment GUIDE</span>
+  </div>
+
+  <div id="f07cta-subline" class="clip f07cta-subline" data-start="0" data-duration="2.475" data-track-index="3">
+    <span class="f07cta-subline-text">and I'll send the full breakdown.</span>
+  </div>
+</div>
+
+<script>
+(function () {
+  var root = document.querySelector('[data-composition-id="07-cta"]');
+  var rings = root.querySelector('#f07cta-rings');
+  var button = root.querySelector('#f07cta-button');
+  var subline = root.querySelector('#f07cta-subline');
+
+  var DURATION = 2.475;
+
+  var tl = gsap.timeline({ paused: true });
+  window.__timelines = window.__timelines || {};
+  window.__timelines['07-cta'] = tl;
+
+  // ================= Scene 1 (0.0-1.23s): cream ground + faint concentric
+  // rings establish, then the CTA pill spring-pops in center. =================
+  tl.fromTo(rings, { opacity: 0 }, { opacity: 1, duration: 0.5, ease: 'power2.out' }, 0);
+
+  tl.fromTo(
+    button,
+    { scale: 0, opacity: 0, xPercent: -50, yPercent: -50 },
+    { scale: 1, opacity: 1, xPercent: -50, yPercent: -50, duration: 0.55, ease: 'power3.out' },
+    0.08
+  );
+
+  // ================= Scene 2 (1.23-2.40s): on "over the full breakdown," the
+  // sub-line lands beneath the button, then holds still to the end. =================
+  tl.fromTo(
+    subline,
+    { opacity: 0, y: 16, xPercent: -50 },
+    { opacity: 1, y: 0, xPercent: -50, duration: 0.45, ease: 'power3.out' },
+    1.23
+  );
+
+  tl.to({}, { duration: DURATION }, 0);
+})();
+</script>
+</template>

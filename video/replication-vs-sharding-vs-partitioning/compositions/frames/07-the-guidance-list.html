@@ -1,0 +1,190 @@
+<template>
+  <style>
+    @font-face { font-family: 'Fraunces'; src: url('assets/fonts/Fraunces-Variable.woff2') format('woff2'); font-weight: 400 700; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Fraunces'; src: url('assets/fonts/Fraunces-Italic.woff2') format('woff2'); font-weight: 400 700; font-style: italic; font-display: block; }
+    @font-face { font-family: 'IBM Plex Sans'; src: url('assets/fonts/IBMPlexSans-Variable.woff2') format('woff2'); font-weight: 300 700; font-style: normal; font-display: block; }
+    @font-face { font-family: 'IBM Plex Mono'; src: url('assets/fonts/IBMPlexMono-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+    @font-face { font-family: 'IBM Plex Mono'; src: url('assets/fonts/IBMPlexMono-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: block; }
+  </style>
+
+  <style>
+    #root {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+      container-type: size;
+      font-family: 'IBM Plex Sans', sans-serif;
+    }
+    #root .clip { position: absolute; inset: 0; }
+
+    .gl07-bg { background: #0A0D12; }
+    .gl07-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(to right, rgba(35, 43, 51, 0.16) 0 1px, transparent 1px 56px),
+        repeating-linear-gradient(to bottom, rgba(35, 43, 51, 0.16) 0 1px, transparent 1px 56px);
+    }
+
+    .gl07-stage { position: absolute; left: 6cqw; right: 6cqw; top: 0; height: 100%; }
+    .gl07-item { position: absolute; left: 0; width: 100%; }
+
+    .gl07-tickrow { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+    .gl07-tick { width: 44px; height: 3px; opacity: 0; }
+    .gl07-index {
+      font-family: 'IBM Plex Mono';
+      font-weight: 500;
+      font-size: 1.3cqw;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #8992A1;
+      opacity: 0;
+    }
+
+    .gl07-headline {
+      font-family: 'Fraunces';
+      font-weight: 600;
+      font-size: 4.4cqw;
+      line-height: 1.14;
+      letter-spacing: -0.01em;
+      color: #EDEFF3;
+      max-width: 100%;
+    }
+    .gl07-word { display: inline-block; opacity: 0; }
+
+    .gl07-sub {
+      font-family: 'IBM Plex Sans';
+      font-weight: 400;
+      font-size: 2.0cqw;
+      line-height: 1.4;
+      color: #8992A1;
+      margin-top: 14px;
+      min-height: 1.4em;
+    }
+  </style>
+
+  <div id="root" data-composition-id="07-the-guidance-list" data-width="1080" data-height="1920">
+    <div class="clip gl07-bg" data-start="0" data-duration="12.544" data-track-index="0">
+      <div class="gl07-grid"></div>
+    </div>
+
+    <div class="clip" data-start="0" data-duration="12.544" data-track-index="1">
+      <div class="gl07-stage">
+
+        <div class="gl07-item" id="gl07-item-1" style="top: 200px;">
+          <div class="gl07-tickrow">
+            <span class="gl07-tick" id="gl07-tick-1" style="background:#FF9F45"></span>
+            <span class="gl07-index" id="gl07-index-1">01</span>
+          </div>
+          <div class="gl07-headline">
+            <span class="gl07-word" id="gl07-h1-w0">ADD</span> <span class="gl07-word" id="gl07-h1-w1">REPLICATION</span> <span class="gl07-word" id="gl07-h1-w2">FIRST</span>
+          </div>
+          <div class="gl07-sub" id="gl07-sub-1"></div>
+        </div>
+
+        <div class="gl07-item" id="gl07-item-2" style="top: 714px;">
+          <div class="gl07-tickrow">
+            <span class="gl07-tick" id="gl07-tick-2" style="background:#4DE8C2"></span>
+            <span class="gl07-index" id="gl07-index-2">02</span>
+          </div>
+          <div class="gl07-headline">
+            <span class="gl07-word" id="gl07-h2-w0">PARTITION</span> <span class="gl07-word" id="gl07-h2-w1">WHEN</span> <span class="gl07-word" id="gl07-h2-w2">TABLES</span> <span class="gl07-word" id="gl07-h2-w3">GET</span> <span class="gl07-word" id="gl07-h2-w4">HUGE</span>
+          </div>
+          <div class="gl07-sub" id="gl07-sub-2"></div>
+        </div>
+
+        <div class="gl07-item" id="gl07-item-3" style="top: 1228px;">
+          <div class="gl07-tickrow">
+            <span class="gl07-tick" id="gl07-tick-3" style="background:#B98CFF"></span>
+            <span class="gl07-index" id="gl07-index-3">03</span>
+          </div>
+          <div class="gl07-headline">
+            <span class="gl07-word" id="gl07-h3-w0">SHARD</span> <span class="gl07-word" id="gl07-h3-w1">WHEN</span> <span class="gl07-word" id="gl07-h3-w2">WRITES</span> <span class="gl07-word" id="gl07-h3-w3">OVERLOAD</span> <span class="gl07-word" id="gl07-h3-w4">ONE</span> <span class="gl07-word" id="gl07-h3-w5">SERVER</span>
+          </div>
+          <div class="gl07-sub" id="gl07-sub-3"></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var root = document.querySelector('[data-composition-id="07-the-guidance-list"]');
+      var tl = gsap.timeline({ paused: true });
+      var F = 1 / 60;
+
+      // waterfall-entry cascade: each word tl.set (instant reveal + y offset) then tl.to (whip to rest)
+      function waterfall(ids, startTime, offsets) {
+        var t = startTime;
+        for (var i = 0; i < ids.length; i++) {
+          var o = offsets[i];
+          tl.set('#' + ids[i], { opacity: 1, y: o.y }, t);
+          tl.to('#' + ids[i], { y: 0, duration: o.dur, ease: 'power4.out' }, t);
+          t = t + o.dur - F;
+        }
+        return t;
+      }
+
+      // discrete-text-sequence: smooth character-slice typewriter (no edits/typos needed for a short sub-line)
+      function typeOn(id, text, startTime, duration) {
+        var el = root.querySelector('#' + id);
+        var len = { v: 0 };
+        tl.to(len, {
+          v: text.length,
+          duration: duration,
+          ease: 'power1.inOut',
+          onUpdate: function () {
+            el.textContent = text.substring(0, Math.floor(len.v));
+          }
+        }, startTime);
+      }
+
+      // --- Statement 1 — ADD REPLICATION FIRST (0.0–1.01s land, sub-line to 4.16s) ---
+      tl.fromTo('#gl07-tick-1', { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.18, ease: 'power2.out', transformOrigin: 'left center' }, 0.05);
+      tl.fromTo('#gl07-index-1', { opacity: 0 }, { opacity: 1, duration: 0.18 }, 0.1);
+      waterfall(['gl07-h1-w0', 'gl07-h1-w1', 'gl07-h1-w2'], 0.2, [
+        { y: 50, dur: 0.16 },
+        { y: 45, dur: 0.15 },
+        { y: 60, dur: 0.17 }
+      ]);
+      typeOn('gl07-sub-1', 'For availability alone.', 1.05, 1.1);
+
+      // --- Statement 1 dims to supporting as Statement 2 lands (4.16s) ---
+      tl.to('#gl07-item-1', { opacity: 0.45, duration: 0.4, ease: 'power2.out' }, 4.16);
+
+      // --- Statement 2 — PARTITION WHEN TABLES GET HUGE (4.16–7.95s) ---
+      tl.fromTo('#gl07-tick-2', { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.18, ease: 'power2.out', transformOrigin: 'left center' }, 4.2);
+      tl.fromTo('#gl07-index-2', { opacity: 0 }, { opacity: 1, duration: 0.18 }, 4.25);
+      waterfall(['gl07-h2-w0', 'gl07-h2-w1', 'gl07-h2-w2', 'gl07-h2-w3', 'gl07-h2-w4'], 4.35, [
+        { y: 55, dur: 0.18 },
+        { y: 40, dur: 0.12 },
+        { y: 48, dur: 0.14 },
+        { y: 36, dur: 0.11 },
+        { y: 48, dur: 0.14 }
+      ]);
+      typeOn('gl07-sub-2', 'When a table gets too big to query.', 5.1, 1.5);
+
+      // --- Statement 2 dims to supporting as Statement 3 lands (7.95s) ---
+      tl.to('#gl07-item-2', { opacity: 0.45, duration: 0.4, ease: 'power2.out' }, 7.95);
+
+      // --- Statement 3 — SHARD WHEN WRITES OVERLOAD ONE SERVER (7.95–12.544s, stays full brightness) ---
+      tl.fromTo('#gl07-tick-3', { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.18, ease: 'power2.out', transformOrigin: 'left center' }, 8.0);
+      tl.fromTo('#gl07-index-3', { opacity: 0 }, { opacity: 1, duration: 0.18 }, 8.05);
+      waterfall(['gl07-h3-w0', 'gl07-h3-w1', 'gl07-h3-w2', 'gl07-h3-w3', 'gl07-h3-w4', 'gl07-h3-w5'], 8.15, [
+        { y: 55, dur: 0.18 },
+        { y: 38, dur: 0.12 },
+        { y: 46, dur: 0.14 },
+        { y: 52, dur: 0.16 },
+        { y: 34, dur: 0.11 },
+        { y: 48, dur: 0.14 }
+      ]);
+      typeOn('gl07-sub-3', 'When writes overload one server.', 9.05, 1.4);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['07-the-guidance-list'] = tl;
+      tl.seek(0);
+    })();
+  </script>
+</template>

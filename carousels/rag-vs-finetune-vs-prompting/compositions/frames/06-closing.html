@@ -1,0 +1,106 @@
+<template>
+<div id="root" data-composition-id="06-closing" data-width="1080" data-height="1080" data-duration="2">
+  <style>
+    @font-face { font-family: 'Space Grotesk'; src: url('assets/fonts/Space-Grotesk-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Space Grotesk'; src: url('assets/fonts/Space-Grotesk-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Space Grotesk'; src: url('assets/fonts/Space-Grotesk-700.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Inter'; src: url('assets/fonts/Inter-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Inter'; src: url('assets/fonts/Inter-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: block; }
+
+    #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: 'Inter', sans-serif; color: #111111; }
+    #root .clip { position: absolute; }
+
+    .cl-bg { inset: 0; background: #fdfae7; }
+
+    /* Bold cobalt card carries the "closing moment" instead of an inverted full-frame ground. */
+    .cl-card { left: 90px; top: 105px; width: 900px; height: 465px; background: #1e2bfa; border-radius: 32px; }
+
+    .cl-eyebrow {
+      left: 130px; top: 148px; width: 820px; text-align: center;
+      font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 22px;
+      letter-spacing: 0.08em; text-transform: uppercase; color: rgba(253,250,231,0.85);
+    }
+    .cl-accentline { left: 490px; top: 198px; width: 100px; height: 4px; background: #fdfae7; border-radius: 2px; }
+    .cl-h1 {
+      left: 130px; top: 234px; width: 820px; text-align: center;
+      font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 64px;
+      line-height: 1.15; letter-spacing: -0.02em; color: #fdfae7;
+    }
+    .cl-body {
+      left: 190px; top: 402px; width: 700px; text-align: center;
+      font-family: 'Inter', sans-serif; font-weight: 400; font-size: 27px;
+      line-height: 1.5; color: rgba(253,250,231,0.78);
+    }
+
+    .cl-btn {
+      left: 50%; transform: translateX(-50%); width: auto; min-width: 520px;
+      display: flex; align-items: center; justify-content: center; gap: 18px;
+      padding: 22px 46px; border-radius: 100px; background: #1e2bfa;
+    }
+    .cl-btn .cl-btn-icon { width: 32px; height: 32px; flex-shrink: 0; color: #fdfae7; }
+    .cl-btn .cl-btn-icon svg { width: 100%; height: 100%; }
+    .cl-btn .cl-btn-label {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 30px;
+      letter-spacing: -0.01em; color: #fdfae7; white-space: nowrap;
+    }
+    .cl-save { top: 610px; }
+    .cl-follow { top: 710px; }
+
+    .cl-caption {
+      left: 190px; top: 826px; width: 700px; text-align: center;
+      font-family: 'Space Grotesk', sans-serif; font-weight: 500; font-size: 20px;
+      letter-spacing: 0.02em; color: #6b6b6b;
+    }
+
+    .cl-dots { left: 481px; top: 955px; width: 118px; height: 8px; }
+    .cl-dots .pdot { position: absolute; top: 0; width: 8px; height: 8px; border-radius: 50%; background: rgba(30,43,250,0.2); }
+    .cl-dots .pdot.active { background: #1e2bfa; }
+  </style>
+
+  <div id="cl-bg" class="clip cl-bg" data-start="0" data-duration="2" data-track-index="0">
+    <svg width="1080" height="1080" style="position:absolute;left:0;top:0;">
+      <circle cx="540" cy="540" r="420" fill="none" stroke="rgba(30,43,250,0.06)" stroke-width="2" />
+      <circle cx="540" cy="540" r="340" fill="none" stroke="rgba(30,43,250,0.08)" stroke-width="2" />
+      <circle cx="540" cy="540" r="260" fill="none" stroke="rgba(30,43,250,0.1)" stroke-width="2" />
+    </svg>
+  </div>
+
+  <div id="cl-card" class="clip cl-card" data-start="0" data-duration="2" data-track-index="1"></div>
+
+  <div id="cl-eyebrow" class="clip cl-eyebrow" data-start="0" data-duration="2" data-track-index="2">Before you go</div>
+  <div id="cl-accentline" class="clip cl-accentline" data-start="0" data-duration="2" data-track-index="2"></div>
+  <div id="cl-h1" class="clip cl-h1" data-start="0" data-duration="2" data-track-index="3">Pick by the gap, not the hype.</div>
+  <div id="cl-body" class="clip cl-body" data-start="0" data-duration="2" data-track-index="3">Save this for your next architecture call, and follow for more breakdowns like this.</div>
+
+  <div id="cl-save" class="clip cl-btn cl-save" data-start="0" data-duration="2" data-track-index="4">
+    <span class="cl-btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></span>
+    <span class="cl-btn-label">Save this post</span>
+  </div>
+
+  <div id="cl-follow" class="clip cl-btn cl-follow" data-start="0" data-duration="2" data-track-index="4">
+    <span class="cl-btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg></span>
+    <span class="cl-btn-label">Follow @ratish.ai</span>
+  </div>
+
+  <div id="cl-caption" class="clip cl-caption" data-start="0" data-duration="2" data-track-index="4">for more breakdowns like this</div>
+
+  <div id="cl-dots" class="clip cl-dots" data-start="0" data-duration="2" data-track-index="9">
+    <div class="pdot" style="left:0px;"></div>
+    <div class="pdot" style="left:22px;"></div>
+    <div class="pdot" style="left:44px;"></div>
+    <div class="pdot" style="left:66px;"></div>
+    <div class="pdot" style="left:88px;"></div>
+    <div class="pdot active" style="left:110px;"></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    (function () {
+      const root = document.querySelector('[data-composition-id="06-closing"]');
+      const tl = gsap.timeline({ paused: true });
+      window.__timelines = window.__timelines || {};
+      window.__timelines["06-closing"] = tl;
+    })();
+  </script>
+</div>
+</template>

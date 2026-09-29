@@ -1,0 +1,5 @@
+{
+  "message": "Comment \"GUIDE\" and I'll send you the full breakdown.\n\nAPI gateway, service mesh, sidecar proxy: all three sit in a microservices request path, and you usually need all three, not just one. I broke down the front door versus the hallways.\n\n#systemdesign #softwareengineering #microservices #backenddevelopment",
+  "angle": "system-design",
+  "hook_style": "contrarian"
+}

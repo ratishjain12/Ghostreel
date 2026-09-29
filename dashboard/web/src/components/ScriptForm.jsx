@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { api } from "../api";
+import { PILLARS, HOOK_STYLES } from "../growthTags";
 
 export default function ScriptForm({ initial, lockName, submitLabel, onDone, onCancel }) {
   const [form, setForm] = useState(initial);
@@ -48,6 +49,30 @@ export default function ScriptForm({ initial, lockName, submitLabel, onDone, onC
             <option value="">default (1080x1920, reels)</option>
             <option value="1080x1080">1080x1080 (square)</option>
             <option value="1920x1080">1920x1080 (landscape)</option>
+          </select>
+        </label>
+      </div>
+      <div className="row">
+        <label>
+          Pillar
+          <select value={form.pillar || ""} onChange={set("pillar")}>
+            <option value="">untagged</option>
+            {PILLARS.map((p) => (
+              <option key={p.value} value={p.value}>
+                {p.label}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label>
+          Hook style
+          <select value={form.hook_style || ""} onChange={set("hook_style")}>
+            <option value="">untagged</option>
+            {HOOK_STYLES.map((h) => (
+              <option key={h.value} value={h.value}>
+                {h.label}
+              </option>
+            ))}
           </select>
         </label>
       </div>

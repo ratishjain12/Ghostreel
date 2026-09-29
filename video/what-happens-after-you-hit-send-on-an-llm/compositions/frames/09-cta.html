@@ -1,0 +1,63 @@
+<template>
+  <div id="root" data-composition-id="09-cta" data-width="1080" data-height="1920" data-duration="2.849">
+    <style>
+      @font-face { font-family: "EB Garamond"; src: url("assets/fonts/EBGaramond-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: block; }
+      @font-face { font-family: "EB Garamond"; src: url("assets/fonts/EBGaramond-700.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: block; }
+      @font-face { font-family: "Inter"; src: url("assets/fonts/Inter-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: block; }
+      @font-face { font-family: "Inter"; src: url("assets/fonts/Inter-700.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: block; }
+      @font-face { font-family: "JetBrains Mono"; src: url("assets/fonts/JetBrainsMono-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: block; }
+      @font-face { font-family: "JetBrains Mono"; src: url("assets/fonts/JetBrainsMono-700.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: block; }
+
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; }
+      [class~="09-cta-bg"] { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; background: #FAF9F5; }
+
+      [class~="09-cta-spine"] { position: absolute; left: 0; top: 0; width: 1080px; height: 300px; opacity: 0.35; }
+      [class~="09-cta-spine-line"] { position: absolute; left: 300px; top: 229px; width: 480px; height: 2px; background: rgba(20, 20, 19, 0.18); z-index: 1; }
+      [class~="09-cta-dot"] { position: absolute; top: 216px; width: 28px; height: 28px; box-sizing: border-box; border-radius: 9999px; border: 2px solid rgba(20, 20, 19, 0.24); background: #FAF9F5; z-index: 2; }
+      [class~="09-cta-dot-fill"] { position: absolute; left: -2px; top: -2px; width: 28px; height: 28px; border-radius: 9999px; background: #141413; opacity: 0.5; }
+
+      [class~="09-cta-callout"] { position: absolute; left: 140px; top: 540px; width: 800px; height: 520px; border-radius: 8px; background: #CC785C; }
+      [class~="09-cta-kicker"] { position: absolute; left: 0; top: 96px; width: 800px; height: 36px; text-align: center; font-family: "JetBrains Mono", monospace; font-weight: 400; font-size: 28px; line-height: 36px; letter-spacing: 0.16em; text-transform: uppercase; color: #FAF9F5; white-space: nowrap; }
+      [class~="09-cta-guide"] { position: absolute; left: 0; top: 190px; width: 800px; height: 220px; text-align: center; font-family: "EB Garamond", serif; font-weight: 400; font-size: 200px; line-height: 220px; letter-spacing: -0.02em; color: #FAF9F5; white-space: nowrap; }
+
+      [class~="09-cta-line"] { position: absolute; left: 40px; top: 1124px; width: 1000px; height: 128px; text-align: center; font-family: "Inter", sans-serif; font-weight: 400; font-size: 50px; line-height: 64px; color: #141413; }
+    </style>
+
+    <div class="clip 09-cta-bg" data-start="0" data-duration="2.849" data-track-index="0"></div>
+
+    <div class="09-cta-spine">
+      <div class="09-cta-spine-line"></div>
+      <div class="09-cta-dot" style="left: 286px;"><div class="09-cta-dot-fill"></div></div>
+      <div class="09-cta-dot" style="left: 382px;"><div class="09-cta-dot-fill"></div></div>
+      <div class="09-cta-dot" style="left: 478px;"><div class="09-cta-dot-fill"></div></div>
+      <div class="09-cta-dot" style="left: 574px;"><div class="09-cta-dot-fill"></div></div>
+      <div class="09-cta-dot" style="left: 670px;"><div class="09-cta-dot-fill"></div></div>
+      <div class="09-cta-dot" style="left: 766px;"><div class="09-cta-dot-fill"></div></div>
+    </div>
+
+    <div class="09-cta-callout" id="09-cta-callout">
+      <div class="09-cta-kicker" id="09-cta-kicker">✱ COMMENT</div>
+      <div class="09-cta-guide" id="09-cta-guide">GUIDE</div>
+    </div>
+
+    <div class="09-cta-line" id="09-cta-line">and I'll send you<br>the full request path</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script>
+      (function () {
+        var root = document.querySelector('[data-composition-id="09-cta"]');
+        function q(id) { return root.querySelector('[id="09-cta-' + id + '"]'); }
+        var tl = gsap.timeline({ paused: true });
+
+        tl.fromTo(q("callout"), { opacity: 0, y: 80 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 0.1);
+        tl.fromTo(q("kicker"), { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 0.3);
+        tl.fromTo(q("guide"), { opacity: 0, scale: 0.95 }, { opacity: 1, scale: 1, duration: 0.5, ease: "power2.out" }, 0.35);
+        tl.fromTo(q("line"), { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 1.6);
+        tl.set({}, {}, 2.849);
+
+        window.__timelines = window.__timelines || {};
+        window.__timelines["09-cta"] = tl;
+      })();
+    </script>
+  </div>
+</template>

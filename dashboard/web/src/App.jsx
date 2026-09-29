@@ -4,11 +4,16 @@ import { useJobRunner } from "./hooks/useJobRunner";
 import ScriptsPanel from "./components/ScriptsPanel";
 import JobLog from "./components/JobLog";
 import VideosPanel from "./components/VideosPanel";
+import SchedulePanel from "./components/SchedulePanel";
+import PerformancePanel from "./components/PerformancePanel";
+import CarouselPanel from "./components/CarouselPanel";
 import Toast from "./components/Toast";
 
 export default function App() {
+  const [view, setView] = useState("pipeline");
   const [scripts, setScripts] = useState([]);
   const [videos, setVideos] = useState([]);
+  const [carousels, setCarousels] = useState([]);
   const [batchTotal, setBatchTotal] = useState(null);
   const [toast, setToast] = useState(null);
   const toastTimer = useRef(null);
@@ -22,11 +27,13 @@ export default function App() {
 
   const loadScripts = useCallback(() => api.listScripts().then(setScripts), []);
   const loadVideos = useCallback(() => api.listVideos().then(setVideos), []);
+  const loadCarousels = useCallback(() => api.listCarousels().then(setCarousels), []);
 
   useEffect(() => {
     loadScripts();
     loadVideos();
-  }, [loadScripts, loadVideos]);
+    loadCarousels();
+  }, [loadScripts, loadVideos, loadCarousels]);
 
   async function handleGenerate(names) {
     setBatchTotal(names ? names.length : scripts.length);
@@ -73,35 +80,70 @@ export default function App() {
     }
   }
 
+  async function handleGenerateCarousel(names) {
+    setBatchTotal(names ? names.length : carousels.length);
+    await job.run(() => api.generateCarousel(names));
+    loadCarousels();
+  }
+
+  async function handleAuthorCarousel(name) {
+    setBatchTotal(null);
+    await job.run(() => api.authorCarousel(name));
+    loadCarousels();
+  }
+
   const signalState = job.status === "running" ? "running" : job.status === "done" ? "done" : job.status === "error" ? "error" : "idle";
 
   return (
     <>
       <header className="masthead">
         <div className="masthead-title">
-          <h1>Reel Pipeline</h1>
-          <span className="sub">script → voice → captions → render</span>
+          <h1>Content Studio</h1>
         </div>
+        <nav className="tabs">
+          <button className={`tab ${view === "pipeline" ? "active" : ""}`} onClick={() => setView("pipeline")}>
+            Pipeline
+          </button>
+          <button className={`tab ${view === "carousel" ? "active" : ""}`} onClick={() => setView("carousel")}>
+            Carousel
+          </button>
+          <button className={`tab ${view === "schedule" ? "active" : ""}`} onClick={() => setView("schedule")}>
+            Schedule
+          </button>
+          <button className={`tab ${view === "performance" ? "active" : ""}`} onClick={() => setView("performance")}>
+            Performance
+          </button>
+        </nav>
         <div className={`signal ${signalState}`}>
           <span className="lamp" />
           {signalState}
         </div>
       </header>
       <main>
-        <ScriptsPanel
-          scripts={scripts}
-          onChanged={loadScripts}
-          onGenerate={handleGenerate}
-          onAuthor={handleAuthor}
-          onRender={handleRender}
-          onGeneratePdf={handleGeneratePdf}
-          onSetTrigger={handleSetTrigger}
-          onPublish={handlePublish}
-        />
-        <div className="side-stack">
-          <JobLog status={job.status} lines={job.lines} total={batchTotal} />
-          <VideosPanel projects={videos} onRefresh={loadVideos} />
-        </div>
+        {view === "pipeline" ? (
+          <>
+            <ScriptsPanel
+              scripts={scripts}
+              onChanged={loadScripts}
+              onGenerate={handleGenerate}
+              onAuthor={handleAuthor}
+              onRender={handleRender}
+              onGeneratePdf={handleGeneratePdf}
+              onSetTrigger={handleSetTrigger}
+              onPublish={handlePublish}
+            />
+            <div className="side-stack">
+              <JobLog status={job.status} lines={job.lines} total={batchTotal} />
+              <VideosPanel projects={videos} onRefresh={loadVideos} />
+            </div>
+          </>
+        ) : view === "carousel" ? (
+          <CarouselPanel carousels={carousels} onChanged={loadCarousels} onGenerate={handleGenerateCarousel} onAuthor={handleAuthorCarousel} />
+        ) : view === "schedule" ? (
+          <SchedulePanel scripts={scripts} />
+        ) : (
+          <PerformancePanel />
+        )}
       </main>
       <Toast toast={toast} onDismiss={() => setToast(null)} />
     </>

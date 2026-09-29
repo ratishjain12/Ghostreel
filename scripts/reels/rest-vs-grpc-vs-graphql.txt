@@ -1,0 +1,11 @@
+Why do big companies run gRPC between their own services, but give the public a REST API? The answer is one question: who controls both ends of the wire.
+
+REST is plain HTTP and JSON. Any language, any browser, any curl command can call it, and you can cache it with the web's normal tools. When you don't know who your clients are, that's exactly what you want.
+
+gRPC sends compact binary messages over a single long lived connection, with a strict contract generated into code on both sides. It's faster and safer, but it only works when you own the client and the server. Inside your own company, you do.
+
+GraphQL lets the client ask for exactly the fields it needs in one request. That's perfect when one mobile screen would otherwise need five REST calls. The cost is on the server: caching is harder, and one careless query can get very expensive.
+
+So public and unknown clients get REST. Your own services talk gRPC. And a front end with complex screens asks through GraphQL.
+
+Comment guide and I'll send you the full comparison.

@@ -106,8 +106,8 @@ def publish_container(ig_user_id, creation_id, access_token):
 
 def publish_reel(name, project_dir, bucket, caption=None, keyword=None, client=None):
     client = client or get_client()
-    ig_user_id = _ssm_param("/reel-pipeline/ig-user-id")
-    access_token = _ssm_param("/reel-pipeline/ig-access-token")
+    ig_user_id = _ssm_param("/content-studio/ig-user-id")
+    access_token = _ssm_param("/content-studio/ig-access-token")
 
     video_path = latest_render(project_dir)
     check_duration(video_path)

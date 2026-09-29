@@ -1,5 +1,0 @@
-Ever wonder what happens when your cache entry expires at the exact same moment 10,000 requests hit your server?
-
-That's the thundering herd problem. One cache key expires. Every request that needed that data suddenly finds it missing, all at once. So all 10,000 requests go straight to the database to recompute the same value. Your database, which was handling light load a second ago, just got hit with 10,000 queries at the same time.
-
-The fix is simple: only one request is allowed to recompute the value. Every other request waits for that result, then reads it from cache. This is usually called request coalescing, or a distributed lock around the recompute step.

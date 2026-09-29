@@ -1,0 +1,5 @@
+{
+  "message": "Comment \"GUIDE\" and I'll send you the full breakdown.\n\nAsync took this API from 400ms to 40ms. One CPU-heavy line put it back to 400ms. Concurrency and parallelism solve different problems, and mixing them up makes async slower, not faster.\n\n#backenddevelopment #softwareengineering #systemdesign #programming",
+  "angle": "system-design",
+  "hook_style": "before-after"
+}

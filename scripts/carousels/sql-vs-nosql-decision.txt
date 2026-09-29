@@ -1,0 +1,7 @@
+Hook: SQL vs NoSQL isn't a religion. It's 5 questions.
+Q1: Does your data have relationships you'll actually query across?
+Q2: Do you need ACID transactions, or is eventual consistency fine?
+Q3: Is your schema fixed, or does it change every sprint?
+Q4: What's your real read/write ratio and scale target?
+Q5: Who's on-call, and do they actually know SQL or Mongo better?
+CTA: Comment GUIDE for the full decision framework.

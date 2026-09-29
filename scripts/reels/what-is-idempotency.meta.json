@@ -1,0 +1,5 @@
+{
+  "message": "Comment \"GUIDE\" and I'll send you the full breakdown.\n\nA retried request shouldn't mean a customer gets charged twice: that's what idempotency actually protects against. I broke down the idempotency-key pattern that makes retries safe, and why reads and writes behave completely differently here.\n\n#systemdesign #softwareengineering #backenddevelopment #distributedsystems",
+  "angle": "system-design",
+  "hook_style": "question"
+}

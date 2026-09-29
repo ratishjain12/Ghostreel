@@ -1,0 +1,5 @@
+{
+  "message": "Comment \"GUIDE\" and I'll send you the full breakdown.\n\nSession auth and JWTs solve the exact same problem completely differently: one remembers you, the other proves you. I broke down how each actually works under the hood, the real trade-off (instant revocation vs stateless scale), and when to reach for which.\n\n#systemdesign #webdevelopment #softwareengineering #backenddevelopment",
+  "angle": "system-design",
+  "hook_style": "number-promise"
+}

@@ -1,0 +1,5 @@
+{
+  "message": "Comment \"GUIDE\" and I'll send you the full breakdown.\n\nContext window, memory, RAG: all three put text in front of the model, but confuse them and you'll build something that either forgets everything or drowns in noise. I broke down what actually earns a spot in the context window.\n\n#aiengineering #llm #promptengineering #rag",
+  "angle": "ai-engineering",
+  "hook_style": "contrarian"
+}

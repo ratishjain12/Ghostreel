@@ -1,0 +1,403 @@
+<template>
+  <style>
+    @font-face { font-family: 'Fraunces'; src: url('assets/fonts/Fraunces-Variable.woff2') format('woff2'); font-weight: 400 700; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Fraunces'; src: url('assets/fonts/Fraunces-Italic.woff2') format('woff2'); font-weight: 400 700; font-style: italic; font-display: block; }
+    @font-face { font-family: 'IBM Plex Sans'; src: url('assets/fonts/IBMPlexSans-Variable.woff2') format('woff2'); font-weight: 300 700; font-style: normal; font-display: block; }
+    @font-face { font-family: 'IBM Plex Mono'; src: url('assets/fonts/IBMPlexMono-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+    @font-face { font-family: 'IBM Plex Mono'; src: url('assets/fonts/IBMPlexMono-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: block; }
+
+    #root {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      container-type: size;
+      font-family: 'IBM Plex Sans', sans-serif;
+      overflow: hidden;
+    }
+
+    .clip { position: absolute; inset: 0; }
+
+    ._05-thesis-bg {
+      background: #0A0D12;
+    }
+    ._05-thesis-bg::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(to right, rgba(35, 43, 51, 0.14) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(35, 43, 51, 0.14) 1px, transparent 1px);
+      background-size: 5.4cqw 5.4cqw;
+    }
+
+    ._05-thesis-glow {
+      pointer-events: none;
+    }
+    ._05-thesis-glow-layer {
+      position: absolute;
+      inset: -20cqw;
+      opacity: 0;
+      background:
+        radial-gradient(ellipse 46cqw 30cqh at 50% 27cqh, rgba(185, 140, 255, 0.3), transparent 62%),
+        radial-gradient(ellipse 46cqw 30cqh at 50% 58cqh, rgba(77, 232, 194, 0.3), transparent 62%);
+    }
+
+    ._05-thesis-stage {
+      pointer-events: none;
+    }
+
+    ._05-thesis-card {
+      position: absolute;
+      left: 12cqw;
+      width: 76cqw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.6cqh;
+      background: #12161C;
+      border: 1.5px solid rgba(137, 146, 161, 0.4);
+      border-radius: 8px;
+      padding: 3cqh 4cqw;
+      transform-origin: 50% 50%;
+    }
+    ._05-thesis-card--gate { top: 11.5cqh; height: 27cqh; }
+    ._05-thesis-card--mesh { top: 44.8cqh; height: 27cqh; }
+
+    ._05-thesis-glyph {
+      width: 62cqw;
+      display: block;
+      overflow: visible;
+    }
+
+    ._05-thesis-node rect {
+      fill: #12161C;
+      stroke: rgba(137, 146, 161, 0.4);
+      stroke-width: 1.5;
+    }
+    ._05-thesis-node text {
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 500;
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      fill: #EDEFF3;
+      text-anchor: middle;
+      dominant-baseline: middle;
+    }
+
+    ._05-thesis-gate-edge path {
+      fill: none;
+      stroke: #B98CFF;
+      stroke-width: 3;
+      stroke-linecap: round;
+    }
+    ._05-thesis-tick {
+      fill: #12161C;
+      stroke: #4A525E;
+      stroke-width: 1.5;
+    }
+    ._05-thesis-arrow-in line {
+      stroke: #B98CFF;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+    }
+    ._05-thesis-arrow-in path {
+      fill: #B98CFF;
+    }
+
+    ._05-thesis-mesh-edge path {
+      fill: none;
+      stroke: #4DE8C2;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+    }
+    ._05-thesis-mesh-dot circle {
+      fill: #12161C;
+      stroke: #4DE8C2;
+      stroke-width: 1.5;
+    }
+    ._05-thesis-mesh-arrow path {
+      fill: #4DE8C2;
+    }
+
+    ._05-thesis-caption {
+      font-family: 'Fraunces', serif;
+      font-weight: 600;
+      font-size: 3.2cqw;
+      line-height: 1.15;
+      color: #EDEFF3;
+      text-align: center;
+      margin: 0;
+      clip-path: inset(0 100% 0 0);
+    }
+  </style>
+
+  <div id="root" data-composition-id="05-thesis" data-width="1080" data-height="1920" data-duration="12.79">
+    <div class="clip _05-thesis-bg" data-start="0" data-duration="12.79" data-track-index="0"></div>
+
+    <div class="clip _05-thesis-glow" data-start="0" data-duration="12.79" data-track-index="1">
+      <div class="_05-thesis-glow-layer" id="_05-thesis-glow-layer"></div>
+    </div>
+
+    <div class="clip _05-thesis-stage" data-start="0" data-duration="12.79" data-track-index="2">
+      <div class="_05-thesis-card _05-thesis-card--gate" id="_05-thesis-card1">
+        <svg class="_05-thesis-glyph" id="_05-thesis-glyph1" viewBox="0 0 300 140" xmlns="http://www.w3.org/2000/svg">
+          <g class="_05-thesis-arrow-in" id="_05-thesis-arrow-in">
+            <line x1="45" y1="6" x2="45" y2="38" />
+            <path d="M 37 32 L 45 44 L 53 32 Z" />
+          </g>
+          <g class="_05-thesis-node">
+            <rect x="10" y="50" width="70" height="40" rx="4" />
+            <text x="45" y="71">CLIENT</text>
+          </g>
+          <g class="_05-thesis-node">
+            <rect x="220" y="50" width="70" height="40" rx="4" />
+            <text x="255" y="71">SERVICE</text>
+          </g>
+          <g class="_05-thesis-gate-edge">
+            <path id="_05-thesis-edge1a" d="M 80 70 L 128 70" />
+            <path id="_05-thesis-edge1b" d="M 142 70 L 168 70" />
+            <path id="_05-thesis-edge1c" d="M 182 70 L 220 70" />
+          </g>
+          <rect class="_05-thesis-tick" id="_05-thesis-tick1" x="128" y="58" width="14" height="24" rx="2" />
+          <rect class="_05-thesis-tick" id="_05-thesis-tick2" x="168" y="58" width="14" height="24" rx="2" />
+        </svg>
+        <p class="_05-thesis-caption" id="_05-thesis-caption1">Front door</p>
+      </div>
+
+      <div class="_05-thesis-card _05-thesis-card--mesh" id="_05-thesis-card2">
+        <svg class="_05-thesis-glyph" id="_05-thesis-glyph2" viewBox="0 0 300 140" xmlns="http://www.w3.org/2000/svg">
+          <g class="_05-thesis-mesh-edge">
+            <path id="_05-thesis-edge2a" d="M 70 70 L 170 40" />
+            <path id="_05-thesis-edge2b" d="M 70 70 L 170 100" />
+            <path id="_05-thesis-edge2c" d="M 70 70 L 250 70" />
+            <path id="_05-thesis-edge2d" d="M 170 40 L 250 70" />
+          </g>
+          <g transform="translate(160,70) rotate(20)">
+            <g class="_05-thesis-mesh-arrow" id="_05-thesis-arrow-ad">
+              <path d="M -6 -6 L 7 0 L -6 6 Z" />
+            </g>
+          </g>
+          <g transform="translate(210,55) rotate(31)">
+            <g class="_05-thesis-mesh-arrow" id="_05-thesis-arrow-bd">
+              <path d="M -6 -6 L 7 0 L -6 6 Z" />
+            </g>
+          </g>
+          <g class="_05-thesis-mesh-dot" id="_05-thesis-dot-a">
+            <circle cx="70" cy="70" r="9" />
+          </g>
+          <g class="_05-thesis-mesh-dot" id="_05-thesis-dot-b">
+            <circle cx="170" cy="40" r="8" />
+          </g>
+          <g class="_05-thesis-mesh-dot" id="_05-thesis-dot-c">
+            <circle cx="170" cy="100" r="8" />
+          </g>
+          <g class="_05-thesis-mesh-dot" id="_05-thesis-dot-d">
+            <circle cx="250" cy="70" r="8" />
+          </g>
+        </svg>
+        <p class="_05-thesis-caption" id="_05-thesis-caption2">Hallways</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const root = document.querySelector('[data-composition-id="05-thesis"]');
+
+      const edgePaths = root.querySelectorAll(
+        "._05-thesis-gate-edge path, ._05-thesis-mesh-edge path"
+      );
+      edgePaths.forEach((p) => {
+        const len = p.getTotalLength();
+        p.style.strokeDasharray = String(len);
+        p.style.strokeDashoffset = String(len);
+      });
+
+      const tl = gsap.timeline({ paused: true });
+
+      // ── Scene 1 (0.0–3.02s) — card 1 assembles: "the gateway handles traffic coming in from outside" ──
+      tl.fromTo(
+        root.querySelector("#_05-thesis-card1"),
+        { scale: 0, opacity: 0, y: 16 },
+        { scale: 1, opacity: 1, y: 0, duration: 0.45, ease: "power3.out" },
+        0.0
+      );
+
+      // client node
+      tl.fromTo(
+        root.querySelectorAll("#_05-thesis-glyph1 ._05-thesis-node")[0],
+        { opacity: 0, scale: 0.85 },
+        { opacity: 1, scale: 1, duration: 0.3, ease: "power3.out", transformOrigin: "50% 50%" },
+        0.5
+      );
+      // arrow entering from above, into the client node — the outside traffic
+      tl.fromTo(
+        root.querySelector("#_05-thesis-arrow-in"),
+        { opacity: 0, y: -30 },
+        { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" },
+        0.6
+      );
+      // edge: client → tick 1
+      tl.to(
+        root.querySelector("#_05-thesis-edge1a"),
+        { strokeDashoffset: 0, duration: 0.3, ease: "power2.out" },
+        0.9
+      );
+      // tick 1 resolves
+      tl.to(
+        root.querySelector("#_05-thesis-tick1"),
+        { fill: "#B98CFF", stroke: "#B98CFF", duration: 0.22, ease: "power1.out" },
+        1.15
+      );
+      // edge: tick 1 → tick 2
+      tl.to(
+        root.querySelector("#_05-thesis-edge1b"),
+        { strokeDashoffset: 0, duration: 0.25, ease: "power2.out" },
+        1.35
+      );
+      // tick 2 resolves
+      tl.to(
+        root.querySelector("#_05-thesis-tick2"),
+        { fill: "#B98CFF", stroke: "#B98CFF", duration: 0.22, ease: "power1.out" },
+        1.55
+      );
+      // edge: tick 2 → service
+      tl.to(
+        root.querySelector("#_05-thesis-edge1c"),
+        { strokeDashoffset: 0, duration: 0.3, ease: "power2.out" },
+        1.75
+      );
+      // service node
+      tl.fromTo(
+        root.querySelectorAll("#_05-thesis-glyph1 ._05-thesis-node")[1],
+        { opacity: 0, scale: 0.85 },
+        { opacity: 1, scale: 1, duration: 0.3, ease: "power3.out", transformOrigin: "50% 50%" },
+        1.95
+      );
+      // "Front door" caption wipes in
+      tl.to(
+        root.querySelector("#_05-thesis-caption1"),
+        { clipPath: "inset(0 0% 0 0)", duration: 0.4, ease: "power2.out" },
+        2.3
+      );
+
+      // ── Scene 2 (3.02–9.1s) — card 2 assembles: "the mesh, built out of sidecars…" ──
+      tl.to(
+        root.querySelector("#_05-thesis-card1"),
+        { opacity: 0.4, duration: 0.4, ease: "power1.inOut" },
+        3.02
+      );
+      tl.fromTo(
+        root.querySelector("#_05-thesis-card2"),
+        { scale: 0, opacity: 0, y: 16 },
+        { scale: 1, opacity: 1, y: 0, duration: 0.55, ease: "power3.out" },
+        3.15
+      );
+      // center sidecar dot
+      tl.fromTo(
+        root.querySelector("#_05-thesis-dot-a"),
+        { opacity: 0, scale: 0.7 },
+        { opacity: 1, scale: 1, duration: 0.28, ease: "power3.out", transformOrigin: "50% 50%" },
+        3.85
+      );
+      // first outer sidecar dot
+      tl.fromTo(
+        root.querySelector("#_05-thesis-dot-b"),
+        { opacity: 0, scale: 0.7 },
+        { opacity: 1, scale: 1, duration: 0.28, ease: "power3.out", transformOrigin: "50% 50%" },
+        4.15
+      );
+      // edge A → B
+      tl.to(
+        root.querySelector("#_05-thesis-edge2a"),
+        { strokeDashoffset: 0, duration: 0.32, ease: "power2.out" },
+        4.45
+      );
+      tl.fromTo(
+        root.querySelector("#_05-thesis-arrow-ad"),
+        { opacity: 0, scale: 0.6 },
+        { opacity: 1, scale: 1, duration: 0.25, ease: "power2.out", transformOrigin: "50% 50%" },
+        4.8
+      );
+      // second outer sidecar dot
+      tl.fromTo(
+        root.querySelector("#_05-thesis-dot-c"),
+        { opacity: 0, scale: 0.7 },
+        { opacity: 1, scale: 1, duration: 0.28, ease: "power3.out", transformOrigin: "50% 50%" },
+        5.15
+      );
+      // edge A → C
+      tl.to(
+        root.querySelector("#_05-thesis-edge2b"),
+        { strokeDashoffset: 0, duration: 0.32, ease: "power2.out" },
+        5.5
+      );
+      // third outer sidecar dot
+      tl.fromTo(
+        root.querySelector("#_05-thesis-dot-d"),
+        { opacity: 0, scale: 0.7 },
+        { opacity: 1, scale: 1, duration: 0.28, ease: "power3.out", transformOrigin: "50% 50%" },
+        5.9
+      );
+      // edge A → D
+      tl.to(
+        root.querySelector("#_05-thesis-edge2c"),
+        { strokeDashoffset: 0, duration: 0.32, ease: "power2.out" },
+        6.25
+      );
+      // cross-link B → D — the mesh reads as interconnected, not a single star
+      tl.to(
+        root.querySelector("#_05-thesis-edge2d"),
+        { strokeDashoffset: 0, duration: 0.32, ease: "power2.out" },
+        6.65
+      );
+      tl.fromTo(
+        root.querySelector("#_05-thesis-arrow-bd"),
+        { opacity: 0, scale: 0.6 },
+        { opacity: 1, scale: 1, duration: 0.25, ease: "power2.out", transformOrigin: "50% 50%" },
+        7.05
+      );
+      // "Hallways" caption wipes in
+      tl.to(
+        root.querySelector("#_05-thesis-caption2"),
+        { clipPath: "inset(0 0% 0 0)", duration: 0.4, ease: "power2.out" },
+        7.4
+      );
+      // both cards settle to equal brightness
+      tl.to(
+        root.querySelector("#_05-thesis-card1"),
+        { opacity: 1, duration: 0.5, ease: "power1.inOut" },
+        8.5
+      );
+
+      // ── Scene 3 (9.1–12.29s) — stillness-before-climax: "one's the front door, the other is the hallways" ──
+      tl.fromTo(
+        root.querySelector("#_05-thesis-glow-layer"),
+        { opacity: 0, scale: 0.85 },
+        { opacity: 1, scale: 1, duration: 0.9, ease: "power2.out" },
+        9.15
+      );
+      const breathe = { p: 0 };
+      const glow = root.querySelector("#_05-thesis-glow-layer");
+      tl.to(
+        breathe,
+        {
+          p: Math.PI * 2,
+          duration: 2.0,
+          ease: "none",
+          onUpdate: () => {
+            const s = Math.sin(breathe.p);
+            glow.style.opacity = String(1 + s * 0.06);
+          },
+        },
+        10.05
+      );
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["05-thesis"] = tl;
+      tl.seek(0);
+    })();
+  </script>
+</template>

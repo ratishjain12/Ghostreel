@@ -1,0 +1,361 @@
+<template>
+  <div id="root" data-composition-id="02-idempotency-key" data-width="1080" data-height="1920" data-duration="16.92">
+    <style>
+      @font-face { font-family: 'Fraunces'; src: url('assets/fonts/Fraunces-Variable.woff2') format('woff2'); font-weight: 400 700; font-style: normal; font-display: block; }
+      @font-face { font-family: 'Fraunces'; src: url('assets/fonts/Fraunces-Italic.woff2') format('woff2'); font-weight: 400 700; font-style: italic; font-display: block; }
+      @font-face { font-family: 'IBM Plex Sans'; src: url('assets/fonts/IBMPlexSans-Variable.woff2') format('woff2'); font-weight: 300 700; font-style: normal; font-display: block; }
+      @font-face { font-family: 'IBM Plex Mono'; src: url('assets/fonts/IBMPlexMono-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+      @font-face { font-family: 'IBM Plex Mono'; src: url('assets/fonts/IBMPlexMono-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: block; }
+
+      #root {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        container-type: size;
+        background: transparent;
+        font-family: 'IBM Plex Sans', sans-serif;
+        color: #EDEFF3;
+      }
+
+      #root .clip {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      #root .ikkey-bg {
+        background-color: #0A0D12;
+        background-image:
+          repeating-linear-gradient(0deg, rgba(35,43,51,0.12) 0px, rgba(35,43,51,0.12) 1px, transparent 1px, transparent 90px),
+          repeating-linear-gradient(90deg, rgba(35,43,51,0.12) 0px, rgba(35,43,51,0.12) 1px, transparent 1px, transparent 90px);
+      }
+
+      #root .ikkey-kicker {
+        position: absolute;
+        left: 90px;
+        top: 168px;
+        font-family: 'Fraunces', serif;
+        font-style: italic;
+        font-weight: 500;
+        font-size: 22px;
+        color: #FF9F45;
+        opacity: 0;
+        margin: 0;
+      }
+
+      #root .ikkey-h3 {
+        position: absolute;
+        left: 90px;
+        top: 202px;
+        width: 860px;
+        font-family: 'Fraunces', serif;
+        font-weight: 600;
+        font-size: 40px;
+        line-height: 1.12;
+        letter-spacing: -0.01em;
+        color: #EDEFF3;
+        opacity: 0;
+        margin: 0;
+      }
+
+      #root .ikkey-node {
+        position: absolute;
+        width: 300px;
+        height: 150px;
+        background-color: #12161C;
+        border: 1.5px solid rgba(137,146,161,0.4);
+        border-radius: 4px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        opacity: 0;
+      }
+
+      #root .ikkey-node--client { left: 90px; top: 345px; }
+      #root .ikkey-node--work { left: 690px; top: 345px; }
+      #root .ikkey-node--return {
+        left: 370px;
+        top: 980px;
+        width: 340px;
+        transition: none;
+      }
+
+      #root .ikkey-node-label {
+        font-family: 'IBM Plex Mono', monospace;
+        font-weight: 500;
+        font-size: 22px;
+        letter-spacing: 0.04em;
+        color: #EDEFF3;
+      }
+
+      #root .ikkey-node-caption {
+        font-family: 'IBM Plex Mono', monospace;
+        font-weight: 500;
+        font-size: 13px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: #8992A1;
+      }
+
+      #root .ikkey-svg {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+      }
+
+      #root .ikkey-edge {
+        fill: none;
+        stroke: #FF9F45;
+        stroke-width: 3;
+        stroke-linecap: round;
+      }
+
+      #root .ikkey-edge--ghost {
+        fill: none;
+        stroke: #FF9F45;
+        stroke-width: 3;
+        stroke-linecap: round;
+        opacity: 0;
+      }
+
+      #root .ikkey-dot {
+        fill: #FF9F45;
+        opacity: 0;
+      }
+
+      #root .ikkey-badge {
+        position: absolute;
+        left: 510px;
+        top: 390px;
+        width: 60px;
+        height: 60px;
+        border-radius: 8px;
+        background-color: #12161C;
+        border: 1.5px solid rgba(137,146,161,0.4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        box-sizing: border-box;
+      }
+
+      #root .ikkey-badge-icon {
+        width: 26px;
+        height: 26px;
+        overflow: visible;
+      }
+
+      #root .ikkey-badge-icon path {
+        fill: none;
+        stroke: #0A0D12;
+        stroke-width: 3;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      #root .ikkey-gate-label-slot {
+        position: absolute;
+        left: 440px;
+        top: 328px;
+        width: 200px;
+        text-align: center;
+      }
+
+      #root .ikkey-gate-label {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        font-family: 'IBM Plex Mono', monospace;
+        font-weight: 500;
+        font-size: 15px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      #root .ikkey-gate-label--pending { color: #8992A1; opacity: 0; }
+      #root .ikkey-gate-label--matched { color: #FF9F45; opacity: 0; }
+
+      #root .ikkey-chip {
+        position: absolute;
+        left: 140px;
+        top: 254px;
+        width: 200px;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1.5px solid rgba(255,159,69,0.5);
+        border-radius: 6px;
+        background-color: rgba(255,159,69,0.08);
+        opacity: 0;
+      }
+
+      #root .ikkey-chip span {
+        font-family: 'IBM Plex Mono', monospace;
+        font-weight: 500;
+        font-size: 14px;
+        letter-spacing: 0.06em;
+        color: #FF9F45;
+      }
+
+      #root .ikkey-micro {
+        position: absolute;
+        font-family: 'IBM Plex Mono', monospace;
+        font-weight: 500;
+        font-size: 13px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        opacity: 0;
+        text-align: center;
+      }
+
+      #root .ikkey-micro--stored { left: 690px; top: 505px; width: 300px; color: #8992A1; }
+      #root .ikkey-micro--untouched { left: 690px; top: 531px; width: 300px; color: #8992A1; }
+      #root .ikkey-micro--retry { left: 380px; top: 372px; width: 140px; color: #8992A1; }
+      #root .ikkey-micro--returned { left: 370px; top: 1140px; width: 340px; color: #FF9F45; }
+
+      #root .ikkey-node--return.is-lit {
+        background-color: #FF9F45;
+      }
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script>
+      (function () {
+        var root = document.querySelector('[data-composition-id="02-idempotency-key"]');
+
+        var q = function (sel) { return root.querySelector(sel); };
+
+        var edge1 = q('#ikkey-edge-1');
+        var edge2 = q('#ikkey-edge-2');
+        var edgeBranch = q('#ikkey-edge-branch');
+        var check = q('#ikkey-check-path');
+
+        [edge1, edge2, edgeBranch, check].forEach(function (p) {
+          var len = p.getTotalLength();
+          p.style.strokeDasharray = len;
+          p.style.strokeDashoffset = len;
+        });
+
+        var dot = q('#ikkey-dot');
+        var badge = q('.ikkey-badge');
+        var returnNode = q('.ikkey-node--return');
+
+        var tl = gsap.timeline({ paused: true });
+
+        tl.fromTo(q('.ikkey-kicker'), { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4, ease: 'power1.out' }, 0.0);
+        tl.fromTo(q('.ikkey-h3'), { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.45, ease: 'power1.out' }, 0.05);
+
+        tl.fromTo(q('.ikkey-node--client'), { opacity: 0, y: 12, scale: 0.94 }, { opacity: 1, y: 0, scale: 1, duration: 0.3, ease: 'power2.out' }, 0.02);
+        tl.fromTo(q('.ikkey-node--work'), { opacity: 0, y: 12, scale: 0.94 }, { opacity: 1, y: 0, scale: 1, duration: 0.3, ease: 'power2.out' }, 0.05);
+        tl.fromTo(badge, { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.28, ease: 'power2.out' }, 0.08);
+        tl.fromTo(q('.ikkey-gate-label--pending'), { opacity: 0 }, { opacity: 1, duration: 0.25, ease: 'power1.out' }, 0.12);
+
+        tl.fromTo(q('.ikkey-chip'), { opacity: 0, y: 10, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: 'power2.out' }, 0.55);
+
+        tl.to(edge1, { strokeDashoffset: 0, duration: 0.6, ease: 'power2.out' }, 1.1);
+
+        tl.fromTo(dot, { opacity: 0, attr: { cx: 390, cy: 420 } }, { opacity: 1, duration: 0.2, ease: 'power1.out' }, 1.9);
+        tl.fromTo(dot, { attr: { cx: 390 } }, { attr: { cx: 540 }, duration: 1.1, ease: 'power1.inOut' }, 2.0);
+
+        tl.to(edge2, { strokeDashoffset: 0, duration: 0.4, ease: 'power2.out' }, 3.3);
+        tl.fromTo(dot, { attr: { cx: 540 } }, { attr: { cx: 840 }, duration: 1.0, ease: 'power1.inOut' }, 3.3);
+
+        tl.to(q('.ikkey-node--work'), { backgroundColor: '#FF9F45', duration: 0.3, ease: 'power2.out' }, 4.3);
+        tl.fromTo(dot, { opacity: 1 }, { opacity: 0, duration: 0.15, ease: 'power1.out' }, 4.3);
+        tl.to(q('.ikkey-node--work'), { backgroundColor: '#12161C', duration: 0.35, ease: 'power1.inOut' }, 4.75);
+
+        tl.fromTo(q('.ikkey-micro--stored'), { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: 0.35, ease: 'power1.out' }, 4.9);
+
+        tl.fromTo(q('.ikkey-micro--retry'), { opacity: 0 }, { opacity: 1, duration: 0.3, ease: 'power1.out' }, 5.8);
+        tl.fromTo(q('#ikkey-edge-ghost'), { opacity: 0 }, { opacity: 0.35, duration: 0.3, ease: 'power1.out' }, 5.8);
+
+        tl.fromTo(dot, { opacity: 0, attr: { cx: 390, cy: 420 } }, { opacity: 1, duration: 0.2, ease: 'power1.out' }, 6.0);
+        tl.fromTo(dot, { attr: { cx: 390 } }, { attr: { cx: 540 }, duration: 1.4, ease: 'power1.inOut' }, 6.1);
+
+        tl.to(q('.ikkey-micro--retry'), { opacity: 0, duration: 0.3, ease: 'power1.out' }, 7.5);
+        tl.to(q('#ikkey-edge-ghost'), { opacity: 0, duration: 0.3, ease: 'power1.out' }, 7.5);
+
+        tl.to(badge, { backgroundColor: '#FF9F45', borderColor: '#FF9F45', duration: 0.3, ease: 'power2.out' }, 7.5);
+        tl.to(check, { strokeDashoffset: 0, duration: 0.3, ease: 'power2.out' }, 7.6);
+        tl.to(q('.ikkey-gate-label--pending'), { opacity: 0, duration: 0.25, ease: 'power1.out' }, 7.5);
+        tl.fromTo(q('.ikkey-gate-label--matched'), { opacity: 0 }, { opacity: 1, duration: 0.3, ease: 'power1.out' }, 7.55);
+
+        tl.to(edgeBranch, { strokeDashoffset: 0, duration: 0.4, ease: 'power2.out' }, 7.9);
+
+        tl.fromTo(dot, { attr: { cy: 420 } }, { attr: { cy: 1055 }, duration: 1.2, ease: 'power1.inOut' }, 8.3);
+        tl.fromTo(returnNode, { opacity: 0, y: 10, scale: 0.92 }, { opacity: 1, y: 0, scale: 1, duration: 1.2, ease: 'power2.out' }, 8.3);
+
+        tl.to(dot, { opacity: 0, duration: 0.2, ease: 'power1.out' }, 9.5);
+
+        tl.fromTo(badge, { scale: 1 }, { scale: 1.04, duration: 0.5, ease: 'sine.inOut' }, 11.0);
+        tl.to(badge, { scale: 1, duration: 0.5, ease: 'sine.inOut' }, 11.5);
+
+        tl.to(returnNode, { backgroundColor: '#FF9F45', duration: 0.5, ease: 'power2.out' }, 12.5);
+        tl.to(returnNode.querySelector('.ikkey-node-label'), { color: '#0A0D12', duration: 0.5, ease: 'power2.out' }, 12.5);
+        tl.to(returnNode.querySelector('.ikkey-node-caption'), { color: '#12161C', duration: 0.5, ease: 'power2.out' }, 12.5);
+
+        tl.fromTo(q('.ikkey-micro--returned'), { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: 0.4, ease: 'power1.out' }, 12.6);
+        tl.fromTo(q('.ikkey-micro--untouched'), { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: 0.4, ease: 'power1.out' }, 12.6);
+
+        window.__timelines = window.__timelines || {};
+        window.__timelines['02-idempotency-key'] = tl;
+      })();
+    </script>
+
+    <div class="clip ikkey-bg" data-start="0" data-duration="16.92" data-track-index="0"></div>
+
+    <div class="clip" data-start="0" data-duration="16.92" data-track-index="1">
+      <p class="ikkey-kicker">Mechanism 01</p>
+      <h3 class="ikkey-h3">Same key, same result.</h3>
+
+      <div class="ikkey-node ikkey-node--client">
+        <span class="ikkey-node-label">CLIENT</span>
+        <span class="ikkey-node-caption">Sends request</span>
+      </div>
+
+      <div class="ikkey-node ikkey-node--work">
+        <span class="ikkey-node-label">WORK</span>
+        <span class="ikkey-node-caption">Runs once</span>
+      </div>
+
+      <div class="ikkey-node ikkey-node--return">
+        <span class="ikkey-node-label">RETURN</span>
+        <span class="ikkey-node-caption">Original result</span>
+      </div>
+
+      <div class="ikkey-chip"><span>KEY: 7F3A2C</span></div>
+
+      <div class="ikkey-badge">
+        <svg class="ikkey-badge-icon" viewBox="0 0 24 24">
+          <path id="ikkey-check-path" d="M4 12.5 L9.5 18 L20 6" />
+        </svg>
+      </div>
+
+      <div class="ikkey-gate-label-slot">
+        <span class="ikkey-gate-label ikkey-gate-label--pending">KEY-SEEN?</span>
+        <span class="ikkey-gate-label ikkey-gate-label--matched">KEY MATCHED</span>
+      </div>
+
+      <span class="ikkey-micro ikkey-micro--stored">Stored</span>
+      <span class="ikkey-micro ikkey-micro--untouched">Untouched</span>
+      <span class="ikkey-micro ikkey-micro--retry">Retry</span>
+      <span class="ikkey-micro ikkey-micro--returned">Returned — no rework</span>
+
+      <svg class="ikkey-svg" viewBox="0 0 1080 1920" preserveAspectRatio="none">
+        <path id="ikkey-edge-ghost" class="ikkey-edge--ghost" d="M 390 420 L 510 420" />
+        <path id="ikkey-edge-1" class="ikkey-edge" d="M 390 420 L 510 420" />
+        <path id="ikkey-edge-2" class="ikkey-edge" d="M 570 420 L 690 420" />
+        <path id="ikkey-edge-branch" class="ikkey-edge" d="M 540 450 L 540 980" />
+        <circle id="ikkey-dot" class="ikkey-dot" cx="390" cy="420" r="14" />
+      </svg>
+    </div>
+  </div>
+</template>

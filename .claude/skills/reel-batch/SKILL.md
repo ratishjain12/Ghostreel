@@ -71,6 +71,17 @@ later pass wastes real time in an unattended run; pre-seeding the files removes 
 pass. `video/explainer-01/` is one already-built project on top of that same kit, not the source
 of it — deleting or heavily editing that example no longer changes what new projects default to.
 
+## Picking topics
+
+Before writing new scripts, check `growth/topic-backlog.md` if it exists and pick from it. It
+ranks topics by competitor evidence (`make competitors` → `growth/competitor-outliers.json`, posts
+that beat their own account's median by ≥3x) crossed with this account's own
+`growth/analysis-latest.md`. `make competitors` writes it automatically via
+`scripts/build_topic_backlog.py` (a headless `claude -p` pass, same mechanism as the dashboard's
+growth analysis), restricted to writing only that one file. Competitor save rates aren't observable: outlier
+scores are likes (or views, when available) relative to that account's median, never saves.
+Mark a backlog line `[x]` once its script exists in `scripts/reels/`.
+
 ## Running the batch step
 
 1. Drop one `.txt` per video into `scripts/reels/` (plain narration text, sentence-punctuated —
@@ -81,6 +92,12 @@ of it — deleting or heavily editing that example no longer changes what new pr
    ```
    Unset fields default to: destination `reels`, aspect `1080x1920` (9:16), language `en`,
    angle `concept`, message/intent derived from the script's first sentence.
+   - **No em dashes in `message`** (or any other on-screen/caption copy this pipeline writes —
+     BRIEF.md, meta.json overrides, the PDF guide). This account's IG/LinkedIn captions kept
+     shipping with em dashes because the rule only lived in `CAROUSEL_AUTHOR_PROMPT`
+     (`dashboard/server.py`), not in the reel `AUTHOR_PROMPT` or `PDF_PROMPT` — both now carry
+     the same instruction. Use a period, comma, or colon instead, and rewrite the sentence
+     rather than just deleting the dash and leaving a run-on.
 3. Run:
    ```bash
    uv run scripts/gen_reel_batch.py --scripts-dir scripts/reels
@@ -162,7 +179,9 @@ webhook wiring). The pipeline side:
     inside a white border, which shows up as "bad padding/spacing" even though the actual margin
     values are perfectly reasonable. Brand color belongs in accents (rules, headings, code-block
     borders) in a print document, not the page fill — that's a video-canvas convention, not a
-    document one.
+    document one. This is now spelled out directly in `PDF_PROMPT` (not just this note), along
+    with a no-em-dash rule for the guide's prose — both used to only live here as a lesson
+    learned after the fact, which is exactly how it kept recurring across runs.
   - **Editing `video/<name>/resources/guide.pdf` locally does nothing for real deliveries until
     it's re-uploaded.** The Lambda delivers whatever object currently sits at `s3://<bucket>/
     <name>/guide.pdf` — it has no awareness of the local file at all. Fixing the local PDF (a

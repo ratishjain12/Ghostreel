@@ -1,0 +1,78 @@
+<template>
+<div id="root" data-composition-id="03-write-through" data-width="1080" data-height="1080" data-duration="3">
+  <style>
+    @font-face { font-family: 'Space Grotesk'; src: url('assets/fonts/Space-Grotesk-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Space Grotesk'; src: url('assets/fonts/Space-Grotesk-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Space Grotesk'; src: url('assets/fonts/Space-Grotesk-700.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Inter'; src: url('assets/fonts/Inter-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Inter'; src: url('assets/fonts/Inter-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: block; }
+
+    #root { position: relative; width: 100%; height: 100%; overflow: hidden; background: #fdfae7; font-family: 'Inter', sans-serif; color: #111111; }
+
+    .eyebrow { position: absolute; left: 80px; top: 140px; width: 600px; font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #1e2bfa; }
+    .tag-pill { position: absolute; right: 80px; top: 136px; width: 160px; height: 32px; line-height: 32px; text-align: center; border-radius: 100px; background: rgba(30,43,250,0.08); color: #1e2bfa; font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; }
+    .h2 { position: absolute; left: 80px; top: 192px; width: 920px; font-family: 'Space Grotesk', sans-serif; font-size: 40px; font-weight: 600; line-height: 1.15; letter-spacing: -0.02em; color: #111111; }
+    .body { position: absolute; left: 80px; top: 282px; width: 920px; font-family: 'Inter', sans-serif; font-size: 26px; font-weight: 400; line-height: 1.6; color: #6b6b6b; }
+
+    /* Highlight column: left this time (mirrored from Frame 2), same vertical span for cross-slide consistency. */
+    .highlight { position: absolute; left: 80px; top: 520px; width: 460px; height: 380px; background: rgba(30,43,250,0.04); border: 1.5px solid rgba(30,43,250,0.2); border-left: 4px solid #1e2bfa; border-radius: 14px; box-sizing: border-box; padding: 32px 32px; display: flex; align-items: center; }
+    .highlight-text { font-family: 'Space Grotesk', sans-serif; font-size: 24px; font-weight: 500; line-height: 1.45; color: #111111; }
+
+    /* Diagram column: right. Sequential step-circles (fading opacity), flex-distributed to match the diagram's vertical range. */
+    .step-col { position: absolute; left: 690px; top: 470px; width: 160px; height: 460px; display: flex; flex-direction: column; align-items: center; }
+    .step { position: relative; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; }
+    .step-circle { position: relative; width: 56px; height: 56px; border-radius: 50%; background: #1e2bfa; display: flex; align-items: center; justify-content: center; }
+    .step-circle .num { font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700; color: #fdfae7; }
+    .step-label { position: relative; margin-top: 8px; width: 160px; text-align: center; font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 600; color: #111111; }
+    .step-connector { position: relative; flex: 1 1 auto; width: 100%; }
+    .step-line { position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: #1e2bfa; transform: translateX(-50%); }
+    .step-head { position: absolute; left: 50%; width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; transform: translateX(-50%); }
+    .step-head.down { bottom: 0; border-top: 7px solid #1e2bfa; }
+    .step-head.up { top: 0; border-bottom: 7px solid #1e2bfa; }
+    .sync-note { position: absolute; left: 100%; top: 50%; margin-left: 20px; width: 150px; transform: translateY(-50%); font-family: 'Inter', sans-serif; font-size: 12px; font-style: italic; color: #6b6b6b; }
+
+    .counter { position: absolute; right: 80px; top: 80px; width: 120px; text-align: right; font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 500; letter-spacing: 0.05em; color: #595959; }
+    .bar-track { position: absolute; left: 80px; top: 985px; width: 920px; height: 3px; background: rgba(30,43,250,0.15); }
+    .bar-fill { position: absolute; left: 80px; top: 985px; width: 460px; height: 3px; background: #1e2bfa; }
+  </style>
+
+  <div class="eyebrow">02: Write-Through</div>
+  <div class="tag-pill">Write Path</div>
+  <div class="h2">Every write updates both</div>
+  <div class="body">On a write, the app updates the cache and the database in the same request, synchronously. Neither store moves without the other: the cache is never stale.</div>
+
+  <div class="highlight">
+    <div class="highlight-text">Strong consistency by default: the write only finishes once both stores agree.</div>
+  </div>
+
+  <div class="step-col">
+    <div class="step">
+      <div class="step-circle" style="opacity:1;"><div class="num">1</div></div>
+      <div class="step-label">App</div>
+    </div>
+    <div class="step-connector">
+      <div class="step-line"></div>
+      <div class="step-head down"></div>
+      <div class="step-head up"></div>
+      <div class="sync-note">same request</div>
+    </div>
+    <div class="step">
+      <div class="step-circle" style="opacity:0.85;"><div class="num">2</div></div>
+      <div class="step-label">Cache</div>
+    </div>
+    <div class="step-connector">
+      <div class="step-line"></div>
+      <div class="step-head down"></div>
+      <div class="step-head up"></div>
+    </div>
+    <div class="step">
+      <div class="step-circle" style="opacity:0.7;"><div class="num">3</div></div>
+      <div class="step-label">Database</div>
+    </div>
+  </div>
+
+  <div class="counter">03 / 06</div>
+  <div class="bar-track"></div>
+  <div class="bar-fill"></div>
+</div>
+</template>

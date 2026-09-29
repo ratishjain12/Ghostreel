@@ -1,0 +1,5 @@
+{
+  "message": "Comment \"GUIDE\" and I'll send you the full breakdown.\n\nReverse proxy, load balancer, API gateway: same position in the request path, completely different jobs. I broke down what each one actually decides, and when to reach for which.\n\n#systemdesign #softwareengineering #webdevelopment #api",
+  "angle": "system-design",
+  "hook_style": "contrarian"
+}

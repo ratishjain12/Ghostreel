@@ -1,0 +1,212 @@
+<template>
+  <style>
+    @font-face { font-family: 'Fraunces'; src: url('assets/fonts/Fraunces-Variable.woff2') format('woff2'); font-weight: 400 700; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Fraunces'; src: url('assets/fonts/Fraunces-Italic.woff2') format('woff2'); font-weight: 400 700; font-style: italic; font-display: block; }
+    @font-face { font-family: 'IBM Plex Sans'; src: url('assets/fonts/IBMPlexSans-Variable.woff2') format('woff2'); font-weight: 300 700; font-style: normal; font-display: block; }
+    @font-face { font-family: 'IBM Plex Mono'; src: url('assets/fonts/IBMPlexMono-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+    @font-face { font-family: 'IBM Plex Mono'; src: url('assets/fonts/IBMPlexMono-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: block; }
+
+    #root {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      container-type: size;
+      background: #0A0D12;
+    }
+
+    .cta07-bg {
+      position: absolute;
+      inset: 0;
+      background: #0A0D12;
+    }
+    .cta07-grid {
+      position: absolute;
+      inset: 0;
+      opacity: 0.12;
+      background-image:
+        repeating-linear-gradient(0deg, #232B33 0px, #232B33 1px, transparent 1px, transparent 64px),
+        repeating-linear-gradient(90deg, #232B33 0px, #232B33 1px, transparent 1px, transparent 64px);
+    }
+
+    .cta07-stage {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cta07-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 7cqh;
+      transform-origin: 50% 50%;
+      will-change: transform;
+    }
+
+    .cta07-line {
+      display: flex;
+      align-items: baseline;
+      gap: 3.5cqw;
+      font-family: 'Fraunces';
+      font-weight: 600;
+      font-size: 4.4cqw;
+      line-height: 1.08;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+    }
+    .cta07-comment {
+      color: #EDEFF3;
+    }
+    .cta07-guide-wrap {
+      position: relative;
+      display: inline-block;
+    }
+    .cta07-glow {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 18cqw;
+      height: 8cqh;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(102,44,189,0.95) 0%, rgba(102,44,189,0.5) 40%, rgba(102,44,189,0) 72%);
+      pointer-events: none;
+      z-index: 1;
+    }
+    .cta07-guide {
+      position: relative;
+      z-index: 2;
+      color: #B98CFF;
+      display: inline-block;
+      transform-origin: 50% 50%;
+      will-change: transform;
+    }
+
+    .cta07-sub-wrap {
+      display: flex;
+      align-items: baseline;
+      font-family: 'IBM Plex Mono';
+      font-weight: 500;
+      font-size: 1.1cqw;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #8992A1;
+    }
+    .cta07-sub {
+      white-space: nowrap;
+    }
+    .cta07-cursor {
+      display: inline-block;
+      margin-left: 0.3cqw;
+      color: #8992A1;
+    }
+  </style>
+
+  <div id="root" data-composition-id="07-cta" data-width="1080" data-height="1920">
+    <div class="cta07-bg clip" data-start="0" data-duration="2.43" data-track-index="0"></div>
+    <div class="cta07-grid clip" data-start="0" data-duration="2.43" data-track-index="1"></div>
+
+    <div class="cta07-stage clip" data-start="0" data-duration="2.43" data-track-index="2">
+      <div class="cta07-card">
+        <div class="cta07-line">
+          <span class="cta07-comment"></span>
+          <span class="cta07-guide-wrap">
+            <div class="cta07-glow"></div>
+            <span class="cta07-guide">&#8220;guide&#8221;</span>
+          </span>
+        </div>
+        <div class="cta07-sub-wrap">
+          <span class="cta07-sub"></span><span class="cta07-cursor">_</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var root = document.querySelector('[data-composition-id="07-cta"]');
+      var commentEl = root.querySelector('.cta07-comment');
+      var guideEl = root.querySelector('.cta07-guide');
+      var glowEl = root.querySelector('.cta07-glow');
+      var cardEl = root.querySelector('.cta07-card');
+      var subEl = root.querySelector('.cta07-sub');
+      var cursorEl = root.querySelector('.cta07-cursor');
+
+      var tl = gsap.timeline({ paused: true });
+      window.__timelines = window.__timelines || {};
+      window.__timelines['07-cta'] = tl;
+
+      // Scene 1 (0.0-0.61s): "Comment" types on — smooth character slice.
+      var commentText = 'Comment';
+      var commentLen = { v: 0 };
+      tl.to(
+        commentLen,
+        {
+          v: commentText.length,
+          duration: 0.42,
+          ease: 'power1.inOut',
+          onUpdate: function () {
+            commentEl.textContent = commentText.substring(0, Math.floor(commentLen.v));
+          },
+        },
+        0,
+      );
+
+      // Scene 2 (0.61-2.43s): "guide" spring-pops in, glow blooms behind it — land as one beat.
+      tl.fromTo(
+        guideEl,
+        { scale: 0, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 0.45, ease: 'power3.out' },
+        0.61,
+      );
+      tl.fromTo(
+        glowEl,
+        { opacity: 0, scale: 0.85, xPercent: -50, yPercent: -50 },
+        { opacity: 0.3, scale: 1, xPercent: -50, yPercent: -50, duration: 0.45, ease: 'power2.out' },
+        0.61,
+      );
+
+      // Mono sub-line types on beneath, starting once "guide" has landed.
+      var subText = 'the full breakdown →';
+      var subLen = { v: 0 };
+      tl.to(
+        subLen,
+        {
+          v: subText.length,
+          duration: 0.9,
+          ease: 'power1.inOut',
+          onUpdate: function () {
+            subEl.textContent = subText.substring(0, Math.floor(subLen.v));
+          },
+        },
+        1.15,
+      );
+
+      // Cursor blink — deterministic sin square wave, bounded to the typing window.
+      var blink = { p: 0 };
+      tl.to(
+        blink,
+        {
+          p: Math.PI * 2 * 1.5,
+          duration: 0.9,
+          ease: 'none',
+          onUpdate: function () {
+            cursorEl.style.opacity = Math.sin(blink.p) > 0 ? '1' : '0';
+          },
+        },
+        1.15,
+      );
+      tl.set(cursorEl, { opacity: 0 }, 2.05);
+
+      // Final frame — the real exit: a slow, gentle settle, then fully still to the last frame.
+      tl.fromTo(
+        cardEl,
+        { scale: 1.018 },
+        { scale: 1, duration: 0.38, ease: 'power2.out' },
+        2.05,
+      );
+    })();
+  </script>
+</template>

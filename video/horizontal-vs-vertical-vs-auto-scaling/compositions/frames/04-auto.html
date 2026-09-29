@@ -1,0 +1,326 @@
+<template>
+  <style>
+    @font-face { font-family: 'Fraunces'; src: url('assets/fonts/Fraunces-Variable.woff2') format('woff2'); font-weight: 400 700; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Fraunces'; src: url('assets/fonts/Fraunces-Italic.woff2') format('woff2'); font-weight: 400 700; font-style: italic; font-display: block; }
+    @font-face { font-family: 'IBM Plex Sans'; src: url('assets/fonts/IBMPlexSans-Variable.woff2') format('woff2'); font-weight: 300 700; font-style: normal; font-display: block; }
+    @font-face { font-family: 'IBM Plex Mono'; src: url('assets/fonts/IBMPlexMono-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+    @font-face { font-family: 'IBM Plex Mono'; src: url('assets/fonts/IBMPlexMono-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: block; }
+
+    #root {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      container-type: size;
+      overflow: hidden;
+      font-family: 'IBM Plex Sans', sans-serif;
+      --canvas: #0A0D12;
+      --canvas-raised: #12161C;
+      --canvas-raised-2: #181D24;
+      --ink: #EDEFF3;
+      --ink-dim: #8992A1;
+      --ink-faint: #4A525E;
+      --line: #232B33;
+      --accent-2: #4DE8C2;
+      --accent-3: #B98CFF;
+    }
+    #root .clip { position: absolute; inset: 0; }
+
+    /* ground */
+    .h04-bg {
+      background-color: var(--canvas);
+      background-image:
+        repeating-linear-gradient(to right, rgba(35,43,51,0.14) 0px, rgba(35,43,51,0.14) 1px, transparent 1px, transparent 54px),
+        repeating-linear-gradient(to bottom, rgba(35,43,51,0.14) 0px, rgba(35,43,51,0.14) 1px, transparent 1px, transparent 54px);
+    }
+
+    /* AUTO kicker */
+    .h04-kicker {
+      position: absolute;
+      top: 8.4cqh;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      font-family: 'IBM Plex Mono';
+      font-weight: 500;
+      font-size: 1.5cqw;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent-3);
+      opacity: 0;
+    }
+
+    /* loop glyph */
+    .h04-loop-wrap {
+      position: absolute;
+      top: 13cqh;
+      left: 50%;
+      width: 30cqw;
+      height: 17cqh;
+      margin-left: -15cqw;
+      opacity: 0;
+    }
+    .h04-loop-svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+    .h04-loop-arc { fill: none; stroke: var(--accent-3); stroke-width: 6; stroke-linecap: round; }
+    .h04-eye-ring { fill: none; stroke: var(--accent-3); stroke-width: 3; opacity: 0; }
+    .h04-eye-dot { fill: var(--accent-3); opacity: 0; }
+
+    /* sightline + gate-tick */
+    .h04-sight-wrap {
+      position: absolute;
+      top: 31.5cqh;
+      left: 50%;
+      width: 8cqw;
+      height: 15cqh;
+      margin-left: -4cqw;
+    }
+    .h04-sight-svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+    .h04-sight-line { fill: none; stroke: var(--ink-faint); stroke-width: 2.5; stroke-dasharray: 6 7; stroke-linecap: round; }
+    .h04-sight-pulse { fill: none; stroke: var(--accent-3); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 12 9999; opacity: 0; }
+
+    .h04-gate-tick {
+      position: absolute;
+      top: 48%;
+      left: 50%;
+      width: 1.7cqw;
+      height: 1.7cqw;
+      margin-top: -0.85cqw;
+      margin-left: -0.85cqw;
+      background: var(--canvas-raised);
+      border: 1.5px solid rgba(137,146,161,0.55);
+      border-radius: 2px;
+    }
+    .h04-gate-label {
+      position: absolute;
+      top: 48%;
+      left: calc(50% + 1.9cqw);
+      margin-top: -0.7em;
+      white-space: nowrap;
+      font-family: 'IBM Plex Mono';
+      font-weight: 500;
+      font-size: 1.05cqw;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+    }
+
+    /* node stack (dimmed, carried-over base layer) */
+    .h04-stack {
+      position: absolute;
+      top: 51.5cqh;
+      left: 0;
+      width: 100%;
+      height: 13cqh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .h04-node {
+      width: 22cqw;
+      height: 10cqh;
+      flex: 0 0 auto;
+      background-color: var(--canvas-raised);
+      border: 1.5px solid rgba(137,146,161,0.4);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+    }
+    .h04-node-tag {
+      font-family: 'IBM Plex Mono';
+      font-weight: 500;
+      font-size: 1.3cqw;
+      letter-spacing: 0.04em;
+      color: var(--ink);
+    }
+    .h04-edge {
+      width: 3cqw;
+      height: 2px;
+      flex: 0 0 auto;
+      background: var(--accent-2);
+      opacity: 0;
+    }
+
+    /* caption */
+    .h04-caption {
+      position: absolute;
+      top: 72cqh;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      font-family: 'IBM Plex Mono';
+      font-weight: 500;
+      font-size: 1.5cqw;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent-3);
+    }
+    .h04-caption span { display: inline-block; opacity: 0; }
+    .h04-caption-underline {
+      position: absolute;
+      top: 76cqh;
+      left: 50%;
+      width: 3.2cqw;
+      height: 2px;
+      margin-left: -1.6cqw;
+      background: var(--accent-3);
+      opacity: 0;
+    }
+  </style>
+
+  <div id="root" data-composition-id="04-auto" data-width="1080" data-height="1920" data-duration="12.361">
+    <div class="h04-bg clip" data-start="0" data-duration="12.361" data-track-index="0"></div>
+
+    <div class="clip" data-start="0" data-duration="12.361" data-track-index="1">
+      <div class="h04-stack" id="h04-stack">
+        <div class="h04-node" id="h04-node-1"><div class="h04-node-tag">NODE</div></div>
+        <div class="h04-edge" id="h04-edge-1"></div>
+        <div class="h04-node" id="h04-node-2"><div class="h04-node-tag">NODE</div></div>
+        <div class="h04-edge" id="h04-edge-2"></div>
+        <div class="h04-node" id="h04-node-3"><div class="h04-node-tag">NODE</div></div>
+      </div>
+    </div>
+
+    <div class="clip" data-start="0" data-duration="12.361" data-track-index="2">
+      <div class="h04-kicker" id="h04-kicker">Auto</div>
+
+      <div class="h04-loop-wrap" id="h04-loop-wrap">
+        <svg class="h04-loop-svg" viewBox="0 0 200 200">
+          <defs>
+            <marker id="h04-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="#B98CFF" />
+            </marker>
+          </defs>
+          <path id="h04-loop-arc" class="h04-loop-arc" d="M 100 32 A 68 68 0 1 1 32 100" marker-end="url(#h04-arrow)" />
+          <circle id="h04-eye-ring" class="h04-eye-ring" cx="100" cy="100" r="16" />
+          <circle id="h04-eye-dot" class="h04-eye-dot" cx="100" cy="100" r="7" />
+        </svg>
+      </div>
+
+      <div class="h04-sight-wrap" id="h04-sight-wrap">
+        <svg class="h04-sight-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <defs>
+            <marker id="h04-sight-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="#4A525E" />
+            </marker>
+          </defs>
+          <path id="h04-sight-line" class="h04-sight-line" d="M50,0 L50,100" marker-end="url(#h04-sight-arrow)" />
+          <path id="h04-sight-pulse" class="h04-sight-pulse" d="M50,0 L50,100" />
+        </svg>
+        <div class="h04-gate-tick" id="h04-gate-tick"></div>
+        <div class="h04-gate-label" id="h04-gate-label">Scale</div>
+      </div>
+    </div>
+
+    <div class="clip" data-start="0" data-duration="12.361" data-track-index="3">
+      <div class="h04-caption" id="h04-caption">
+        <span id="h04-cap-1">Watches</span>
+        <span id="h04-cap-2">+</span>
+        <span id="h04-cap-3">Decides</span>
+      </div>
+      <div class="h04-caption-underline" id="h04-caption-underline"></div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var root = document.querySelector('[data-composition-id="04-auto"]');
+      var tl = gsap.timeline({ paused: true });
+
+      var loopArc = root.querySelector('#h04-loop-arc');
+      var loopLen = loopArc.getTotalLength();
+      loopArc.style.strokeDasharray = loopLen;
+      loopArc.style.strokeDashoffset = loopLen;
+
+      var sightLine = root.querySelector('#h04-sight-line');
+      var sightLen = sightLine.getTotalLength();
+      sightLine.style.strokeDasharray = sightLen;
+      sightLine.style.strokeDashoffset = sightLen;
+
+      var eyeDot = root.querySelector('#h04-eye-dot');
+      var eyeRing = root.querySelector('#h04-eye-ring');
+      var loopWrap = root.querySelector('#h04-loop-wrap');
+      var gateTick = root.querySelector('#h04-gate-tick');
+      var gateLabel = root.querySelector('#h04-gate-label');
+      var sightPulse = root.querySelector('#h04-sight-pulse');
+
+      // ---- Scene 1 (0.0-2.78s): dimmed node stack settles, loop draws in, AUTO label ----
+      tl.fromTo(root.querySelectorAll('#h04-node-1, #h04-node-2, #h04-node-3'),
+        { opacity: 0, y: 12 }, { opacity: 0.4, y: 0, duration: 0.4, ease: 'power2.out', stagger: 0.06 }, 0);
+      tl.fromTo(root.querySelectorAll('#h04-edge-1, #h04-edge-2'),
+        { opacity: 0 }, { opacity: 0.4, duration: 0.35, ease: 'power1.out' }, 0.2);
+
+      tl.fromTo(loopWrap, { opacity: 0, scale: 0.94 }, { opacity: 1, scale: 1, duration: 0.35, ease: 'power2.out', transformOrigin: 'center center' }, 0.15);
+      tl.to(loopArc, { strokeDashoffset: 0, duration: 2.0, ease: 'power2.inOut' }, 0.3);
+
+      tl.fromTo(root.querySelector('#h04-kicker'),
+        { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.35, ease: 'power2.out' }, 2.0);
+
+      // ---- Scene 2 (2.78-6.94s): the eye wakes and pulses ("watches real demand"), sightline draws ----
+      tl.fromTo([eyeRing, eyeDot], { opacity: 0 }, { opacity: 1, duration: 0.3, ease: 'power1.out' }, 2.85);
+
+      var pulsePhase = { p: 0 };
+      tl.to(pulsePhase, {
+        p: Math.PI * 2 * 3,
+        duration: 3.0,
+        ease: 'none',
+        onUpdate: function () {
+          var s = Math.sin(pulsePhase.p);
+          var sDot = 1 + s * 0.12;
+          var sRing = 1 + Math.sin(pulsePhase.p + Math.PI / 2) * 0.08;
+          eyeDot.setAttribute('transform', 'translate(100 100) scale(' + sDot + ') translate(-100 -100)');
+          eyeRing.setAttribute('transform', 'translate(100 100) scale(' + sRing + ') translate(-100 -100)');
+          eyeRing.style.opacity = String(0.5 + s * 0.3);
+        }
+      }, 3.1);
+
+      tl.to(sightLine, { strokeDashoffset: 0, duration: 1.2, ease: 'power2.inOut' }, 3.6);
+
+      // ---- Scene 3 (6.94-9.32s): a signal travels down, gate-tick flips, a node lights up ----
+      tl.fromTo(sightPulse, { strokeDashoffset: 100, opacity: 0.9 }, { strokeDashoffset: 40, duration: 0.32, ease: 'none' }, 6.85);
+      tl.to(sightPulse, { opacity: 0, duration: 0.15, ease: 'power1.out' }, 7.15);
+
+      tl.to(gateTick, {
+        backgroundColor: '#B98CFF', borderColor: '#B98CFF',
+        duration: 0.3, ease: 'power2.out'
+      }, 7.15);
+      tl.to(gateTick, { scale: 1.35, duration: 0.14, ease: 'power2.out', transformOrigin: 'center center' }, 7.15);
+      tl.to(gateTick, { scale: 1, duration: 0.22, ease: 'power2.inOut', transformOrigin: 'center center' }, 7.29);
+      tl.to(gateLabel, { color: '#B98CFF', duration: 0.3, ease: 'power2.out' }, 7.15);
+
+      tl.to(root.querySelector('#h04-node-2'), {
+        opacity: 1, borderColor: 'rgba(185,140,255,0.75)', backgroundColor: '#181D24',
+        duration: 0.4, ease: 'power2.out'
+      }, 7.25);
+      tl.to(root.querySelector('#h04-node-2 .h04-node-tag'), { color: '#B98CFF', duration: 0.4, ease: 'power2.out' }, 7.25);
+      tl.to(root.querySelector('#h04-node-2'), { scale: 1.06, duration: 0.15, ease: 'power2.out', transformOrigin: 'center center' }, 7.25);
+      tl.to(root.querySelector('#h04-node-2'), { scale: 1, duration: 0.22, ease: 'power2.inOut', transformOrigin: 'center center' }, 7.4);
+
+      // ---- Scene 4 (9.32-11.861s): caption settles, holds, subtle jitter on the loop's internals ----
+      tl.fromTo(root.querySelector('#h04-cap-1'), { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.32, ease: 'power2.out' }, 9.35);
+      tl.fromTo(root.querySelector('#h04-cap-2'), { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.28, ease: 'power2.out' }, 9.46);
+      tl.fromTo(root.querySelector('#h04-cap-3'), { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.32, ease: 'power2.out' }, 9.56);
+      tl.fromTo(root.querySelector('#h04-caption-underline'),
+        { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.3, ease: 'power2.out', transformOrigin: 'center center' }, 9.75);
+
+      var idlePhase = { p: 0 };
+      tl.to(idlePhase, {
+        p: Math.PI * 2,
+        duration: 1.95,
+        ease: 'none',
+        onUpdate: function () {
+          var s = Math.sin(idlePhase.p);
+          var sDot = 1 + s * 0.05;
+          var sRing = 1 + Math.sin(idlePhase.p + Math.PI / 2) * 0.035;
+          eyeDot.setAttribute('transform', 'translate(100 100) scale(' + sDot + ') translate(-100 -100)');
+          eyeRing.setAttribute('transform', 'translate(100 100) scale(' + sRing + ') translate(-100 -100)');
+        }
+      }, 9.9);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['04-auto'] = tl;
+      tl.seek(0);
+    })();
+  </script>
+</template>

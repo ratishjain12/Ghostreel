@@ -1,0 +1,13 @@
+Context window, memory, RAG. All three end up putting text in front of the model. But confuse them, and you'll build a system that either forgets everything or drowns in irrelevant context.
+
+The context window is just the raw space, the token budget for a single call. Whatever's inside it, the model can see, whatever's outside it, the model has never heard of, full stop.
+
+Memory is what decides what from past turns, or past sessions, gets carried forward and re-inserted into that window. Without memory, every new call starts from zero, the model has no idea what you said five messages ago unless something explicitly put it back in.
+
+RAG isn't about the past conversation at all, it's about knowledge the model was never told in the first place. It retrieves relevant documents from an external source based on the current query, and injects them into the same context window, right alongside the conversation history.
+
+So the context window is the space. Memory decides what from the conversation's own history earns a spot in that space. RAG decides what from outside the conversation entirely earns a spot in that same space.
+
+You always have a context window, that's just the constraint. Add memory the moment your app needs to remember something across turns or sessions. Add RAG the moment the model needs facts it was never given, from your docs, your database, wherever.
+
+Comment guide and I'll send over the full breakdown.

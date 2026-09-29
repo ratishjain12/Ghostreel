@@ -1,0 +1,348 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face {
+          font-family: "Space Grotesk";
+          font-weight: 500;
+          font-style: normal;
+          font-display: block;
+          src: url("assets/fonts/Space-Grotesk-500.woff2") format("woff2");
+        }
+        @font-face {
+          font-family: "Space Grotesk";
+          font-weight: 600;
+          font-style: normal;
+          font-display: block;
+          src: url("assets/fonts/Space-Grotesk-600.woff2") format("woff2");
+        }
+        @font-face {
+          font-family: "Space Grotesk";
+          font-weight: 700;
+          font-style: normal;
+          font-display: block;
+          src: url("assets/fonts/Space-Grotesk-700.woff2") format("woff2");
+        }
+        @font-face {
+          font-family: "Inter";
+          font-weight: 400;
+          font-style: normal;
+          font-display: block;
+          src: url("assets/fonts/Inter-400.woff2") format("woff2");
+        }
+        @font-face {
+          font-family: "Inter";
+          font-weight: 600;
+          font-style: normal;
+          font-display: block;
+          src: url("assets/fonts/Inter-600.woff2") format("woff2");
+        }
+
+        #root {
+          position: relative;
+          width: 1080px;
+          height: 1080px;
+          overflow: hidden;
+          container-type: size;
+          font-family: "Inter", sans-serif;
+        }
+
+        .f06-bg {
+          position: absolute;
+          inset: 0;
+          background: #fdfae7;
+        }
+
+        .f06-content {
+          position: absolute;
+          inset: 80px;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .f06-header-row {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 18px;
+        }
+        .f06-eyebrow {
+          font-family: "Space Grotesk", sans-serif;
+          font-weight: 600;
+          font-size: 1.7cqw;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          color: #1e2bfa;
+        }
+        .f06-pill {
+          font-family: "Space Grotesk", sans-serif;
+          font-weight: 500;
+          font-size: 1.35cqw;
+          color: #1e2bfa;
+          background: rgba(30, 43, 250, 0.08);
+          border-radius: 100px;
+          padding: 9px 22px;
+        }
+        .f06-h2 {
+          font-family: "Space Grotesk", sans-serif;
+          font-weight: 600;
+          font-size: 4.6cqw;
+          letter-spacing: -0.02em;
+          line-height: 1.15;
+          color: #111111;
+          margin-bottom: 40px;
+        }
+
+        .f06-grid {
+          flex: 1;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          grid-template-rows: 1fr 1fr;
+          gap: 24px;
+        }
+        .f06-card {
+          background: rgba(30, 43, 250, 0.04);
+          border: 1.5px solid rgba(30, 43, 250, 0.2);
+          border-radius: 14px;
+          padding: 30px 32px;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          gap: 20px;
+        }
+        .f06-card-icon {
+          flex-shrink: 0;
+          width: 46px;
+          height: 46px;
+          border-radius: 50%;
+          background: rgba(30, 43, 250, 0.08);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .f06-card-body {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+        }
+        .f06-card-num {
+          font-family: "Space Grotesk", sans-serif;
+          font-weight: 600;
+          font-size: 1.3cqw;
+          letter-spacing: 0.05em;
+          color: #1e2bfa;
+          margin-bottom: 10px;
+        }
+        .f06-icon-ticks {
+          display: flex;
+          gap: 4px;
+        }
+        .f06-icon-ticks span {
+          width: 5px;
+          height: 5px;
+          border-radius: 50%;
+          background: #1e2bfa;
+        }
+        .f06-icon-wait {
+          position: relative;
+          width: 18px;
+          height: 18px;
+          border-radius: 50%;
+          border: 2px solid #1e2bfa;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 3px;
+        }
+        .f06-icon-wait span {
+          width: 3px;
+          height: 8px;
+          background: #1e2bfa;
+          border-radius: 1px;
+        }
+        .f06-icon-duplex {
+          position: relative;
+          width: 24px;
+          height: 12px;
+        }
+        .f06-icon-duplex::before {
+          content: "";
+          position: absolute;
+          left: 6px;
+          right: 6px;
+          top: 50%;
+          height: 2px;
+          margin-top: -1px;
+          background: #1e2bfa;
+        }
+        .f06-icon-duplex .f06-arrow {
+          position: absolute;
+          top: 50%;
+          width: 0;
+          height: 0;
+          margin-top: -5px;
+          border-top: 5px solid transparent;
+          border-bottom: 5px solid transparent;
+        }
+        .f06-icon-duplex .f06-arrow-l {
+          left: 0;
+          border-right: 7px solid #1e2bfa;
+        }
+        .f06-icon-duplex .f06-arrow-r {
+          right: 0;
+          border-left: 7px solid #1e2bfa;
+        }
+        .f06-icon-oneway {
+          position: relative;
+          width: 24px;
+          height: 12px;
+        }
+        .f06-icon-oneway::before {
+          content: "";
+          position: absolute;
+          left: 3px;
+          right: 9px;
+          top: 50%;
+          height: 2px;
+          margin-top: -1px;
+          background: #1e2bfa;
+        }
+        .f06-icon-oneway .f06-arrow-r {
+          position: absolute;
+          right: 0;
+          top: 50%;
+          width: 0;
+          height: 0;
+          margin-top: -5px;
+          border-top: 5px solid transparent;
+          border-bottom: 5px solid transparent;
+          border-left: 7px solid #1e2bfa;
+        }
+        .f06-card-name {
+          font-family: "Space Grotesk", sans-serif;
+          font-weight: 600;
+          font-size: 2.3cqw;
+          letter-spacing: -0.01em;
+          color: #111111;
+          margin-bottom: 12px;
+        }
+        .f06-card-desc {
+          font-family: "Inter", sans-serif;
+          font-weight: 400;
+          font-size: 1.62cqw;
+          line-height: 1.5;
+          color: #6b6b6b;
+        }
+
+        .f06-chrome {
+          position: absolute;
+          left: 80px;
+          right: 80px;
+          bottom: 80px;
+        }
+        .f06-counter {
+          font-family: "Space Grotesk", sans-serif;
+          font-weight: 500;
+          font-size: 1.35cqw;
+          letter-spacing: 0.05em;
+          color: #9a9a9a;
+          margin-bottom: 10px;
+        }
+        .f06-progress-track {
+          width: 100%;
+          height: 3px;
+          background: rgba(30, 43, 250, 0.15);
+        }
+        .f06-progress-fill {
+          width: 85.7%;
+          height: 100%;
+          background: #1e2bfa;
+        }
+      </style>
+
+      <div id="root" data-composition-id="06-comparison" data-width="1080" data-height="1080">
+        <div class="clip f06-bg" data-start="0" data-duration="6" data-track-index="0"></div>
+
+        <div class="clip f06-content" data-start="0" data-duration="6" data-track-index="1">
+          <div class="f06-header-row">
+            <div class="f06-eyebrow">The tradeoff, side by side</div>
+            <div class="f06-pill">OVERVIEW</div>
+          </div>
+          <div class="f06-h2">Pick your cost</div>
+
+          <div class="f06-grid">
+            <div class="f06-card">
+              <div class="f06-card-icon">
+                <div class="f06-icon-ticks"><span></span><span></span><span></span></div>
+              </div>
+              <div class="f06-card-body">
+                <div class="f06-card-num">01</div>
+                <div class="f06-card-name">Polling</div>
+                <div class="f06-card-desc">
+                  Wasted requests, latency capped at your interval.
+                </div>
+              </div>
+            </div>
+            <div class="f06-card">
+              <div class="f06-card-icon">
+                <div class="f06-icon-wait"><span></span><span></span></div>
+              </div>
+              <div class="f06-card-body">
+                <div class="f06-card-num">02</div>
+                <div class="f06-card-name">Long Polling</div>
+                <div class="f06-card-desc">
+                  A held-open connection per client, instant re-asks.
+                </div>
+              </div>
+            </div>
+            <div class="f06-card">
+              <div class="f06-card-icon">
+                <div class="f06-icon-duplex">
+                  <div class="f06-arrow f06-arrow-l"></div>
+                  <div class="f06-arrow f06-arrow-r"></div>
+                </div>
+              </div>
+              <div class="f06-card-body">
+                <div class="f06-card-num">03</div>
+                <div class="f06-card-name">WebSockets</div>
+                <div class="f06-card-desc">
+                  Stateful connections complicate scaling.
+                </div>
+              </div>
+            </div>
+            <div class="f06-card">
+              <div class="f06-card-icon">
+                <div class="f06-icon-oneway">
+                  <div class="f06-arrow-r"></div>
+                </div>
+              </div>
+              <div class="f06-card-body">
+                <div class="f06-card-num">04</div>
+                <div class="f06-card-name">SSE</div>
+                <div class="f06-card-desc">
+                  One-way only: no client-to-server channel.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="clip f06-chrome" data-start="0" data-duration="6" data-track-index="2">
+          <div class="f06-counter">6 / 7</div>
+          <div class="f06-progress-track">
+            <div class="f06-progress-fill"></div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        window.__timelines = window.__timelines || {};
+        window.__timelines["06-comparison"] = gsap.timeline({ paused: true });
+      </script>
+    </template>
+  </body>
+</html>

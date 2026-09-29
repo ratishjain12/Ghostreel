@@ -1,0 +1,262 @@
+<template>
+  <style>
+    @font-face { font-family: "Inter"; font-weight: 400; font-style: normal; font-display: block; src: url("assets/fonts/Inter-400.woff2") format("woff2"); }
+    @font-face { font-family: "Inter"; font-weight: 600; font-style: normal; font-display: block; src: url("assets/fonts/Inter-600.woff2") format("woff2"); }
+    @font-face { font-family: "Space Grotesk"; font-weight: 500; font-style: normal; font-display: block; src: url("assets/fonts/Space-Grotesk-500.woff2") format("woff2"); }
+    @font-face { font-family: "Space Grotesk"; font-weight: 600; font-style: normal; font-display: block; src: url("assets/fonts/Space-Grotesk-600.woff2") format("woff2"); }
+    @font-face { font-family: "Space Grotesk"; font-weight: 700; font-style: normal; font-display: block; src: url("assets/fonts/Space-Grotesk-700.woff2") format("woff2"); }
+
+    #root {
+      position: relative;
+      width: 1080px;
+      height: 1080px;
+      overflow: hidden;
+      container-type: size;
+      font-family: "Inter", sans-serif;
+      background: #fdfae7;
+    }
+
+    .clip { position: absolute; inset: 0; }
+    .f6-bg { background: #fdfae7; }
+
+    .f6-wrap {
+      position: absolute;
+      left: 8cqw;
+      right: 8cqw;
+      top: 8cqw;
+      height: 42cqw;
+      background: #1e2bfa;
+      border-radius: 2.6cqw;
+      padding: 3.6cqw 5.4cqw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    .f6-below {
+      position: absolute;
+      left: 8cqw;
+      right: 8cqw;
+      top: 56cqw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .f6-eyebrow {
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 600;
+      font-size: 1.85cqw;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #fdfae7;
+    }
+
+    .f6-accent-line {
+      width: 6.4cqw;
+      height: 0.42cqw;
+      min-height: 4px;
+      border-radius: 2px;
+      background: #fdfae7;
+      margin-top: 2cqw;
+    }
+
+    .f6-headline {
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 700;
+      font-size: 7.6cqw;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: #fdfae7;
+      margin-top: 2.4cqw;
+      max-width: 90%;
+    }
+
+    .f6-body {
+      font-family: "Inter", sans-serif;
+      font-weight: 400;
+      font-size: 2.3cqw;
+      line-height: 1.55;
+      color: rgba(253,250,231,0.72);
+      margin-top: 2cqw;
+      max-width: 78%;
+    }
+
+    .f6-steps {
+      display: flex;
+      gap: 3.6cqw;
+    }
+    .f6-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1cqw;
+    }
+    .f6-step-circle {
+      width: 4.6cqw;
+      height: 4.6cqw;
+      min-width: 36px;
+      min-height: 36px;
+      border-radius: 50%;
+      background: #1e2bfa;
+      color: #fdfae7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 700;
+      font-size: 1.7cqw;
+    }
+    .f6-step-label {
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 500;
+      font-size: 1.4cqw;
+      color: #6b6b6b;
+    }
+
+    .f6-cta-row {
+      margin-top: 3.2cqw;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.6cqw;
+    }
+    .f6-cta-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.9cqw;
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 600;
+      font-size: 2.05cqw;
+      border-radius: 100px;
+      padding: 1.6cqw 2.9cqw;
+      white-space: nowrap;
+    }
+    .f6-cta-btn--save {
+      background: #1e2bfa;
+      color: #fdfae7;
+    }
+    .f6-cta-btn--follow {
+      background: rgba(30,43,250,0.06);
+      border: 1.5px solid rgba(30,43,250,0.4);
+      color: #1e2bfa;
+    }
+    .f6-cta-icon {
+      width: 1.9cqw;
+      height: 1.9cqw;
+      min-width: 16px;
+      min-height: 16px;
+      flex-shrink: 0;
+    }
+
+    .f6-signoff {
+      margin-top: 1.8cqw;
+      font-family: "Inter", sans-serif;
+      font-weight: 400;
+      font-size: 1.6cqw;
+      color: #6b6b6b;
+    }
+
+    .f6-footer {
+      position: absolute;
+      left: 8cqw;
+      right: 8cqw;
+      bottom: 4.2cqw;
+      display: flex;
+      align-items: center;
+      gap: 1.6cqw;
+    }
+    .f6-progress-track {
+      flex: 1;
+      height: 0.28cqw;
+      min-height: 3px;
+      border-radius: 6px;
+      background: rgba(30,43,250,0.15);
+      overflow: hidden;
+    }
+    .f6-progress-fill {
+      display: block;
+      width: 100%;
+      height: 100%;
+      background: #1e2bfa;
+    }
+    .f6-counter {
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 500;
+      font-size: 1.5cqw;
+      letter-spacing: 0.05em;
+      color: #5c5c5c;
+      white-space: nowrap;
+    }
+  </style>
+
+  <div id="root" data-composition-id="06-closing" data-width="1080" data-height="1080" data-duration="4">
+    <div class="clip f6-bg" data-start="0" data-duration="4" data-track-index="0"></div>
+
+    <div class="clip" data-start="0" data-duration="4" data-track-index="1">
+      <div class="f6-wrap">
+        <div class="f6-eyebrow">The fix</div>
+        <div class="f6-accent-line"></div>
+        <div class="f6-headline">Curate context. Every turn.</div>
+        <div class="f6-body">Prune what&rsquo;s irrelevant. Summarize what&rsquo;s settled. Remove what&rsquo;s stale, before it poisons, distracts, confuses, or clashes.</div>
+      </div>
+
+      <div class="f6-below">
+        <div class="f6-steps">
+          <div class="f6-step">
+            <div class="f6-step-circle">1</div>
+            <span class="f6-step-label">Prune</span>
+          </div>
+          <div class="f6-step">
+            <div class="f6-step-circle">2</div>
+            <span class="f6-step-label">Summarize</span>
+          </div>
+          <div class="f6-step">
+            <div class="f6-step-circle">3</div>
+            <span class="f6-step-label">Remove</span>
+          </div>
+        </div>
+
+        <div class="f6-cta-row">
+          <span class="f6-cta-btn f6-cta-btn--save">
+            <svg class="f6-cta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+            </svg>
+            Save this
+          </span>
+          <span class="f6-cta-btn f6-cta-btn--follow">
+            <svg class="f6-cta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M2 21v-2a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v2"></path>
+              <line x1="19" y1="8" x2="19" y2="14"></line>
+              <line x1="16" y1="11" x2="22" y2="11"></line>
+            </svg>
+            Follow @ratish.ai
+          </span>
+        </div>
+
+        <div class="f6-signoff">for more AI engineering breakdowns</div>
+      </div>
+    </div>
+
+    <div class="clip" data-start="0" data-duration="4" data-track-index="2">
+      <div class="f6-footer">
+        <div class="f6-progress-track"><span class="f6-progress-fill"></span></div>
+        <div class="f6-counter">06 / 06</div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    (function () {
+      var root = document.querySelector('[data-composition-id="06-closing"]');
+      window.__timelines = window.__timelines || {};
+      window.__timelines["06-closing"] = gsap.timeline({ paused: true });
+    })();
+  </script>
+</template>

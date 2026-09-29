@@ -1,0 +1,13 @@
+You've clicked "Continue with Google" a thousand times. Here's what actually happens in those two seconds.
+
+OAuth 2.0 isn't for logging you in — it's for letting one app hand another app limited access, without ever sharing your password. That distinction matters more than people think.
+
+Say a photo printing app wants access to your Google Photos. Without OAuth, you'd have to hand over your actual Google password — which means that app can now do literally anything your account can do. Terrible idea.
+
+Instead, OAuth redirects you to Google itself. You log in there, on Google's page, not the printing app's page. Google asks: this app wants to read your photos, allow it? You say yes, and Google hands the printing app a short-lived access token — not your password, just a scoped permission slip.
+
+That token says exactly one thing: this app can read your photos, for this long, and nothing else. It can't change your password, it can't read your email, it can't do anything outside that scope.
+
+And when the token expires? The app uses a longer-lived refresh token to quietly get a new one, without bothering you again.
+
+That's the whole model. Delegated, scoped, revocable access, without ever handing over the actual keys. Comment guide and I'll send over the full flow, step by step.

@@ -1,0 +1,112 @@
+<template>
+<div id="root" data-composition-id="03-prompting" data-width="1080" data-height="1080" data-duration="2">
+  <style>
+    @font-face { font-family: 'Space Grotesk'; src: url('assets/fonts/Space-Grotesk-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Space Grotesk'; src: url('assets/fonts/Space-Grotesk-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Space Grotesk'; src: url('assets/fonts/Space-Grotesk-700.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Inter'; src: url('assets/fonts/Inter-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Inter'; src: url('assets/fonts/Inter-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: block; }
+
+    #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: 'Inter', sans-serif; color: #111111; }
+    #root .clip { position: absolute; }
+
+    .p1-bg { inset: 0; background: #fdfae7; }
+
+    .p1-eyebrow {
+      left: 90px; top: 110px; width: 500px;
+      font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 22px;
+      letter-spacing: 0.08em; text-transform: uppercase; color: #1e2bfa;
+    }
+    .p1-tagpill {
+      right: 90px; top: 104px; width: auto; padding: 9px 20px; border-radius: 100px;
+      background: rgba(30,43,250,0.08); color: #1e2bfa;
+      font-family: 'Space Grotesk', sans-serif; font-weight: 500; font-size: 18px;
+      letter-spacing: 0.04em; text-transform: uppercase; white-space: nowrap;
+    }
+    .p1-h2 {
+      left: 90px; top: 170px; width: 900px;
+      font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 66px;
+      line-height: 1.1; letter-spacing: -0.02em; color: #111111;
+    }
+    .p1-body {
+      left: 90px; top: 320px; width: 480px;
+      font-family: 'Inter', sans-serif; font-weight: 400; font-size: 28px;
+      line-height: 1.6; color: #6b6b6b;
+    }
+    .p1-diagram {
+      left: 610px; top: 320px; width: 340px; padding: 28px 26px;
+      background: rgba(30,43,250,0.04); border: 1.5px solid rgba(30,43,250,0.2); border-radius: 14px;
+    }
+    .p1-diagram .p1-d-title {
+      display: flex; align-items: center; gap: 10px;
+      font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 14px;
+      letter-spacing: 0.08em; text-transform: uppercase; color: #1e2bfa; margin-bottom: 20px;
+    }
+    .p1-diagram .p1-d-title svg { width: 18px; height: 18px; flex-shrink: 0; }
+    .p1-diagram .p1-d-row { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .p1-diagram .p1-d-row:last-child { margin-bottom: 0; }
+    .p1-diagram .p1-d-num {
+      width: 28px; height: 28px; border-radius: 50%; background: #1e2bfa; color: #fdfae7;
+      font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 14px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .p1-diagram .p1-d-label {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 500; font-size: 20px; color: #111111;
+    }
+    .p1-highlight {
+      left: 90px; top: 660px; width: 860px; padding: 36px 40px;
+      background: rgba(30,43,250,0.08); border-left: 4px solid #1e2bfa; border-radius: 12px;
+    }
+    .p1-highlight .p1-h-eyebrow {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 16px;
+      letter-spacing: 0.08em; text-transform: uppercase; color: #1e2bfa; margin-bottom: 12px;
+    }
+    .p1-highlight .p1-h-statement {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 500; font-size: 28px;
+      line-height: 1.4; color: #111111;
+    }
+
+    .p1-dots { left: 481px; top: 955px; width: 118px; height: 8px; }
+    .p1-dots .pdot { position: absolute; top: 0; width: 8px; height: 8px; border-radius: 50%; background: rgba(30,43,250,0.2); }
+    .p1-dots .pdot.active { background: #1e2bfa; }
+  </style>
+
+  <div id="p1-bg" class="clip p1-bg" data-start="0" data-duration="2" data-track-index="0"></div>
+
+  <div id="p1-eyebrow" class="clip p1-eyebrow" data-start="0" data-duration="2" data-track-index="2">OPTION 1</div>
+  <div id="p1-tagpill" class="clip p1-tagpill" data-start="0" data-duration="2" data-track-index="2">INSTRUCTIONS GAP</div>
+  <div id="p1-h2" class="clip p1-h2" data-start="0" data-duration="2" data-track-index="3">Prompting</div>
+  <div id="p1-body" class="clip p1-body" data-start="0" data-duration="2" data-track-index="3">The model already has the knowledge and the right behavior. It just needs clearer direction: better instructions, format, examples, and constraints.</div>
+
+  <div id="p1-diagram" class="clip p1-diagram" data-start="0" data-duration="2" data-track-index="3">
+    <div class="p1-d-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Prompt anatomy</div>
+    <div class="p1-d-row"><span class="p1-d-num">1</span><span class="p1-d-label">Role</span></div>
+    <div class="p1-d-row"><span class="p1-d-num">2</span><span class="p1-d-label">Task</span></div>
+    <div class="p1-d-row"><span class="p1-d-num">3</span><span class="p1-d-label">Format</span></div>
+  </div>
+
+  <div id="p1-highlight" class="clip p1-highlight" data-start="0" data-duration="2" data-track-index="4">
+    <div class="p1-h-eyebrow">Use it when</div>
+    <div class="p1-h-statement">The answer already lives in the model. The gap is how you&rsquo;re asking.</div>
+  </div>
+
+  <div id="p1-dots" class="clip p1-dots" data-start="0" data-duration="2" data-track-index="9">
+    <div class="pdot" style="left:0px;"></div>
+    <div class="pdot" style="left:22px;"></div>
+    <div class="pdot active" style="left:44px;"></div>
+    <div class="pdot" style="left:66px;"></div>
+    <div class="pdot" style="left:88px;"></div>
+    <div class="pdot" style="left:110px;"></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    (function () {
+      const root = document.querySelector('[data-composition-id="03-prompting"]');
+      const tl = gsap.timeline({ paused: true });
+      window.__timelines = window.__timelines || {};
+      window.__timelines["03-prompting"] = tl;
+    })();
+  </script>
+</div>
+</template>

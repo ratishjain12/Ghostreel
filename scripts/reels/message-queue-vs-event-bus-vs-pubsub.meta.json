@@ -1,0 +1,5 @@
+{
+  "message": "Comment \"GUIDE\" and I'll send you the full breakdown.\n\nMessage queue, event bus, pub/sub: all three move messages between services, but picking the wrong one either loses messages or floods everyone with noise. I broke down who's actually allowed to consume each message, and when to reach for which.\n\n#systemdesign #softwareengineering #backenddevelopment #distributedsystems",
+  "angle": "system-design",
+  "hook_style": "contrarian"
+}

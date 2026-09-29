@@ -1,0 +1,5 @@
+{
+  "message": "Comment \"GUIDE\" and I'll send you the full breakdown.\n\nWhy do big companies use gRPC internally but give the public REST? It comes down to who controls both ends of the wire. REST vs gRPC vs GraphQL, and when each one wins.\n\n#systemdesign #api #backenddevelopment #softwareengineering",
+  "angle": "system-design",
+  "hook_style": "question"
+}

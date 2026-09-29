@@ -1,0 +1,13 @@
+Vertical scaling, horizontal scaling, auto-scaling. People say we need to scale like it's one decision. It's actually three separate ones, and only one of them is really about automation.
+
+Vertical scaling means making one machine bigger, more CPU, more RAM, on the same box. It's the simplest option, nothing about your architecture has to change, but you eventually hit a hardware ceiling, and there's still just one machine that can go down.
+
+Horizontal scaling means adding more machines instead, running the same service side by side. No hard ceiling the way vertical has, and you get redundancy for free, if one instance dies, the others are still there. The tradeoff is your app has to be built to run as multiple, coordinated copies.
+
+Auto-scaling isn't a third way to add capacity, it's the automation layer on top of the other two. It watches real demand and adds or removes capacity for you, instead of a human deciding when to scale up or down.
+
+So vertical and horizontal answer how do we get more capacity. Auto-scaling answers who decides when we need it, and how fast do we react.
+
+Scale vertically first, it's the cheapest fix while you're small. Move to horizontal once you need redundancy or you're hitting the ceiling of a single machine. Add auto-scaling once your traffic is unpredictable enough that manual scaling can't keep up.
+
+Comment guide and I'll send over the full breakdown.

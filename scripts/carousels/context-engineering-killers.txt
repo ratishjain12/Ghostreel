@@ -1,0 +1,6 @@
+Hook: Your agent isn't dumb. Its context is.
+Context rot: stale info piles up across a long session and never gets pruned.
+Tool bloat: every tool's description eats context whether or not it's relevant this turn.
+Missing grounding: no retrieval/memory anchor, so the model guesses instead of reading.
+No token budget: everything gets crammed in "just in case" instead of curated.
+CTA: Curate context like you curate code. Comment GUIDE for the full breakdown.

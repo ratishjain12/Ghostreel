@@ -1,0 +1,165 @@
+<template id="06-prefill-template">
+  <div id="root" data-composition-id="06-prefill" data-width="1080" data-height="1920" data-duration="7.1">
+    <style>
+      @font-face { font-family: "EB Garamond"; src: url("assets/fonts/EBGaramond-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: block; }
+      @font-face { font-family: "EB Garamond"; src: url("assets/fonts/EBGaramond-700.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: block; }
+      @font-face { font-family: "Inter"; src: url("assets/fonts/Inter-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: block; }
+      @font-face { font-family: "Inter"; src: url("assets/fonts/Inter-700.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: block; }
+      @font-face { font-family: "JetBrains Mono"; src: url("assets/fonts/JetBrainsMono-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: block; }
+      @font-face { font-family: "JetBrains Mono"; src: url("assets/fonts/JetBrainsMono-700.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: block; }
+
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; }
+      #root [class*="06-prefill-"] { position: absolute; }
+
+      #\30 6-prefill-bg { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; background: #FAF9F5; }
+      #\30 6-prefill-stage { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+
+      /* request-path spine */
+      .\30 6-prefill-spine-line { left: 300px; top: 229px; width: 480px; height: 1px; background: rgba(20,20,19,0.2); }
+      .\30 6-prefill-dot { top: 216px; width: 28px; height: 28px; border-radius: 9999px; box-sizing: border-box; }
+      .\30 6-prefill-dot-past { background: #B4B3AF; }
+      .\30 6-prefill-dot-future { background: #FAF9F5; border: 1px solid rgba(20,20,19,0.3); }
+      .\30 6-prefill-dot-current { background: #FAF9F5; border: 1px solid rgba(20,20,19,0.3); }
+      .\30 6-prefill-dot-fill { left: -1px; top: -1px; width: 28px; height: 28px; border-radius: 9999px; background: #CC785C; }
+
+      .\30 6-prefill-kicker { left: 0; top: 282px; width: 1080px; height: 36px; text-align: center; font-family: "JetBrains Mono", monospace; font-weight: 400; font-size: 28px; line-height: 36px; letter-spacing: 0.16em; text-transform: uppercase; color: #141413; }
+      #root .\30 6-prefill-spike { position: static; color: #CC785C; }
+      .\30 6-prefill-display { left: 0; top: 350px; width: 1080px; height: 160px; text-align: center; font-family: "EB Garamond", serif; font-weight: 400; font-size: 160px; line-height: 160px; letter-spacing: -0.022em; color: #141413; }
+
+      /* prompt panel */
+      .\30 6-prefill-panel { left: 90px; top: 570px; width: 900px; height: 540px; background: #181715; border: 1px solid rgba(250,249,245,0.14); border-radius: 8px; box-sizing: border-box; overflow: hidden; }
+      .\30 6-prefill-bar { left: 0; top: 0; width: 898px; height: 64px; background: #252320; border-bottom: 1px solid rgba(250,249,245,0.14); box-sizing: border-box; }
+      .\30 6-prefill-bar-label { top: 0; width: 240px; height: 64px; font-family: "JetBrains Mono", monospace; font-weight: 400; font-size: 24px; line-height: 64px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(250,249,245,0.72); }
+      .\30 6-prefill-bar-left { left: 32px; text-align: left; }
+      .\30 6-prefill-bar-right { left: 626px; text-align: right; color: #FAF9F5; }
+      .\30 6-prefill-grid { left: 40px; top: 104px; width: 820px; height: 394px; }
+      .\30 6-prefill-tok { height: 44px; border-radius: 6px; background: rgba(250,249,245,0.1); overflow: hidden; }
+      .\30 6-prefill-tok-lit { left: 0; top: 0; width: 100%; height: 100%; background: #FAF9F5; border-radius: 6px; }
+      .\30 6-prefill-sweep { left: 0; top: -14px; width: 3px; height: 422px; background: #CC785C; border-radius: 2px; }
+
+      /* pause timeline */
+      .\30 6-prefill-chip { left: 90px; top: 1222px; width: 64px; height: 56px; background: #181715; border-radius: 6px; }
+      .\30 6-prefill-chip-cell { width: 22px; height: 10px; border-radius: 2px; background: #FAF9F5; }
+      .\30 6-prefill-tl-line { left: 170px; top: 1250px; width: 766px; height: 1px; background: rgba(20,20,19,0.35); }
+      .\30 6-prefill-marker { left: 936px; top: 1236px; width: 28px; height: 28px; border-radius: 9999px; border: 1px solid #141413; background: #FAF9F5; box-sizing: border-box; }
+      .\30 6-prefill-pause { left: 353px; top: 1178px; width: 400px; height: 34px; text-align: center; font-family: "JetBrains Mono", monospace; font-weight: 400; font-size: 26px; line-height: 34px; letter-spacing: 0.02em; color: rgba(20,20,19,0.6); }
+      .\30 6-prefill-first { left: 690px; top: 1296px; width: 300px; height: 34px; text-align: right; font-family: "JetBrains Mono", monospace; font-weight: 400; font-size: 24px; line-height: 34px; letter-spacing: 0.16em; text-transform: uppercase; color: #141413; }
+    </style>
+
+    <div id="06-prefill-bg" class="clip" data-start="0" data-duration="7.1" data-track-index="0"></div>
+
+    <div id="06-prefill-stage" class="clip" data-start="0" data-duration="7.1" data-track-index="1">
+      <div class="06-prefill-spine-line"></div>
+      <div class="06-prefill-dot 06-prefill-dot-past" style="left:286px"></div>
+      <div class="06-prefill-dot 06-prefill-dot-past" style="left:382px"></div>
+      <div class="06-prefill-dot 06-prefill-dot-past" style="left:478px"></div>
+      <div class="06-prefill-dot 06-prefill-dot-past" style="left:574px"></div>
+      <div class="06-prefill-dot 06-prefill-dot-current" style="left:670px"><div id="06-prefill-dotfill" class="06-prefill-dot-fill"></div></div>
+      <div class="06-prefill-dot 06-prefill-dot-future" style="left:766px"></div>
+
+      <div id="06-prefill-kicker" class="06-prefill-kicker"><span class="06-prefill-spike">✱</span> STEP 05 / 06</div>
+      <div id="06-prefill-display" class="06-prefill-display">Prefill</div>
+
+      <div id="06-prefill-panel" class="06-prefill-panel">
+        <div class="06-prefill-bar">
+          <div id="06-prefill-label" class="06-prefill-bar-label 06-prefill-bar-left">Your prompt</div>
+          <div id="06-prefill-allonce" class="06-prefill-bar-label 06-prefill-bar-right">All at once</div>
+        </div>
+        <div id="06-prefill-grid" class="06-prefill-grid">
+          <div id="06-prefill-sweep" class="06-prefill-sweep"></div>
+        </div>
+      </div>
+
+      <div id="06-prefill-chip" class="06-prefill-chip">
+        <div class="06-prefill-chip-cell" style="left:8px;top:10px"></div>
+        <div class="06-prefill-chip-cell" style="left:34px;top:10px"></div>
+        <div class="06-prefill-chip-cell" style="left:8px;top:23px"></div>
+        <div class="06-prefill-chip-cell" style="left:34px;top:23px"></div>
+        <div class="06-prefill-chip-cell" style="left:8px;top:36px"></div>
+        <div class="06-prefill-chip-cell" style="left:34px;top:36px;width:12px"></div>
+      </div>
+      <div id="06-prefill-tlline" class="06-prefill-tl-line"></div>
+      <div id="06-prefill-marker" class="06-prefill-marker"></div>
+      <div id="06-prefill-pause" class="06-prefill-pause">pause</div>
+      <div id="06-prefill-first" class="06-prefill-first">First token</div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script>
+      (function () {
+        var root = document.querySelector('[data-composition-id="06-prefill"]');
+        var q = function (id) { return root.querySelector('[id="06-prefill-' + id + '"]'); };
+        var grid = q("grid");
+        var sweep = q("sweep");
+
+        // Deterministic token layout: 6 rows, last row shorter (the prompt ends).
+        var widths = [96, 64, 128, 80, 112, 56, 144, 72, 88, 120, 60, 104, 136, 68, 92, 76, 116, 52, 84, 140];
+        var rowMax = [800, 800, 800, 800, 800, 470];
+        var ROW_H = 44, ROW_GAP = 26, GAP = 12;
+        var toks = [];
+        var wi = 0;
+        for (var r = 0; r < rowMax.length; r++) {
+          var x = 0;
+          while (true) {
+            var w = widths[wi % widths.length];
+            if (x + w > rowMax[r]) break;
+            toks.push({ x: x, y: r * (ROW_H + ROW_GAP), w: w });
+            x += w + GAP;
+            wi++;
+          }
+        }
+        var lits = [];
+        toks.forEach(function (t) {
+          var el = document.createElement("div");
+          el.className = "06-prefill-tok";
+          el.style.left = t.x + "px";
+          el.style.top = t.y + "px";
+          el.style.width = t.w + "px";
+          var lit = document.createElement("div");
+          lit.className = "06-prefill-tok-lit";
+          el.appendChild(lit);
+          grid.insertBefore(el, sweep);
+          t.el = el;
+          lits.push({ lit: lit, x: t.x });
+        });
+
+        var tl = gsap.timeline({ paused: true });
+
+        // Scene 1: current dot pops coral, kicker, display rises on "prefill".
+        tl.fromTo(q("dotfill"), { scale: 0.3, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.35, ease: "power3.out" }, 0);
+        tl.fromTo(q("kicker"), { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }, 0.1);
+        tl.fromTo(q("display"), { opacity: 0, y: 48 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 0.5);
+
+        // Scene 2: navy prompt panel with dim token grid on "reads your entire prompt".
+        tl.fromTo(q("panel"), { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 1.9);
+        tl.fromTo(q("label"), { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "power1.out" }, 2.15);
+        toks.forEach(function (t, i) {
+          tl.fromTo(t.el, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power1.out" }, 2.2 + (t.y / (ROW_H + ROW_GAP)) * 0.1 + (t.x / 800) * 0.2);
+        });
+        lits.forEach(function (l) { tl.set(l.lit, { opacity: 0 }, 0); });
+
+        // Scene 3: one coral sweep crosses the grid once; every row lights together as it passes.
+        var SWEEP_START = 3.4, SWEEP_DUR = 0.9, SWEEP_FROM = -8, SWEEP_TO = 810;
+        tl.fromTo(sweep, { opacity: 0 }, { opacity: 1, duration: 0.12, ease: "none" }, SWEEP_START - 0.12);
+        tl.fromTo(sweep, { x: SWEEP_FROM }, { x: SWEEP_TO, duration: SWEEP_DUR, ease: "none" }, SWEEP_START);
+        lits.forEach(function (l) {
+          var at = SWEEP_START + ((l.x - SWEEP_FROM) / (SWEEP_TO - SWEEP_FROM)) * SWEEP_DUR;
+          tl.fromTo(l.lit, { opacity: 0 }, { opacity: 0.92, duration: 0.14, ease: "power1.out" }, at);
+        });
+        tl.fromTo(q("allonce"), { opacity: 0, x: 16 }, { opacity: 1, x: 0, duration: 0.4, ease: "power2.out" }, 4.35);
+
+        // Scene 4: pause timeline from lit prompt to the first token.
+        tl.fromTo(q("chip"), { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.35, ease: "power2.out" }, 5.1);
+        tl.fromTo(q("tlline"), { scaleX: 0, transformOrigin: "0% 50%" }, { scaleX: 1, transformOrigin: "0% 50%", duration: 0.8, ease: "power2.inOut" }, 5.2);
+        tl.fromTo(q("marker"), { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.35, ease: "power2.out" }, 5.85);
+        tl.fromTo(q("pause"), { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 5.6);
+        tl.fromTo(q("first"), { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 5.95);
+
+        tl.set({}, {}, 6.6);
+
+        window.__timelines = window.__timelines || {};
+        window.__timelines["06-prefill"] = tl;
+      })();
+    </script>
+  </div>
+</template>

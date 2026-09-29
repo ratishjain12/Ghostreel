@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js" integrity="sha384-sG0Hv1tP1lZCk9KQmrIbY/XNwi+OY84GQqhMscbnsoBFqAz8KNCil1kvfL3Hbbk2" crossorigin="anonymous"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        background: #000;
+      }
+      #root {
+        position: relative;
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        background: #0A0D12;
+      }
+      .scene {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="73.498"
+      data-width="1080"
+      data-height="1920"
+    >
+      <div
+        id="el-01-the-denial"
+        class="scene"
+        data-composition-id="01-the-denial"
+        data-composition-src="compositions/frames/01-the-denial.html"
+        data-start="0"
+        data-duration="9.033"
+        data-track-index="0"
+      ></div>
+      <audio
+        id="el-01-the-denial-voice"
+        src="assets/voice/01.wav"
+        data-start="0"
+        data-duration="8.533"
+        data-track-index="10"
+        data-volume="1"
+      ></audio>
+
+      <div
+        id="el-02-replication"
+        class="scene"
+        data-composition-id="02-replication"
+        data-composition-src="compositions/frames/02-replication.html"
+        data-start="8.533"
+        data-duration="12.617"
+        data-track-index="1"
+      ></div>
+      <audio
+        id="el-02-replication-voice"
+        src="assets/voice/02.wav"
+        data-start="8.533"
+        data-duration="12.117"
+        data-track-index="10"
+        data-volume="1"
+      ></audio>
+
+      <div
+        id="el-03-partitioning"
+        class="scene"
+        data-composition-id="03-partitioning"
+        data-composition-src="compositions/frames/03-partitioning.html"
+        data-start="20.65"
+        data-duration="13.812"
+        data-track-index="0"
+      ></div>
+      <audio
+        id="el-03-partitioning-voice"
+        src="assets/voice/03.wav"
+        data-start="20.65"
+        data-duration="13.312"
+        data-track-index="10"
+        data-volume="1"
+      ></audio>
+
+      <div
+        id="el-04-sharding"
+        class="scene"
+        data-composition-id="04-sharding"
+        data-composition-src="compositions/frames/04-sharding.html"
+        data-start="33.961999999999996"
+        data-duration="12.447"
+        data-track-index="1"
+      ></div>
+      <audio
+        id="el-04-sharding-voice"
+        src="assets/voice/04.wav"
+        data-start="33.961999999999996"
+        data-duration="11.947"
+        data-track-index="10"
+        data-volume="1"
+      ></audio>
+
+      <div
+        id="el-05-the-divide"
+        class="scene"
+        data-composition-id="05-the-divide"
+        data-composition-src="compositions/frames/05-the-divide.html"
+        data-start="45.90899999999999"
+        data-duration="9.131"
+        data-track-index="0"
+      ></div>
+      <audio
+        id="el-05-the-divide-voice"
+        src="assets/voice/05.wav"
+        data-start="45.90899999999999"
+        data-duration="9.131"
+        data-track-index="10"
+        data-volume="1"
+      ></audio>
+
+      <div
+        id="el-06-the-punchline"
+        class="scene"
+        data-composition-id="06-the-punchline"
+        data-composition-src="compositions/frames/06-the-punchline.html"
+        data-start="55.03999999999999"
+        data-duration="3.145"
+        data-track-index="1"
+      ></div>
+      <audio
+        id="el-06-the-punchline-voice"
+        src="assets/voice/06.wav"
+        data-start="55.03999999999999"
+        data-duration="2.645"
+        data-track-index="10"
+        data-volume="1"
+      ></audio>
+
+      <div
+        id="el-07-the-guidance-list"
+        class="scene"
+        data-composition-id="07-the-guidance-list"
+        data-composition-src="compositions/frames/07-the-guidance-list.html"
+        data-start="57.684999999999995"
+        data-duration="12.544"
+        data-track-index="0"
+      ></div>
+      <audio
+        id="el-07-the-guidance-list-voice"
+        src="assets/voice/07.wav"
+        data-start="57.684999999999995"
+        data-duration="12.544"
+        data-track-index="10"
+        data-volume="1"
+      ></audio>
+
+      <div
+        id="el-08-the-ask"
+        class="scene"
+        data-composition-id="08-the-ask"
+        data-composition-src="compositions/frames/08-the-ask.html"
+        data-start="70.229"
+        data-duration="3.269"
+        data-track-index="1"
+      ></div>
+      <audio
+        id="el-08-the-ask-voice"
+        src="assets/voice/08.wav"
+        data-start="70.229"
+        data-duration="3.269"
+        data-track-index="10"
+        data-volume="1"
+      ></audio>
+
+      <!-- captions -->
+      <div
+        id="el-captions"
+        class="scene"
+        data-composition-id="captions"
+        data-composition-src="compositions/captions.html"
+        data-start="0"
+        data-duration="73.498"
+        data-track-index="2"
+      ></div>
+
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = gsap.timeline({ paused: true });
+      // ── frame transitions (injected by transitions.mjs) ──
+      (function () { var tl = window.__timelines["main"];
+        tl.to("#el-01-the-denial", { opacity: 0, duration: 0.5, ease: "power2.inOut" }, 8.533);
+        tl.fromTo("#el-02-replication", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.inOut" }, 8.533);
+        tl.to("#el-02-replication", { x: -1080, duration: 0.5, ease: "power3.inOut" }, 20.65);
+        tl.fromTo("#el-03-partitioning", { x: 1080, opacity: 1 }, { x: 0, duration: 0.5, ease: "power3.inOut" }, 20.65);
+        tl.to("#el-03-partitioning", { x: -1080, duration: 0.5, ease: "power3.inOut" }, 33.962);
+        tl.fromTo("#el-04-sharding", { x: 1080, opacity: 1 }, { x: 0, duration: 0.5, ease: "power3.inOut" }, 33.962);
+        tl.to("#el-04-sharding", { opacity: 0, duration: 0.5, ease: "power2.inOut" }, 45.909);
+        tl.fromTo("#el-05-the-divide", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.inOut" }, 45.909);
+        tl.to("#el-06-the-punchline", { opacity: 0, duration: 0.5, ease: "power2.inOut" }, 57.685);
+        tl.fromTo("#el-07-the-guidance-list", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.inOut" }, 57.685);
+        tl.to({}, { duration: 73.498 }, 0); // full-span anchor — main.duration() == composition total (Studio master duration)
+      })();
+    </script>
+  </body>
+</html>

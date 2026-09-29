@@ -1,0 +1,62 @@
+<template>
+<div id="root" data-composition-id="01-cover" data-width="1080" data-height="1080" data-duration="3">
+  <style>
+    @font-face { font-family: 'Space Grotesk'; src: url('assets/fonts/Space-Grotesk-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Space Grotesk'; src: url('assets/fonts/Space-Grotesk-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Space Grotesk'; src: url('assets/fonts/Space-Grotesk-700.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Inter'; src: url('assets/fonts/Inter-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Inter'; src: url('assets/fonts/Inter-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: block; }
+
+    #root { position: relative; width: 100%; height: 100%; overflow: hidden; background: #fdfae7; font-family: 'Inter', sans-serif; color: #111111; }
+
+    .panel { position: absolute; top: 0; right: 0; width: 100%; height: 100%; background: rgba(30,43,250,0.08); clip-path: polygon(75% 0, 100% 0, 100% 100%, 62% 100%); }
+    .dot { position: absolute; width: 8px; height: 8px; border-radius: 50%; background: #1e2bfa; opacity: 0.28; }
+
+    .eyebrow { position: absolute; left: 80px; top: 190px; width: 480px; font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #1e2bfa; }
+    .accent-line { position: absolute; left: 80px; top: 234px; width: 60px; height: 4px; border-radius: 2px; background: #1e2bfa; }
+    .headline { position: absolute; left: 80px; top: 270px; width: 520px; font-family: 'Space Grotesk', sans-serif; font-size: 46px; font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; color: #111111; }
+    .sub { position: absolute; left: 80px; top: 530px; width: 720px; font-family: 'Inter', sans-serif; font-size: 24px; font-weight: 400; line-height: 1.5; color: #6b6b6b; white-space: nowrap; }
+    .swipe { position: absolute; left: 80px; top: 770px; width: 500px; font-family: 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #1e2bfa; }
+
+    .strategy-list { position: absolute; left: 80px; top: 582px; width: 700px; }
+    .strategy-row { position: relative; height: 50px; margin-bottom: 12px; border-radius: 12px; background: rgba(30,43,250,0.04); border: 1.5px solid rgba(30,43,250,0.2); box-sizing: border-box; display: flex; align-items: center; padding: 0 18px; }
+    .strategy-row.risk { background: rgba(220,38,38,0.06); border-color: rgba(220,38,38,0.35); }
+    .strategy-num { width: 24px; height: 24px; border-radius: 50%; background: #1e2bfa; color: #fdfae7; font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; margin-right: 14px; flex-shrink: 0; }
+    .strategy-row.risk .strategy-num { background: #dc2626; }
+    .strategy-label { font-family: 'Space Grotesk', sans-serif; font-size: 19px; font-weight: 600; color: #111111; }
+    .strategy-flag { margin-left: auto; font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: #b91c1c; }
+
+    .counter { position: absolute; right: 80px; top: 80px; width: 120px; text-align: right; font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 500; letter-spacing: 0.05em; color: #595959; }
+    .bar-track { position: absolute; left: 80px; top: 985px; width: 920px; height: 3px; background: rgba(30,43,250,0.15); }
+    .bar-fill { position: absolute; left: 80px; top: 985px; width: 153px; height: 3px; background: #1e2bfa; }
+  </style>
+
+  <div class="panel"></div>
+  <div class="dot" style="left:880px; top:250px;"></div>
+  <div class="dot" style="left:925px; top:250px;"></div>
+  <div class="dot" style="left:970px; top:250px;"></div>
+  <div class="dot" style="left:880px; top:295px;"></div>
+  <div class="dot" style="left:925px; top:295px;"></div>
+  <div class="dot" style="left:970px; top:295px;"></div>
+  <div class="dot" style="left:880px; top:340px;"></div>
+  <div class="dot" style="left:925px; top:340px;"></div>
+  <div class="dot" style="left:970px; top:340px;"></div>
+
+  <div class="eyebrow">System Design · Caching</div>
+  <div class="accent-line"></div>
+  <div class="headline">3 Caching Strategies.<br>One Quietly Risks Your Data.</div>
+  <div class="sub">Cache-Aside · Write-Through · Write-Behind</div>
+
+  <div class="strategy-list">
+    <div class="strategy-row"><div class="strategy-num">1</div><div class="strategy-label">Cache-Aside</div></div>
+    <div class="strategy-row"><div class="strategy-num">2</div><div class="strategy-label">Write-Through</div></div>
+    <div class="strategy-row risk"><div class="strategy-num">3</div><div class="strategy-label">Write-Behind</div><div class="strategy-flag">Risk</div></div>
+  </div>
+
+  <div class="swipe">Swipe for the full breakdown &rarr;</div>
+
+  <div class="counter">01 / 06</div>
+  <div class="bar-track"></div>
+  <div class="bar-fill"></div>
+</div>
+</template>

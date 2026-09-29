@@ -1,8 +1,9 @@
-# Reel Pipeline — Setup Guide
+# Content Studio — Setup Guide
 
 Turns a short script into a voiced, captioned, rendered vertical video (1080×1920, ready for
-Reels/Shorts/TikTok) via a local dashboard. You write or paste a script, the tool generates a
-voiceover + word-level captions, and renders the final MP4 — no video editing required.
+Reels/Shorts/TikTok) via a local dashboard, then schedules and publishes it straight to Instagram
+and tracks its performance. You write or paste a script, the tool generates a voiceover +
+word-level captions, and renders the final MP4 — no video editing required.
 
 This guide covers **script → voice → captions → render**, the part this team needs day to day.
 A couple of buttons in the dashboard (PDF, Approve & Publish) belong to a separate workflow —

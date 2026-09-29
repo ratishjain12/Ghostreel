@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en" data-resolution="square">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        width: 1080px;
+        height: 1080px;
+        overflow: hidden;
+        background: #fdfae7;
+      }
+      body {
+        font-family: "Inter", sans-serif;
+      }
+      code,
+      pre,
+      .monospace {
+        font-family: "JetBrains Mono", monospace;
+      }
+      .scene {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="12"
+      data-width="1080"
+      data-height="1080"
+    >
+      <div
+        id="el-01-cover"
+        class="scene"
+        data-composition-id="01-cover"
+        data-composition-src="compositions/frames/01-cover.html"
+        data-start="0"
+        data-duration="2"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-02-question"
+        class="scene"
+        data-composition-id="02-question"
+        data-composition-src="compositions/frames/02-question.html"
+        data-start="2"
+        data-duration="2"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-03-prompting"
+        class="scene"
+        data-composition-id="03-prompting"
+        data-composition-src="compositions/frames/03-prompting.html"
+        data-start="4"
+        data-duration="2"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-04-rag"
+        class="scene"
+        data-composition-id="04-rag"
+        data-composition-src="compositions/frames/04-rag.html"
+        data-start="6"
+        data-duration="2"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-05-fine-tuning"
+        class="scene"
+        data-composition-id="05-fine-tuning"
+        data-composition-src="compositions/frames/05-fine-tuning.html"
+        data-start="8"
+        data-duration="2"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-06-closing"
+        class="scene"
+        data-composition-id="06-closing"
+        data-composition-src="compositions/frames/06-closing.html"
+        data-start="10"
+        data-duration="2"
+        data-track-index="1"
+      ></div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

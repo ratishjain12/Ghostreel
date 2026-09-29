@@ -1,0 +1,13 @@
+Vector database, traditional database, cache. The moment people start building RAG, they treat these like interchangeable storage, plug in any of the three and it'll work. It won't, because the query they answer isn't the same query.
+
+A traditional database answers exact questions. Give me the row where the ID equals this, give me every order where status equals shipped. It's built for structured data and precise matches, with strong guarantees about consistency.
+
+A cache answers the same kind of exact question, but optimized purely for speed, not for being the source of truth. It's not there to guarantee correctness or durability, it's there so you don't have to hit the real database for the same lookup a thousand times a second.
+
+A vector database answers a completely different kind of question, not give me the exact match, but give me the things that are most similar to this. It stores embeddings and searches by distance, not equality, which is exactly what semantic search and RAG retrieval need.
+
+So the real difference isn't performance or scale, it's the kind of question each one is built to answer. Exact match, cached exact match, or nearest neighbor.
+
+Use a traditional database as your source of truth for structured data. Add a cache in front of it once repeated lookups become your bottleneck. Reach for a vector database the moment your query is find things similar to this, not find the exact thing.
+
+Comment guide and I'll send over the full breakdown.

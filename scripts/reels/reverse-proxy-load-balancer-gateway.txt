@@ -1,0 +1,13 @@
+Reverse proxy, load balancer, API gateway. Three terms everyone in system design interviews mixes up. Here's what each one actually does, and why they overlap more than you'd think.
+
+A reverse proxy sits in front of your servers and forwards client requests to them. The client only ever talks to the proxy, never directly to your backend. Its core job is hiding what's behind it: which server, how many, what version.
+
+A load balancer does one very specific job on top of that. When there's more than one backend server, it decides which one gets each request, round robin, least connections, whatever strategy fits. Every load balancer is technically a reverse proxy. Not every reverse proxy is a load balancer.
+
+An API gateway is the reverse proxy's job, expanded. It still forwards requests, but it also handles authentication, rate limiting, request transformation, and routing to completely different backend services based on the path, turning ten microservices into one clean, unified API surface.
+
+So the real distinction isn't what they touch, all three sit between the client and your servers. It's how much decision-making happens at that layer. A reverse proxy just forwards. A load balancer picks a destination. A gateway makes policy decisions.
+
+Use a reverse proxy when you just need to hide your backend. Add a load balancer the moment you have more than one server. Reach for a gateway when you're fronting multiple services and need auth, rate limits, or routing logic in one place.
+
+Comment guide and I'll send over the full comparison, with real configs.

@@ -1,0 +1,6 @@
+{
+  "slide_count": 6,
+  "message": "Cache-aside vs write-through vs write-behind. The one that's quietly risking data loss surprises most people. Save this before your next caching decision, and follow @ratish.ai for more system design breakdowns.\n\n#systemdesign #backenddevelopment #caching #softwareengineering",
+  "angle": "system-design",
+  "hook_style": "contrarian"
+}

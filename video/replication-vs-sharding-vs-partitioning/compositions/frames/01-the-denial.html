@@ -1,0 +1,269 @@
+<template>
+<div id="root" data-composition-id="01-the-denial" data-width="1080" data-height="1920" data-duration="9.033">
+  <style>
+    @font-face { font-family: 'Fraunces'; src: url('assets/fonts/Fraunces-Variable.woff2') format('woff2'); font-weight: 400 700; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Fraunces'; src: url('assets/fonts/Fraunces-Italic.woff2') format('woff2'); font-weight: 400 700; font-style: italic; font-display: block; }
+    @font-face { font-family: 'IBM Plex Sans'; src: url('assets/fonts/IBMPlexSans-Variable.woff2') format('woff2'); font-weight: 300 700; font-style: normal; font-display: block; }
+    @font-face { font-family: 'IBM Plex Mono'; src: url('assets/fonts/IBMPlexMono-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+    @font-face { font-family: 'IBM Plex Mono'; src: url('assets/fonts/IBMPlexMono-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: block; }
+
+    #root {
+      width: 1080px;
+      height: 1920px;
+      position: relative;
+      overflow: hidden;
+      container-type: size;
+      font-family: 'IBM Plex Sans', sans-serif;
+    }
+
+    .f01td-bg {
+      background: #0A0D12;
+      background-image:
+        repeating-linear-gradient(0deg, rgba(35,43,51,0.14) 0px, rgba(35,43,51,0.14) 1px, transparent 1px, transparent 96px),
+        repeating-linear-gradient(90deg, rgba(35,43,51,0.14) 0px, rgba(35,43,51,0.14) 1px, transparent 1px, transparent 96px);
+    }
+
+    .f01td-flash-pulse {
+      position: absolute;
+      inset: 0;
+      background: #FF9F45;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .f01td-term-wrap {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 806px;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 22px;
+    }
+    .f01td-term-word {
+      font-family: 'Fraunces', serif;
+      font-weight: 600;
+      font-size: 6.6cqw;
+      line-height: 1.0;
+      letter-spacing: -0.015em;
+      color: #EDEFF3;
+      text-align: center;
+    }
+    .f01td-term-tick {
+      width: 108px;
+      height: 4px;
+      background: #FF9F45;
+    }
+
+    .f01td-line2-wrap {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 960px;
+      transform: translateY(-50%);
+      display: flex;
+      justify-content: center;
+      align-items: baseline;
+      gap: 14px;
+    }
+    .f01td-line2-word {
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-weight: 400;
+      font-size: 2.0cqw;
+      line-height: 1.5;
+      color: #8992A1;
+      opacity: 0;
+    }
+
+    .f01td-bracket-wrap {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 806px;
+      transform: translateY(-50%);
+      display: flex;
+      justify-content: center;
+    }
+    .f01td-bracket-inner {
+      position: relative;
+      padding: 26px 34px;
+    }
+    .f01td-bracket-rect {
+      position: absolute;
+      inset: 0;
+      border: 1.5px solid rgba(137,146,161,0.4);
+      border-radius: 8px;
+      transform: scaleX(0);
+      transform-origin: center center;
+    }
+    .f01td-chip-row {
+      position: relative;
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+    .f01td-chip {
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 500;
+      font-size: 1.6cqw;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 16px 20px;
+      background: #12161C;
+      border: 1.5px solid rgba(137,146,161,0.4);
+      border-radius: 4px;
+      color: #EDEFF3;
+      opacity: 0;
+      transform: scale(0);
+      transform-origin: 50% 50%;
+      white-space: nowrap;
+    }
+    .f01td-chip-repl { color: #FF9F45; }
+    .f01td-chip-shard { color: #B98CFF; }
+    .f01td-chip-part { color: #4DE8C2; }
+
+    .f01td-strike-bar {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 50%;
+      margin-top: -2px;
+      height: 4px;
+      background: #FF5C7A;
+      transform: scaleX(0);
+      transform-origin: left center;
+    }
+
+    .f01td-stamp-wrap {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 1080px;
+      transform: translateY(-50%);
+      text-align: center;
+      padding: 0 6cqw;
+    }
+    .f01td-stamp {
+      font-family: 'Fraunces', serif;
+      font-weight: 600;
+      font-size: 9.5cqw;
+      line-height: 0.96;
+      letter-spacing: -0.02em;
+      color: #EDEFF3;
+      opacity: 0;
+    }
+    .f01td-stamp .f01td-stamp-accent { color: #FF5C7A; }
+  </style>
+
+  <div class="clip f01td-bg" data-start="0" data-duration="8.5" data-track-index="0"></div>
+
+  <div class="clip" data-start="0" data-duration="2.46" data-track-index="1">
+    <div class="f01td-flash-pulse" id="f01td-flash"></div>
+    <div class="f01td-term-wrap">
+      <div class="f01td-term-word" id="f01td-term-word">Replication</div>
+      <div class="f01td-term-tick" id="f01td-term-tick"></div>
+    </div>
+  </div>
+
+  <div class="clip" data-start="2.46" data-duration="2.54" data-track-index="1">
+    <div class="f01td-line2-wrap">
+      <span class="f01td-line2-word" id="f01td-w1">scale</span>
+      <span class="f01td-line2-word" id="f01td-w2">the</span>
+      <span class="f01td-line2-word" id="f01td-w3">database?</span>
+    </div>
+  </div>
+
+  <div class="clip" data-start="5.0" data-duration="3.5" data-track-index="1">
+    <div class="f01td-bracket-wrap">
+      <div class="f01td-bracket-inner">
+        <div class="f01td-bracket-rect" id="f01td-bracket"></div>
+        <div class="f01td-chip-row">
+          <div class="f01td-chip f01td-chip-repl" id="f01td-chip1">Replication</div>
+          <div class="f01td-chip f01td-chip-shard" id="f01td-chip2">Sharding</div>
+          <div class="f01td-chip f01td-chip-part" id="f01td-chip3">Partitioning</div>
+        </div>
+        <div class="f01td-strike-bar" id="f01td-strike"></div>
+      </div>
+    </div>
+    <div class="f01td-stamp-wrap">
+      <div class="f01td-stamp" id="f01td-stamp">They <span class="f01td-stamp-accent">don't.</span></div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var root = document.querySelector('[data-composition-id="01-the-denial"]');
+      var wordEl = root.querySelector('#f01td-term-word');
+      var tickEl = root.querySelector('#f01td-term-tick');
+      var flashEl = root.querySelector('#f01td-flash');
+
+      var TERMS = [
+        { t: 0.0, text: 'Replication', color: '#FF9F45' },
+        { t: 0.82, text: 'Sharding', color: '#B98CFF' },
+        { t: 1.64, text: 'Partitioning', color: '#4DE8C2' },
+      ];
+      function stateAt(time) {
+        for (var i = TERMS.length - 1; i >= 0; i--) {
+          if (time >= TERMS[i].t) return TERMS[i];
+        }
+        return TERMS[0];
+      }
+
+      var tl = gsap.timeline({ paused: true });
+
+      var driver = { t: 0 };
+      tl.to(driver, {
+        t: 2.46,
+        duration: 2.46,
+        ease: 'none',
+        onUpdate: function () {
+          var s = stateAt(driver.t);
+          wordEl.textContent = s.text;
+          tickEl.style.backgroundColor = s.color;
+        },
+      }, 0);
+
+      TERMS.forEach(function (term) {
+        tl.set(flashEl, { backgroundColor: term.color }, term.t);
+        tl.fromTo(flashEl, { opacity: 0.45 }, { opacity: 0, duration: 0.18, ease: 'power2.out' }, term.t);
+      });
+
+      var w1 = root.querySelector('#f01td-w1');
+      var w2 = root.querySelector('#f01td-w2');
+      var w3 = root.querySelector('#f01td-w3');
+      [ [w1, 2.6], [w2, 2.82], [w3, 3.04] ].forEach(function (pair) {
+        tl.fromTo(pair[0],
+          { opacity: 0, y: 18 },
+          { opacity: 1, y: 0, duration: 0.4, ease: 'power3.out' },
+          pair[1]
+        );
+      });
+
+      var bracket = root.querySelector('#f01td-bracket');
+      tl.fromTo(bracket, { scaleX: 0 }, { scaleX: 1, duration: 0.3, ease: 'power2.out' }, 5.0);
+
+      var chip1 = root.querySelector('#f01td-chip1');
+      var chip2 = root.querySelector('#f01td-chip2');
+      var chip3 = root.querySelector('#f01td-chip3');
+      [ [chip1, 5.35], [chip2, 5.55], [chip3, 5.75] ].forEach(function (pair) {
+        tl.fromTo(pair[0],
+          { scale: 0, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 0.4, ease: 'power3.out' },
+          pair[1]
+        );
+      });
+
+      var strike = root.querySelector('#f01td-strike');
+      tl.fromTo(strike, { scaleX: 0 }, { scaleX: 1, duration: 0.35, ease: 'power1.inOut' }, 6.9);
+
+      var stamp = root.querySelector('#f01td-stamp');
+      tl.fromTo(stamp, { opacity: 0 }, { opacity: 1, duration: 0.1, ease: 'none' }, 7.3);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['01-the-denial'] = tl;
+    })();
+  </script>
+</div>
+</template>

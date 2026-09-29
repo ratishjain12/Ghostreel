@@ -1,0 +1,11 @@
+Every time you log into an app, something has to remember that you're you. There are really only two ways that happens. Session-based auth, and JWTs — and picking wrong costs you real pain later.
+
+Session-based auth is the old reliable way. You log in, the server creates a session record — usually in memory or a database — and hands you back just an ID, in a cookie. Every request after that, the server looks up that ID and checks who's attached to it. Simple. But the server now has to remember every single logged-in user, and that lookup has to scale with them.
+
+JWTs flip that around completely. Instead of the server remembering anything, it signs a token that already contains your identity, and hands the whole thing to you. Every request, you send the token back, the server verifies the signature, and it's done — no database lookup, no stored state anywhere. That's exactly why JWTs scale so well across a fleet of servers behind a load balancer.
+
+But that trade-off cuts both ways. A session gets revoked instantly — delete the record, they're logged out everywhere. A JWT stays valid until it expires, so if one leaks, there's no clean kill switch unless you've built a blocklist yourself.
+
+Mobile apps and multi-service backends usually reach for JWTs. Anything that needs an instant, no-questions-asked logout usually reaches for sessions.
+
+So the real question was never which one is better. It's whether you need instant revocation, or stateless scale. Comment guide and I'll send over the full breakdown, code included.

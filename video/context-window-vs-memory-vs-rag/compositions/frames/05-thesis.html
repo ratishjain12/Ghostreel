@@ -1,0 +1,262 @@
+<template>
+  <style>
+    @font-face { font-family: 'Fraunces'; src: url('assets/fonts/Fraunces-Variable.woff2') format('woff2'); font-weight: 400 700; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Fraunces'; src: url('assets/fonts/Fraunces-Italic.woff2') format('woff2'); font-weight: 400 700; font-style: italic; font-display: block; }
+    @font-face { font-family: 'IBM Plex Sans'; src: url('assets/fonts/IBMPlexSans-Variable.woff2') format('woff2'); font-weight: 300 700; font-style: normal; font-display: block; }
+    @font-face { font-family: 'IBM Plex Mono'; src: url('assets/fonts/IBMPlexMono-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+    @font-face { font-family: 'IBM Plex Mono'; src: url('assets/fonts/IBMPlexMono-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: block; }
+
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      container-type: size;
+      font-family: 'IBM Plex Sans', sans-serif;
+      color: #EDEFF3;
+    }
+
+    .clip { position: absolute; inset: 0; }
+
+    .f5-grid {
+      background-color: #0A0D12;
+      background-image:
+        linear-gradient(to right, rgba(35, 43, 51, 0.14) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(35, 43, 51, 0.14) 1px, transparent 1px);
+      background-size: 54px 54px;
+    }
+
+    .f5-stage { width: 100%; height: 100%; }
+
+    .f5-glow {
+      position: absolute;
+      left: 50%;
+      top: 23.4cqh;
+      width: 55cqw;
+      height: 55cqw;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 159, 69, 0.55) 0%, rgba(255, 159, 69, 0) 68%);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .f5-lines { width: 100%; height: 100%; }
+
+    .f5-glyph {
+      position: absolute;
+      left: 50%;
+      top: 380px;
+      width: 380px;
+      height: 140px;
+      margin-left: -190px;
+      background: #12161C;
+      border: 1.5px solid #FF9F45;
+      border-radius: 4px;
+      display: grid;
+      place-items: center;
+      opacity: 0;
+    }
+    .f5-glyph-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 1.3cqw;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #FF9F45;
+    }
+
+    .f5-card {
+      position: absolute;
+      left: 50%;
+      width: 440px;
+      margin-left: -220px;
+      background: #12161C;
+      border-radius: 8px;
+      padding: 22px 30px 20px;
+      box-sizing: border-box;
+      opacity: 0;
+      text-align: center;
+    }
+    #f5-card-memory { top: 680px; height: 260px; border: 1.5px solid rgba(77, 232, 194, 0.65); }
+    #f5-card-rag { top: 1080px; height: 260px; border: 1.5px solid rgba(185, 140, 255, 0.65); }
+
+    .f5-icon { width: 120px; height: 70px; margin: 0 auto; display: block; }
+
+    .f5-caption {
+      font-family: 'Fraunces', serif;
+      font-weight: 600;
+      font-size: 3.2cqw;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      margin-top: 8px;
+    }
+    #f5-card-memory .f5-caption { color: #4DE8C2; }
+    #f5-card-rag .f5-caption { color: #B98CFF; }
+
+    .f5-tag {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 1.1cqw;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #8992A1;
+      margin-top: 10px;
+    }
+
+    .f5-thesis {
+      position: absolute;
+      left: 50%;
+      top: 1400px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 20px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #8992A1;
+      opacity: 0;
+      white-space: nowrap;
+    }
+  </style>
+
+  <div id="root" data-composition-id="05-thesis" data-width="1080" data-height="1920" data-duration="13.04">
+    <div class="clip f5-grid" data-start="0" data-duration="13.04" data-track-index="0"></div>
+
+    <div class="clip f5-stage" data-start="0" data-duration="13.04" data-track-index="1">
+      <div class="f5-glow" id="f5-glow"></div>
+
+      <svg class="f5-lines" viewBox="0 0 1080 1920" preserveAspectRatio="none">
+        <path id="f5-line-teal" d="M540,520 L540,680" fill="none" stroke="#4DE8C2" stroke-width="3" />
+        <path id="f5-line-violet" d="M620,520 C900,620 900,980 620,1080" fill="none" stroke="#B98CFF" stroke-width="3" />
+      </svg>
+
+      <div class="f5-glyph" id="f5-glyph">
+        <div class="f5-glyph-label">Context window</div>
+      </div>
+
+      <div class="f5-card" id="f5-card-memory">
+        <svg class="f5-icon" viewBox="0 0 120 70">
+          <path id="f5-fork-stem" d="M10,35 L45,35" fill="none" stroke="#4DE8C2" stroke-width="4" stroke-linecap="round" />
+          <path id="f5-fork-lit" d="M45,35 L100,12" fill="none" stroke="#4DE8C2" stroke-width="4" stroke-linecap="round" />
+          <path id="f5-fork-dim" d="M45,35 L100,58" fill="none" stroke="#4A525E" stroke-width="4" stroke-linecap="round" opacity="0" />
+        </svg>
+        <div class="f5-caption">From your own history</div>
+        <div class="f5-tag">Memory</div>
+      </div>
+
+      <div class="f5-card" id="f5-card-rag">
+        <svg class="f5-icon" viewBox="0 0 120 70">
+          <path id="f5-gate-stem1" d="M10,35 L48,35" fill="none" stroke="#B98CFF" stroke-width="4" stroke-linecap="round" />
+          <rect id="f5-gate-badge-pending" x="48" y="15" width="16" height="40" fill="none" stroke="#4A525E" stroke-width="3" opacity="0" />
+          <rect id="f5-gate-badge-filled" x="48" y="15" width="16" height="40" fill="#B98CFF" stroke="#B98CFF" stroke-width="3" opacity="0" />
+          <path id="f5-gate-stem2" d="M64,35 L110,35" fill="none" stroke="#B98CFF" stroke-width="4" stroke-linecap="round" opacity="0" />
+        </svg>
+        <div class="f5-caption">From outside it</div>
+        <div class="f5-tag">RAG</div>
+      </div>
+
+      <div class="f5-thesis" id="f5-thesis">Same space, different gatekeeper</div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var root = document.querySelector('[data-composition-id="05-thesis"]');
+      var tl = gsap.timeline({ paused: true });
+
+      function setDash(sel) {
+        var el = root.querySelector(sel);
+        var len = el.getTotalLength();
+        el.style.strokeDasharray = String(len);
+        el.style.strokeDashoffset = String(len);
+        return len;
+      }
+
+      ["#f5-line-teal", "#f5-line-violet", "#f5-fork-stem", "#f5-fork-lit", "#f5-gate-stem1", "#f5-gate-stem2"].forEach(setDash);
+
+      function wipeIn(el, start, dur) {
+        var proxy = { p: 100 };
+        tl.to(proxy, {
+          p: 0,
+          duration: dur,
+          ease: "power2.out",
+          onUpdate: function () {
+            el.style.clipPath = "inset(0 " + proxy.p + "% 0 0)";
+          },
+        }, start);
+      }
+
+      // Scene 1 (0.0-1.58s) -- CONTEXT WINDOW glyph settles.
+      tl.fromTo(root.querySelector("#f5-glyph"),
+        { scale: 0, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 0.4, ease: "power3.out" },
+        0.1
+      );
+
+      // Scene 2 (1.58-5.74s) -- memory recap card.
+      tl.to(root.querySelector("#f5-line-teal"), { strokeDashoffset: 0, duration: 0.4, ease: "power2.out" }, 1.75);
+      tl.fromTo(root.querySelector("#f5-card-memory"),
+        { scale: 0, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 0.55, ease: "power3.out" },
+        1.95
+      );
+      tl.to(root.querySelector("#f5-fork-stem"), { strokeDashoffset: 0, duration: 0.25, ease: "power2.out" }, 2.55);
+      tl.to(root.querySelector("#f5-fork-lit"), { strokeDashoffset: 0, duration: 0.3, ease: "power2.out" }, 2.75);
+      tl.to(root.querySelector("#f5-fork-dim"), { opacity: 0.3, duration: 0.3, ease: "power1.out" }, 2.75);
+      wipeIn(root.querySelector("#f5-card-memory .f5-caption"), 3.1, 0.5);
+      tl.fromTo(root.querySelector("#f5-card-memory .f5-tag"),
+        { opacity: 0, y: 6 },
+        { opacity: 1, y: 0, duration: 0.3, ease: "power1.out" },
+        3.65
+      );
+
+      // Scene 3 (5.74-10.06s) -- RAG recap card.
+      tl.to(root.querySelector("#f5-line-violet"), { strokeDashoffset: 0, duration: 0.45, ease: "power2.out" }, 5.85);
+      tl.fromTo(root.querySelector("#f5-card-rag"),
+        { scale: 0, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 0.55, ease: "power3.out" },
+        6.1
+      );
+      tl.to(root.querySelector("#f5-gate-stem1"), { strokeDashoffset: 0, duration: 0.2, ease: "power2.out" }, 6.7);
+      tl.fromTo(root.querySelector("#f5-gate-badge-pending"),
+        { opacity: 0, scale: 0.6 },
+        { opacity: 1, scale: 1, duration: 0.2, ease: "power2.out" },
+        6.85
+      );
+      tl.to(root.querySelector("#f5-gate-badge-pending"), { opacity: 0, duration: 0.25, ease: "power1.in" }, 7.1);
+      tl.to(root.querySelector("#f5-gate-badge-filled"), { opacity: 1, duration: 0.25, ease: "power1.out" }, 7.1);
+      tl.to(root.querySelector("#f5-gate-stem2"), { opacity: 1, strokeDashoffset: 0, duration: 0.2, ease: "power2.out" }, 7.35);
+      wipeIn(root.querySelector("#f5-card-rag .f5-caption"), 7.65, 0.5);
+      tl.fromTo(root.querySelector("#f5-card-rag .f5-tag"),
+        { opacity: 0, y: 6 },
+        { opacity: 1, y: 0, duration: 0.3, ease: "power1.out" },
+        8.2
+      );
+
+      // Scene 4 (10.06-12.54s) -- stillness-before-climax hold.
+      tl.fromTo(root.querySelector("#f5-glow"),
+        { opacity: 0, scale: 0.9, xPercent: -50, yPercent: -50 },
+        { opacity: 0.22, scale: 1, xPercent: -50, yPercent: -50, duration: 0.6, ease: "power2.out" },
+        10.1
+      );
+      tl.fromTo(root.querySelector("#f5-thesis"),
+        { opacity: 0, y: 8, xPercent: -50 },
+        { opacity: 1, y: 0, xPercent: -50, duration: 0.5, ease: "power1.out" },
+        10.2
+      );
+
+      var jitterTarget = root.querySelector(".f5-stage");
+      var phase = { p: 0 };
+      tl.to(phase, {
+        p: Math.PI * 2 * 0.9,
+        duration: 1.74,
+        ease: "none",
+        onUpdate: function () {
+          var s = Math.sin(phase.p);
+          jitterTarget.style.transform = "translateY(" + (s * 2) + "px)";
+        },
+      }, 10.8);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["05-thesis"] = tl;
+    })();
+  </script>
+</template>

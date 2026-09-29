@@ -1,0 +1,388 @@
+<template>
+  <style>
+    @font-face { font-family: 'Fraunces'; src: url('assets/fonts/Fraunces-Variable.woff2') format('woff2'); font-weight: 400 700; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Fraunces'; src: url('assets/fonts/Fraunces-Italic.woff2') format('woff2'); font-weight: 400 700; font-style: italic; font-display: block; }
+    @font-face { font-family: 'IBM Plex Sans'; src: url('assets/fonts/IBMPlexSans-Variable.woff2') format('woff2'); font-weight: 300 700; font-style: normal; font-display: block; }
+    @font-face { font-family: 'IBM Plex Mono'; src: url('assets/fonts/IBMPlexMono-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+    @font-face { font-family: 'IBM Plex Mono'; src: url('assets/fonts/IBMPlexMono-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: block; }
+
+    #root {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+      container-type: size;
+      background: transparent;
+      font-family: 'IBM Plex Sans', sans-serif;
+    }
+
+    .clip { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+    .h04-service-mesh-bg {
+      background: #0A0D12;
+      background-image:
+        repeating-linear-gradient(0deg, rgba(35, 43, 51, 0.14) 0px, rgba(35, 43, 51, 0.14) 1px, transparent 1px, transparent 64px),
+        repeating-linear-gradient(90deg, rgba(35, 43, 51, 0.14) 0px, rgba(35, 43, 51, 0.14) 1px, transparent 1px, transparent 64px);
+    }
+
+    .h04-service-mesh-stage { overflow: hidden; }
+
+    .h04-service-mesh-world {
+      position: absolute;
+      inset: 0;
+      transform-origin: 50% 50%;
+      will-change: transform;
+    }
+    .h04-service-mesh-content {
+      position: absolute;
+      inset: 0;
+    }
+
+    .h04-service-mesh-edges-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+    .h04-service-mesh-fan, .h04-service-mesh-mesh {
+      fill: none;
+      stroke: #4DE8C2;
+      stroke-width: 3;
+      stroke-linecap: round;
+    }
+    .h04-service-mesh-pulse { fill: #4DE8C2; opacity: 0; }
+
+    /* control plane node */
+    .h04-service-mesh-control {
+      position: absolute;
+      left: 18cqw;
+      top: 9cqh;
+      width: 64cqw;
+      height: 15cqh;
+      background: #12161C;
+      border: 1.5px solid rgba(137, 146, 161, 0.4);
+      border-radius: 8px;
+      box-sizing: border-box;
+      padding: 1.3cqh 2cqw;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transform-origin: 50% 50%;
+    }
+    .h04-service-mesh-control-title {
+      font-family: 'IBM Plex Mono';
+      font-weight: 500;
+      font-size: 2.2cqw;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #8992A1;
+      text-align: center;
+    }
+    .h04-service-mesh-ticks {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      column-gap: 2cqw;
+      row-gap: 0.8cqh;
+      align-items: center;
+    }
+    .h04-service-mesh-tick { display: flex; align-items: center; gap: 0.6cqw; }
+    .h04-service-mesh-tick-badge { width: 30px; height: 30px; flex: none; overflow: visible; }
+    .h04-service-mesh-tick-outline { fill: none; stroke: rgba(137, 146, 161, 0.55); stroke-width: 1.6; }
+    .h04-service-mesh-tick-fill {
+      fill: #4DE8C2;
+      stroke: none;
+      transform-box: fill-box;
+      transform-origin: 50% 50%;
+      transform: scale(0);
+      opacity: 0;
+    }
+    .h04-service-mesh-tick-check {
+      fill: none;
+      stroke: #0A0D12;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .h04-service-mesh-tick-label {
+      display: inline-block;
+      font-family: 'IBM Plex Mono';
+      font-weight: 500;
+      font-size: 20px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #8992A1;
+      white-space: nowrap;
+    }
+
+    /* service + sidecar pairs */
+    .h04-service-mesh-pair {
+      position: absolute;
+      width: 20.54cqw;
+      height: 3.125cqh;
+      display: flex;
+      align-items: stretch;
+    }
+    .h04-service-mesh-service, .h04-service-mesh-sidecar {
+      background: #12161C;
+      border: 1.5px solid rgba(137, 146, 161, 0.4);
+      border-radius: 4px;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #8992A1;
+      font-family: 'IBM Plex Mono';
+      font-weight: 500;
+      font-size: 1.3cqw;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 0 4px;
+    }
+    .h04-service-mesh-service { width: 12.04cqw; }
+    .h04-service-mesh-sidecar { width: 7.2cqw; }
+    .h04-service-mesh-stub {
+      width: 1.3cqw;
+      height: 2px;
+      background: #FF9F45;
+      align-self: center;
+    }
+
+    .h04-service-mesh-kicker {
+      position: absolute;
+      left: 10cqw;
+      top: 73cqh;
+      width: 80cqw;
+      text-align: center;
+      font-family: 'Fraunces';
+      font-style: italic;
+      font-weight: 500;
+      font-size: 2.6cqw;
+      line-height: 1.15;
+      color: #EDEFF3;
+      opacity: 0;
+    }
+  </style>
+
+  <div id="root" data-composition-id="04-service-mesh" data-width="1080" data-height="1920" data-duration="14.43">
+    <div class="clip h04-service-mesh-bg" data-start="0" data-duration="14.43" data-track-index="0"></div>
+
+    <div class="clip h04-service-mesh-stage" data-start="0" data-duration="14.43" data-track-index="1">
+      <div class="h04-service-mesh-world" id="h04-service-mesh-world">
+       <div class="h04-service-mesh-content" id="h04-service-mesh-content">
+
+        <svg class="h04-service-mesh-edges-svg" viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMid slice">
+          <path id="h04-service-mesh-fan-a" class="h04-service-mesh-fan h04-service-mesh-draw-path" d="M540,461 Q446,480 353,527"></path>
+          <path id="h04-service-mesh-fan-b" class="h04-service-mesh-fan h04-service-mesh-draw-path" d="M540,461 Q706,480 871,527"></path>
+          <path id="h04-service-mesh-fan-c" class="h04-service-mesh-fan h04-service-mesh-draw-path" d="M540,461 Q580,680 612,911"></path>
+          <path id="h04-service-mesh-fan-d" class="h04-service-mesh-fan h04-service-mesh-draw-path" d="M540,461 Q220,780 353,1295"></path>
+          <path id="h04-service-mesh-fan-e" class="h04-service-mesh-fan h04-service-mesh-draw-path" d="M540,461 Q860,780 871,1295"></path>
+
+          <path id="h04-service-mesh-mesh-ab" class="h04-service-mesh-mesh h04-service-mesh-draw-path" d="M353,557 L871,557"></path>
+          <path id="h04-service-mesh-mesh-ac" class="h04-service-mesh-mesh h04-service-mesh-draw-path" d="M353,557 L612,941"></path>
+          <path id="h04-service-mesh-mesh-bc" class="h04-service-mesh-mesh h04-service-mesh-draw-path" d="M871,557 L612,941"></path>
+          <path id="h04-service-mesh-mesh-cd" class="h04-service-mesh-mesh h04-service-mesh-draw-path" d="M612,941 L353,1325"></path>
+          <path id="h04-service-mesh-mesh-ce" class="h04-service-mesh-mesh h04-service-mesh-draw-path" d="M612,941 L871,1325"></path>
+          <path id="h04-service-mesh-mesh-de" class="h04-service-mesh-mesh h04-service-mesh-draw-path" d="M353,1325 L871,1325"></path>
+
+          <circle id="h04-service-mesh-pulse-A" class="h04-service-mesh-pulse" cx="540" cy="461" r="5"></circle>
+          <circle id="h04-service-mesh-pulse-B" class="h04-service-mesh-pulse" cx="540" cy="461" r="5"></circle>
+          <circle id="h04-service-mesh-pulse-C" class="h04-service-mesh-pulse" cx="540" cy="461" r="5"></circle>
+          <circle id="h04-service-mesh-pulse-D" class="h04-service-mesh-pulse" cx="540" cy="461" r="5"></circle>
+          <circle id="h04-service-mesh-pulse-E" class="h04-service-mesh-pulse" cx="540" cy="461" r="5"></circle>
+        </svg>
+
+        <div class="h04-service-mesh-control" id="h04-service-mesh-control">
+          <div class="h04-service-mesh-control-title" id="h04-service-mesh-control-title">Control plane</div>
+          <div class="h04-service-mesh-ticks">
+            <div class="h04-service-mesh-tick" id="h04-service-mesh-tick-1">
+              <svg class="h04-service-mesh-tick-badge" viewBox="0 0 24 24">
+                <circle class="h04-service-mesh-tick-outline" cx="12" cy="12" r="9"></circle>
+                <circle class="h04-service-mesh-tick-fill h04-service-mesh-tick-fill-1" cx="12" cy="12" r="9"></circle>
+                <path class="h04-service-mesh-tick-check h04-service-mesh-draw-path h04-service-mesh-tick-check-1" d="M7.5 12.5 L10.5 15.5 L16.5 9.5"></path>
+              </svg>
+              <span class="h04-service-mesh-tick-label h04-service-mesh-tick-label-1">Retries</span>
+            </div>
+            <div class="h04-service-mesh-tick" id="h04-service-mesh-tick-2">
+              <svg class="h04-service-mesh-tick-badge" viewBox="0 0 24 24">
+                <circle class="h04-service-mesh-tick-outline" cx="12" cy="12" r="9"></circle>
+                <circle class="h04-service-mesh-tick-fill h04-service-mesh-tick-fill-2" cx="12" cy="12" r="9"></circle>
+                <path class="h04-service-mesh-tick-check h04-service-mesh-draw-path h04-service-mesh-tick-check-2" d="M7.5 12.5 L10.5 15.5 L16.5 9.5"></path>
+              </svg>
+              <span class="h04-service-mesh-tick-label h04-service-mesh-tick-label-2">Timeouts</span>
+            </div>
+            <div class="h04-service-mesh-tick" id="h04-service-mesh-tick-3">
+              <svg class="h04-service-mesh-tick-badge" viewBox="0 0 24 24">
+                <circle class="h04-service-mesh-tick-outline" cx="12" cy="12" r="9"></circle>
+                <circle class="h04-service-mesh-tick-fill h04-service-mesh-tick-fill-3" cx="12" cy="12" r="9"></circle>
+                <path class="h04-service-mesh-tick-check h04-service-mesh-draw-path h04-service-mesh-tick-check-3" d="M7.5 12.5 L10.5 15.5 L16.5 9.5"></path>
+              </svg>
+              <span class="h04-service-mesh-tick-label h04-service-mesh-tick-label-3">Encryption</span>
+            </div>
+            <div class="h04-service-mesh-tick" id="h04-service-mesh-tick-4">
+              <svg class="h04-service-mesh-tick-badge" viewBox="0 0 24 24">
+                <circle class="h04-service-mesh-tick-outline" cx="12" cy="12" r="9"></circle>
+                <circle class="h04-service-mesh-tick-fill h04-service-mesh-tick-fill-4" cx="12" cy="12" r="9"></circle>
+                <path class="h04-service-mesh-tick-check h04-service-mesh-draw-path h04-service-mesh-tick-check-4" d="M7.5 12.5 L10.5 15.5 L16.5 9.5"></path>
+              </svg>
+              <span class="h04-service-mesh-tick-label h04-service-mesh-tick-label-4">Observability</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="h04-service-mesh-pair" id="h04-service-mesh-pair-a" style="left:15.73cqw; top:27.4375cqh;">
+          <div class="h04-service-mesh-service">Service-A</div>
+          <div class="h04-service-mesh-stub" id="h04-service-mesh-stub-a"></div>
+          <div class="h04-service-mesh-sidecar">Sidecar</div>
+        </div>
+        <div class="h04-service-mesh-pair" id="h04-service-mesh-pair-b" style="left:63.73cqw; top:27.4375cqh;">
+          <div class="h04-service-mesh-service">Service-B</div>
+          <div class="h04-service-mesh-stub" id="h04-service-mesh-stub-b"></div>
+          <div class="h04-service-mesh-sidecar">Sidecar</div>
+        </div>
+        <div class="h04-service-mesh-pair" id="h04-service-mesh-pair-c" style="left:39.73cqw; top:47.4375cqh;">
+          <div class="h04-service-mesh-service">Service-C</div>
+          <div class="h04-service-mesh-stub" id="h04-service-mesh-stub-c"></div>
+          <div class="h04-service-mesh-sidecar">Sidecar</div>
+        </div>
+        <div class="h04-service-mesh-pair" id="h04-service-mesh-pair-d" style="left:15.73cqw; top:67.4375cqh;">
+          <div class="h04-service-mesh-service">Service-D</div>
+          <div class="h04-service-mesh-stub" id="h04-service-mesh-stub-d"></div>
+          <div class="h04-service-mesh-sidecar">Sidecar</div>
+        </div>
+        <div class="h04-service-mesh-pair" id="h04-service-mesh-pair-e" style="left:63.73cqw; top:67.4375cqh;">
+          <div class="h04-service-mesh-service">Service-E</div>
+          <div class="h04-service-mesh-stub" id="h04-service-mesh-stub-e"></div>
+          <div class="h04-service-mesh-sidecar">Sidecar</div>
+        </div>
+
+        <div class="h04-service-mesh-kicker" id="h04-service-mesh-kicker">one control plane. every sidecar covered.</div>
+       </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var root = document.querySelector('[data-composition-id="04-service-mesh"]');
+      if (!root) return;
+
+      var world = root.querySelector('#h04-service-mesh-world');
+
+      // --- measure + prime every stroke-drawn path (fan lines, mesh lines, tick checkmarks) ---
+      var drawPaths = root.querySelectorAll('.h04-service-mesh-draw-path');
+      drawPaths.forEach(function (p) {
+        var len = p.getTotalLength();
+        p.style.strokeDasharray = len;
+        p.style.strokeDashoffset = len;
+      });
+
+      // --- virtual camera (viewport-change): single wrapper, T = -offset * S ---
+      var cam = { scale: 1.8, x: 466.2, y: 725.4 };
+      function applyCamera() {
+        world.style.transform = 'translate(' + cam.x + 'px, ' + cam.y + 'px) scale(' + cam.scale + ')';
+      }
+      applyCamera();
+
+      var FAN = {
+        A: { p0: { x: 540, y: 461 }, p1: { x: 446, y: 480 }, p2: { x: 353, y: 527 } },
+        B: { p0: { x: 540, y: 461 }, p1: { x: 706, y: 480 }, p2: { x: 871, y: 527 } },
+        C: { p0: { x: 540, y: 461 }, p1: { x: 580, y: 680 }, p2: { x: 612, y: 911 } },
+        D: { p0: { x: 540, y: 461 }, p1: { x: 220, y: 780 }, p2: { x: 353, y: 1295 } },
+        E: { p0: { x: 540, y: 461 }, p1: { x: 860, y: 780 }, p2: { x: 871, y: 1295 } }
+      };
+      function quadPoint(c, t) {
+        var mt = 1 - t;
+        return {
+          x: mt * mt * c.p0.x + 2 * mt * t * c.p1.x + t * t * c.p2.x,
+          y: mt * mt * c.p0.y + 2 * mt * t * c.p1.y + t * t * c.p2.y
+        };
+      }
+
+      var tl = gsap.timeline({ paused: true });
+
+      // ===== Scene 1 (0.0-0.9s): camera pulls back from the single pinned pair, control plane pops in unlit =====
+      tl.to(cam, { scale: 1, x: 0, y: 0, duration: 0.9, ease: 'power3.out', onUpdate: applyCamera }, 0);
+      tl.fromTo('#h04-service-mesh-control',
+        { opacity: 0, scale: 0.86 },
+        { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(1.5)', transformOrigin: '50% 50%' },
+        0.1);
+
+      // ===== Scene 2 (0.9-3.25s): amber edges fade to ink-dim, left to right =====
+      var stubStarts = { a: 0.95, b: 1.30, c: 1.65, d: 2.00, e: 2.35 };
+      Object.keys(stubStarts).forEach(function (k) {
+        tl.to('#h04-service-mesh-stub-' + k, { opacity: 0.25, duration: 0.4, ease: 'power1.out' }, stubStarts[k]);
+      });
+
+      // ===== Scene 3 (3.25-5.45s): control plane lights up, teal fan-lines self-draw to every sidecar at once =====
+      tl.to('#h04-service-mesh-control', { borderColor: 'rgba(77,232,194,0.6)', duration: 0.9, ease: 'power1.out' }, 3.25);
+      tl.to('#h04-service-mesh-control-title', { color: '#EDEFF3', duration: 0.9, ease: 'power1.out' }, 3.25);
+      ['a', 'b', 'c', 'd', 'e'].forEach(function (k, i) {
+        tl.to('#h04-service-mesh-fan-' + k, { strokeDashoffset: 0, duration: 1.5, ease: 'power2.out' }, 3.25 + i * 0.03);
+      });
+
+      // hollow ticks appear as a pending checklist, just before Scene 4's flips begin
+      tl.fromTo('.h04-service-mesh-tick', { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.35, stagger: 0.06, ease: 'power2.out' }, 4.9);
+
+      // ===== Scene 4 (5.45-8.8s): four capability ticks flip in sequence, each pulses teal along every fan-line =====
+      function pulseAlong(dotSel, curveKey, startTime) {
+        var proxy = { t: 0 };
+        var curve = FAN[curveKey];
+        tl.set(dotSel, { opacity: 1, attr: { cx: curve.p0.x, cy: curve.p0.y } }, startTime);
+        tl.to(proxy, {
+          t: 1, duration: 0.5, ease: 'power1.out',
+          onUpdate: function () {
+            var pt = quadPoint(curve, proxy.t);
+            gsap.set(dotSel, { attr: { cx: pt.x, cy: pt.y } });
+          }
+        }, startTime);
+        tl.to(dotSel, { opacity: 0, duration: 0.18, ease: 'power1.in' }, startTime + 0.34);
+      }
+
+      function flipTick(idx, time) {
+        tl.fromTo('.h04-service-mesh-tick-fill-' + idx,
+          { scale: 0, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 0.28, ease: 'back.out(2.2)' },
+          time);
+        tl.to('.h04-service-mesh-tick-check-' + idx, { strokeDashoffset: 0, duration: 0.22, ease: 'power2.out' }, time + 0.15);
+        tl.to('.h04-service-mesh-tick-label-' + idx, { color: '#4DE8C2', duration: 0.2, ease: 'power1.out' }, time);
+        tl.fromTo('.h04-service-mesh-tick-label-' + idx, { scale: 1 }, { scale: 1.08, duration: 0.12, yoyo: true, repeat: 1, ease: 'power1.inOut', transformOrigin: '50% 50%' }, time);
+        ['A', 'B', 'C', 'D', 'E'].forEach(function (k) {
+          pulseAlong('#h04-service-mesh-pulse-' + k, k, time);
+        });
+      }
+
+      flipTick(1, 5.45);
+      flipTick(2, 6.29);
+      flipTick(3, 7.13);
+      flipTick(4, 7.97);
+
+      // ===== Scene 5 (8.8-13.93s): direct sidecar-to-sidecar edges self-draw, mesh fully networks, held read =====
+      var meshEdges = [
+        { id: 'ab', start: 8.80 },
+        { id: 'ac', start: 9.30 },
+        { id: 'bc', start: 9.80 },
+        { id: 'cd', start: 10.30 },
+        { id: 'ce', start: 10.80 },
+        { id: 'de', start: 11.30 }
+      ];
+      meshEdges.forEach(function (e) {
+        tl.to('#h04-service-mesh-mesh-' + e.id, { strokeDashoffset: 0, duration: 0.7, ease: 'power2.out' }, e.start);
+      });
+
+      tl.to('#h04-service-mesh-kicker', { opacity: 1, duration: 0.6, ease: 'power1.out' }, 12.2);
+
+      // subtle held jitter on the fully networked mesh — finite, seek-safe.
+      // Targets the inner content wrapper, never #h04-service-mesh-world (that
+      // element's transform is owned exclusively by the manual cam/applyCamera
+      // mechanism above — a GSAP x/y/scale tween on it would clobber that string).
+      tl.to('#h04-service-mesh-content', { x: '+=3', duration: 0.4, ease: 'sine.inOut', yoyo: true, repeat: 3 }, 12.0);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['04-service-mesh'] = tl;
+      tl.seek(0);
+    })();
+  </script>
+</template>

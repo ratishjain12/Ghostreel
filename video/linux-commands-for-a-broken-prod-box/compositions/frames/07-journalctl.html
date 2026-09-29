@@ -1,0 +1,435 @@
+<template>
+  <div id="root" data-composition-id="07-journalctl" data-width="1080" data-height="1920" data-duration="5.05">
+    <style>
+      @font-face { font-family: "EB Garamond"; src: url("assets/fonts/EBGaramond-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: block; }
+      @font-face { font-family: "EB Garamond"; src: url("assets/fonts/EBGaramond-700.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: block; }
+      @font-face { font-family: "Inter"; src: url("assets/fonts/Inter-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: block; }
+      @font-face { font-family: "Inter"; src: url("assets/fonts/Inter-700.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: block; }
+      @font-face { font-family: "JetBrains Mono"; src: url("assets/fonts/JetBrainsMono-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: block; }
+      @font-face { font-family: "JetBrains Mono"; src: url("assets/fonts/JetBrainsMono-700.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: block; }
+
+      #root {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        color: #141413;
+        font-family: "Inter", sans-serif;
+      }
+      #root *, #root *::before, #root *::after { box-sizing: border-box; }
+
+      .f07-ground {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 1080px;
+        height: 1920px;
+        background: #FAF9F5;
+      }
+      .f07-stage {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 1080px;
+        height: 1920px;
+      }
+
+      .f07-lockup {
+        position: absolute;
+        left: 80px;
+        top: 170px;
+        display: flex;
+        align-items: baseline;
+        gap: 18px;
+      }
+      .f07-numeral {
+        font-family: "EB Garamond", serif;
+        font-weight: 400;
+        font-size: 200px;
+        line-height: 1;
+        letter-spacing: -0.025em;
+        color: #141413;
+      }
+      .f07-unit {
+        font-family: "JetBrains Mono", monospace;
+        font-weight: 400;
+        font-size: 40px;
+        line-height: 1;
+        color: rgba(20, 20, 19, 0.55);
+      }
+      .f07-kicker {
+        position: absolute;
+        right: 80px;
+        top: 205px;
+        font-family: "JetBrains Mono", monospace;
+        font-weight: 700;
+        font-size: 30px;
+        line-height: 1.2;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: #141413;
+        text-align: right;
+        white-space: nowrap;
+      }
+      .f07-spike { color: #CC785C; }
+
+      .f07-rail {
+        position: absolute;
+        left: 80px;
+        top: 400px;
+        width: 920px;
+        height: 56px;
+        display: flex;
+        gap: 12px;
+      }
+      .f07-chip {
+        flex: 1 1 0;
+        height: 56px;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "JetBrains Mono", monospace;
+        font-weight: 400;
+        font-size: 24px;
+        line-height: 1;
+      }
+      .f07-chip-done { background: #141413; color: #FAF9F5; }
+      .f07-chip-now { background: #CC785C; color: #FAF9F5; }
+      .f07-chip-next { background: transparent; border: 1px solid rgba(20, 20, 19, 0.20); color: rgba(20, 20, 19, 0.45); }
+
+      .f07-term {
+        position: absolute;
+        left: 80px;
+        top: 500px;
+        width: 920px;
+        height: 620px;
+        background: #181715;
+        border: 1px solid rgba(250, 249, 245, 0.14);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      .f07-bar {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 64px;
+        background: #252320;
+        border-bottom: 1px solid rgba(250, 249, 245, 0.14);
+      }
+      .f07-dot {
+        position: absolute;
+        top: 25px;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: rgba(250, 249, 245, 0.22);
+      }
+      .f07-bar-label {
+        position: absolute;
+        left: 130px;
+        top: 0;
+        height: 64px;
+        line-height: 64px;
+        font-family: "JetBrains Mono", monospace;
+        font-weight: 400;
+        font-size: 24px;
+        color: rgba(250, 249, 245, 0.55);
+        white-space: nowrap;
+      }
+
+      .f07-cmdline {
+        position: absolute;
+        left: 44px;
+        top: 108px;
+        width: 832px;
+        height: 57px;
+        font-family: "JetBrains Mono", monospace;
+        font-weight: 400;
+        font-size: 38px;
+        line-height: 57px;
+        color: #FAF9F5;
+        white-space: pre;
+      }
+      .f07-glyph { color: #5DB872; }
+      .f07-caret {
+        display: inline-block;
+        width: 20px;
+        height: 42px;
+        margin-left: 4px;
+        background: #FAF9F5;
+        vertical-align: -9px;
+      }
+      .f07-tag {
+        position: absolute;
+        right: 0;
+        top: 8px;
+        height: 42px;
+        padding: 0 14px;
+        border: 1px solid rgba(250, 249, 245, 0.24);
+        border-radius: 6px;
+        font-family: "JetBrains Mono", monospace;
+        font-weight: 400;
+        font-size: 26px;
+        line-height: 40px;
+        color: rgba(250, 249, 245, 0.72);
+        white-space: nowrap;
+      }
+
+      .f07-viewport {
+        position: absolute;
+        left: 44px;
+        top: 173px;
+        width: 832px;
+        height: 399px;
+        overflow: hidden;
+      }
+      .f07-list {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 832px;
+        height: 627px;
+      }
+      .f07-row {
+        position: absolute;
+        left: 0;
+        width: 832px;
+        height: 57px;
+        font-family: "JetBrains Mono", monospace;
+        font-weight: 400;
+        font-size: 38px;
+        line-height: 57px;
+        white-space: pre;
+      }
+      .f07-lvl {
+        position: absolute;
+        left: 12px;
+        top: 0;
+        width: 130px;
+      }
+      .f07-lvl-info { color: rgba(250, 249, 245, 0.60); }
+      .f07-lvl-warn { color: #E8A55A; }
+      .f07-lvl-err { color: #C64545; font-weight: 700; }
+      .f07-lvlbar {
+        position: absolute;
+        left: 166px;
+        top: 20px;
+        height: 18px;
+        border-radius: 4px;
+        background: rgba(250, 249, 245, 0.18);
+      }
+      .f07-lvlbar-err { background: rgba(198, 69, 69, 0.55); }
+      .f07-band {
+        position: absolute;
+        left: 0;
+        width: 832px;
+        height: 57px;
+        background: rgba(198, 69, 69, 0.12);
+        border-top: 1px solid rgba(198, 69, 69, 0.60);
+        border-bottom: 1px solid rgba(198, 69, 69, 0.60);
+        transform-origin: 0% 50%;
+      }
+      .f07-marker {
+        position: absolute;
+        left: 166px;
+        width: 640px;
+        height: 57px;
+        font-family: "JetBrains Mono", monospace;
+        font-weight: 700;
+        font-size: 26px;
+        line-height: 57px;
+        letter-spacing: 0.12em;
+        color: #C64545;
+        white-space: nowrap;
+      }
+
+      .f07-take {
+        position: absolute;
+        left: 80px;
+        top: 1210px;
+        width: 920px;
+        font-family: "EB Garamond", serif;
+        font-weight: 400;
+        font-size: 76px;
+        line-height: 1.08;
+        letter-spacing: -0.018em;
+        color: #141413;
+      }
+      .f07-wg { display: inline-block; }
+    </style>
+
+    <div class="f07-ground clip" data-start="0" data-duration="5.05" data-track-index="0"></div>
+
+    <div class="f07-stage clip" data-start="0" data-duration="5.05" data-track-index="1">
+      <div class="f07-lockup">
+        <span class="f07-numeral">6</span><span class="f07-unit">/ 7</span>
+      </div>
+      <div class="f07-kicker"><span class="f07-spike">✱</span> LOGS</div>
+
+      <div class="f07-rail">
+        <div class="f07-chip f07-chip-done">01</div>
+        <div class="f07-chip f07-chip-done">02</div>
+        <div class="f07-chip f07-chip-done">03</div>
+        <div class="f07-chip f07-chip-done">04</div>
+        <div class="f07-chip f07-chip-done">05</div>
+        <div class="f07-chip f07-chip-now">06</div>
+        <div class="f07-chip f07-chip-next">07</div>
+      </div>
+
+      <div class="f07-term" data-f07="term">
+        <div class="f07-bar">
+          <span class="f07-dot" style="left: 28px;"></span>
+          <span class="f07-dot" style="left: 54px;"></span>
+          <span class="f07-dot" style="left: 80px;"></span>
+          <span class="f07-bar-label">prod · ssh</span>
+        </div>
+
+        <div class="f07-cmdline">
+          <span class="f07-glyph">$ </span><span data-f07="cmd"></span><span class="f07-caret" data-f07="caret"></span>
+          <span class="f07-tag" data-f07="tag">or app logs</span>
+        </div>
+
+        <div class="f07-viewport">
+          <div class="f07-list" data-f07="list">
+            <div class="f07-band" data-f07="band" style="top: 399px;"></div>
+
+            <div class="f07-row" data-f07="pre" style="top: 0px;"><span class="f07-lvl f07-lvl-info">INFO</span><span class="f07-lvlbar" style="width: 420px;"></span></div>
+            <div class="f07-row" data-f07="pre" style="top: 57px;"><span class="f07-lvl f07-lvl-info">INFO</span><span class="f07-lvlbar" style="width: 300px;"></span></div>
+            <div class="f07-row" data-f07="pre" style="top: 114px;"><span class="f07-lvl f07-lvl-warn">WARN</span><span class="f07-lvlbar" style="width: 480px;"></span></div>
+            <div class="f07-row" data-f07="pre" style="top: 171px;"><span class="f07-lvl f07-lvl-info">INFO</span><span class="f07-lvlbar" style="width: 360px;"></span></div>
+            <div class="f07-row" data-f07="pre" style="top: 228px;"><span class="f07-lvl f07-lvl-info">INFO</span><span class="f07-lvlbar" style="width: 260px;"></span></div>
+            <div class="f07-row" data-f07="pre" style="top: 285px;"><span class="f07-lvl f07-lvl-warn">WARN</span><span class="f07-lvlbar" style="width: 440px;"></span></div>
+            <div class="f07-row" data-f07="pre" style="top: 342px;"><span class="f07-lvl f07-lvl-info">INFO</span><span class="f07-lvlbar" style="width: 330px;"></span></div>
+
+            <div class="f07-row" data-f07="err" style="top: 399px;"><span class="f07-lvl f07-lvl-err">ERROR</span><span class="f07-lvlbar f07-lvlbar-err" style="width: 520px;"></span></div>
+
+            <div class="f07-marker" data-f07="marker" style="top: 456px;">▲ RIGHT BEFORE IT STARTED</div>
+
+            <div class="f07-row" data-f07="post" style="top: 456px;"><span class="f07-lvl f07-lvl-info">INFO</span><span class="f07-lvlbar" style="width: 380px;"></span></div>
+            <div class="f07-row" data-f07="post" style="top: 513px;"><span class="f07-lvl f07-lvl-warn">WARN</span><span class="f07-lvlbar" style="width: 290px;"></span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="f07-take">
+        <span class="f07-wg" data-f07="wg">Find the error</span>
+        <span class="f07-wg" data-f07="wg">right before it started.</span>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script>
+      (function () {
+        "use strict";
+        var FRAME_ID = "07-journalctl";
+        var DURATION = 5.05;
+        var LINE = 57;
+        var root = document.querySelector('[data-composition-id="' + FRAME_ID + '"]');
+        if (!root) return;
+        function q(sel) { return root.querySelector('[data-f07="' + sel + '"]'); }
+        function qa(sel) { return Array.prototype.slice.call(root.querySelectorAll('[data-f07="' + sel + '"]')); }
+
+        var term = q("term");
+        var cmd = q("cmd");
+        var caret = q("caret");
+        var tag = q("tag");
+        var list = q("list");
+        var band = q("band");
+        var preRows = qa("pre");
+        var errRow = q("err");
+        var marker = q("marker");
+        var postRows = qa("post");
+        var wordGroups = qa("wg");
+
+        // Typed-prompt law: chars-at-time table built once, synchronously, seeded cadence.
+        var COMMAND = "journalctl";
+        var TYPE_START = 1.03;
+        var lcg = 0x0707a11c;
+        function rnd() {
+          lcg = (Math.imul(1664525, lcg) + 1013904223) >>> 0;
+          return lcg / 4294967296;
+        }
+        var rows = [{ t: 0, n: 0 }];
+        (function () {
+          var t = TYPE_START;
+          var n = 0;
+          while (n < COMMAND.length) {
+            var take = Math.min(COMMAND.length - n, 1 + Math.floor(rnd() * 3));
+            n += take;
+            rows.push({ t: t, n: n });
+            t += take * (0.035 + rnd() * 0.025);
+          }
+        })();
+        var TYPE_END = rows[rows.length - 1].t;
+        var EXEC_AT = 1.9;
+        function charsAt(time) {
+          for (var i = rows.length - 1; i >= 0; i -= 1) {
+            if (time >= rows[i].t - 0.001) return rows[i].n;
+          }
+          return 0;
+        }
+        function caretOn(time) {
+          if (time >= EXEC_AT) return false;
+          if (time >= TYPE_START - 0.001 && time <= TYPE_END + 0.15) return true;
+          return Math.floor(time / 0.5) % 2 === 0;
+        }
+        function render(time) {
+          cmd.textContent = COMMAND.slice(0, charsAt(time));
+          caret.style.opacity = caretOn(time) ? "1" : "0";
+        }
+        render(0);
+
+        var tl = gsap.timeline({ paused: true });
+
+        // Scene 1: chrome seated; terminal settles.
+        tl.fromTo(term, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" }, 0);
+
+        // Scene 1-5 driver: typing + caret as a pure function of time.
+        var clock = { t: 0 };
+        tl.fromTo(clock, { t: 0 }, {
+          t: DURATION,
+          duration: DURATION,
+          ease: "none",
+          onUpdate: function () { render(clock.t); }
+        }, 0);
+
+        // Scene 2: "or your app logs" tag.
+        tl.fromTo(tag, { opacity: 0, x: 12 }, { opacity: 1, x: 0, duration: 0.35, ease: "power3.out" }, 1.65);
+
+        // Scene 3: log rows print.
+        var preTimes = [1.95, 2.12, 2.29, 2.46, 2.63, 2.8, 2.97];
+        preRows.forEach(function (row, i) {
+          tl.fromTo(row, { opacity: 0 }, { opacity: 1, duration: 0.12, ease: "none" }, preTimes[i]);
+        });
+
+        // Scene 4: ERROR prints, band locks, list scrolls up, trailing rows dim.
+        tl.fromTo(errRow, { opacity: 0 }, { opacity: 1, duration: 0.12, ease: "none" }, 3.25);
+        tl.fromTo(band, { scaleX: 0, opacity: 0 }, { scaleX: 1, opacity: 1, duration: 0.4, ease: "power3.out" }, 3.3);
+        tl.fromTo(list, { y: 0 }, { y: -LINE, duration: 0.16, ease: "power3.out" }, 3.25);
+
+        var postTimes = [3.45, 3.65];
+        postRows.forEach(function (row, i) {
+          tl.fromTo(row, { opacity: 0 }, { opacity: 1, duration: 0.12, ease: "none" }, postTimes[i]);
+          tl.fromTo(list, { y: -LINE * (i + 1) }, { y: -LINE * (i + 2), duration: 0.16, ease: "power3.out", immediateRender: false }, postTimes[i]);
+        });
+        tl.fromTo(postRows, { opacity: 1 }, { opacity: 0.28, duration: 0.3, ease: "power3.out", immediateRender: false }, 3.95);
+
+        // Scene 5: open a slot under ERROR, pin the marker, land the takeaway.
+        tl.fromTo(list, { y: -LINE * 3 }, { y: -LINE * 4, duration: 0.3, ease: "power3.out", immediateRender: false }, 4.35);
+        tl.fromTo(postRows, { y: 0 }, { y: LINE, duration: 0.3, ease: "power3.out" }, 4.35);
+        tl.fromTo(marker, { opacity: 0, x: -12 }, { opacity: 1, x: 0, duration: 0.3, ease: "power3.out" }, 4.5);
+
+        tl.fromTo(wordGroups[0], { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 4.38);
+        tl.fromTo(wordGroups[1], { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 4.6);
+
+        tl.seek(0);
+        window.__timelines = window.__timelines || {};
+        window.__timelines[FRAME_ID] = tl;
+      })();
+    </script>
+  </div>
+</template>

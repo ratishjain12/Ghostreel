@@ -1,0 +1,13 @@
+Container, VM, serverless. All three ways to run your code without thinking about the physical machine underneath. The difference is how much of the machine you're actually pretending doesn't exist.
+
+A VM virtualizes the entire hardware. It boots its own kernel, its own OS, completely isolated from everything else on that physical box. Strong isolation, but heavy, you're paying for a whole operating system just to run one app.
+
+A container skips the second OS entirely. It shares the host's kernel and just isolates the process, the filesystem, the network. Same isolation goal, a fraction of the overhead, and it starts in milliseconds instead of minutes.
+
+Serverless takes the container idea and removes it from you completely. You don't provision it, don't keep it running, don't even know if it's a container under the hood. You hand over a function, it runs when triggered, and disappears.
+
+So the real axis here isn't performance, it's control. A VM gives you the whole machine. A container gives you an isolated slice of one. Serverless takes the machine away from you entirely.
+
+Use a VM when you need full OS-level control, or you're running something that assumes it owns the kernel. Use containers for most normal services, that's the default now. Reach for serverless when the workload is spiky, event-driven, or not worth keeping a server running for.
+
+Comment guide and I'll send over the full breakdown.

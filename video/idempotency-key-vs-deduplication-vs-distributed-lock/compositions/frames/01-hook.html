@@ -1,0 +1,308 @@
+<template data-composition-id="01-hook" data-width="1080" data-height="1920" data-duration="10.12">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+
+<style data-brand-tokens>
+  @font-face { font-family: 'Fraunces'; src: url('assets/fonts/Fraunces-Variable.woff2') format('woff2'); font-weight: 400 700; font-style: normal; font-display: block; }
+  @font-face { font-family: 'Fraunces'; src: url('assets/fonts/Fraunces-Italic.woff2') format('woff2'); font-weight: 400 700; font-style: italic; font-display: block; }
+  @font-face { font-family: 'IBM Plex Sans'; src: url('assets/fonts/IBMPlexSans-Variable.woff2') format('woff2'); font-weight: 300 700; font-style: normal; font-display: block; }
+  @font-face { font-family: 'IBM Plex Mono'; src: url('assets/fonts/IBMPlexMono-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+  @font-face { font-family: 'IBM Plex Mono'; src: url('assets/fonts/IBMPlexMono-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: block; }
+</style>
+
+<style>
+  #root {
+    position: relative;
+    width: 1080px;
+    height: 1920px;
+    overflow: hidden;
+    container-type: size;
+    font-family: 'IBM Plex Sans', sans-serif;
+  }
+  #root .clip { position: absolute; inset: 0; }
+
+  /* -- background: void-black + hairline schematic grid -- */
+  .h01-bg {
+    background:
+      repeating-linear-gradient(to right, rgba(35, 43, 51, 0.14) 0 1px, transparent 1px 64px),
+      repeating-linear-gradient(to bottom, rgba(35, 43, 51, 0.14) 0 1px, transparent 1px 64px),
+      #0A0D12;
+  }
+
+  /* -- Scene 1: hard-cut hero term flashes -- */
+  .h01-hero {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 33cqh;
+    height: 12cqh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .h01-term {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 6.6cqw;
+    line-height: 1.0;
+    letter-spacing: -0.015em;
+    color: #EDEFF3;
+    opacity: 0;
+  }
+  .h01-hero-tick-wrap {
+    position: absolute;
+    top: 4.6cqh;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+  }
+  .h01-hero-tick {
+    width: 15cqw;
+    height: 4px;
+    border-radius: 2px;
+    opacity: 0;
+    transform: scaleX(0);
+    transform-origin: 50% 50%;
+  }
+
+  /* -- Scene 2: stacked rows -- */
+  .h01-row {
+    position: absolute;
+    left: 50%;
+    margin-left: -31cqw;
+    width: 62cqw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.4cqw;
+    opacity: 0;
+    transform: scale(0);
+    transform-origin: 50% 50%;
+  }
+  .h01-row-1 { top: 20cqh; }
+  .h01-row-2 { top: 27cqh; }
+  .h01-row-3 { top: 34cqh; }
+  .h01-row-tick {
+    display: inline-block;
+    width: 2.6cqw;
+    height: 4px;
+    border-radius: 2px;
+    flex: none;
+  }
+  .h01-row-term {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 3.2cqw;
+    line-height: 1.15;
+    color: #EDEFF3;
+    white-space: nowrap;
+  }
+  .h01-row-ring-wrap {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+  .h01-row-ring {
+    width: 62%;
+    height: 260%;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    opacity: 0;
+    transform: scale(0.7);
+    transform-origin: 50% 50%;
+  }
+
+  /* -- Scene 2 tail: kicker line -- */
+  .h01-kicker {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 42cqh;
+    display: flex;
+    justify-content: center;
+    gap: 0.55em;
+  }
+  .h01-kicker-word {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-style: italic;
+    font-size: 2.0cqw;
+    line-height: 1.1;
+    color: #8992A1;
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  /* -- Scene 4: stamp line -- */
+  .h01-stamp {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 52cqh;
+    display: flex;
+    justify-content: center;
+    gap: 0.5em;
+    transform-origin: 50% 50%;
+  }
+  .h01-stamp-word {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 4.4cqw;
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    color: #EDEFF3;
+    opacity: 0;
+    transform: scale(0);
+    transform-origin: 50% 50%;
+  }
+</style>
+
+<div
+  id="root"
+  data-composition-id="01-hook"
+  data-start="0"
+  data-duration="10.12"
+  data-width="1080"
+  data-height="1920"
+>
+  <div class="clip h01-bg" data-start="0" data-duration="10.12" data-track-index="0"></div>
+
+  <div class="clip" data-start="0" data-duration="10.12" data-track-index="1">
+    <div class="h01-hero" id="hook01-hero">
+      <div class="h01-term" id="hook01-term-a">Idempotency key</div>
+      <div class="h01-term" id="hook01-term-b">Deduplication</div>
+      <div class="h01-term" id="hook01-term-c">Distributed lock</div>
+      <div class="h01-hero-tick-wrap">
+        <div class="h01-hero-tick" id="hook01-hero-tick"></div>
+      </div>
+    </div>
+
+    <div class="h01-row h01-row-1" id="hook01-row-1">
+      <span class="h01-row-tick" id="hook01-row-1-tick"></span>
+      <span class="h01-row-term">Idempotency key</span>
+      <span class="h01-row-ring-wrap"><span class="h01-row-ring" id="hook01-ring-1"></span></span>
+    </div>
+    <div class="h01-row h01-row-2" id="hook01-row-2">
+      <span class="h01-row-tick" id="hook01-row-2-tick"></span>
+      <span class="h01-row-term">Deduplication</span>
+      <span class="h01-row-ring-wrap"><span class="h01-row-ring" id="hook01-ring-2"></span></span>
+    </div>
+    <div class="h01-row h01-row-3" id="hook01-row-3">
+      <span class="h01-row-tick" id="hook01-row-3-tick"></span>
+      <span class="h01-row-term">Distributed lock</span>
+      <span class="h01-row-ring-wrap"><span class="h01-row-ring" id="hook01-ring-3"></span></span>
+    </div>
+
+    <div class="h01-kicker" id="hook01-kicker">
+      <span class="h01-kicker-word" id="hook01-kw-1">Same</span>
+      <span class="h01-kicker-word" id="hook01-kw-2">thing,</span>
+      <span class="h01-kicker-word" id="hook01-kw-3">twice</span>
+    </div>
+
+    <div class="h01-stamp" id="hook01-stamp">
+      <span class="h01-stamp-word" id="hook01-sw-1">three</span>
+      <span class="h01-stamp-word" id="hook01-sw-2">different</span>
+      <span class="h01-stamp-word" id="hook01-sw-3">problems.</span>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var AMBER = '#FF9F45';
+  var TEAL = '#4DE8C2';
+  var VIOLET = '#B98CFF';
+
+  window.__timelines = window.__timelines || {};
+  var tl = gsap.timeline({ paused: true });
+
+  var DURATION = 9.72;
+  tl.to({}, { duration: DURATION }, 0);
+
+  // ---- Scene 1 (0.0-3.5s): hard-cut term flashes, VO-word synced ----
+  var termA = document.getElementById('hook01-term-a');
+  var termB = document.getElementById('hook01-term-b');
+  var termC = document.getElementById('hook01-term-c');
+  var heroTick = document.getElementById('hook01-hero-tick');
+
+  var TERM1_IN = 0.0, TERM1_OUT = 1.2;
+  var TERM2_IN = 1.2, TERM2_OUT = 2.32;
+  var TERM3_IN = 2.32;
+  var HERO_FADE_AT = 3.3, HERO_FADE_DUR = 0.2;
+
+  function flashTerm(el, tickColor, at, outAt) {
+    tl.set(el, { opacity: 1 }, at);
+    if (outAt) tl.set(el, { opacity: 0 }, outAt);
+    tl.set(heroTick, { backgroundColor: tickColor, opacity: 1, scaleX: 0 }, at);
+    tl.to(heroTick, { scaleX: 1, duration: 0.16, ease: 'power2.out' }, at + 0.08);
+  }
+
+  flashTerm(termA, AMBER, TERM1_IN, TERM1_OUT);
+  flashTerm(termB, TEAL, TERM2_IN, TERM2_OUT);
+  flashTerm(termC, VIOLET, TERM3_IN, null);
+
+  tl.to(
+    '#hook01-hero',
+    { opacity: 0, scale: 0.85, duration: HERO_FADE_DUR, ease: 'power2.in' },
+    HERO_FADE_AT,
+  );
+
+  // ---- Scene 2 (3.55-5.9s): collapse into stacked rows + kicker line ----
+  var ROW1_AT = 3.55, ROW2_AT = 3.7, ROW3_AT = 3.85;
+  var POP_DUR = 0.45;
+
+  gsap.set('#hook01-row-1-tick', { backgroundColor: AMBER });
+  gsap.set('#hook01-row-2-tick', { backgroundColor: TEAL });
+  gsap.set('#hook01-row-3-tick', { backgroundColor: VIOLET });
+
+  tl.fromTo('#hook01-row-1', { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: POP_DUR, ease: 'power3.out' }, ROW1_AT);
+  tl.fromTo('#hook01-row-2', { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: POP_DUR, ease: 'power3.out' }, ROW2_AT);
+  tl.fromTo('#hook01-row-3', { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: POP_DUR, ease: 'power3.out' }, ROW3_AT);
+
+  var KICKER_SAME = 4.2, KICKER_THING = 4.45, KICKER_TWICE = 5.49;
+  tl.fromTo('#hook01-kw-1', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.35, ease: 'power2.out' }, KICKER_SAME);
+  tl.fromTo('#hook01-kw-2', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.35, ease: 'power2.out' }, KICKER_THING);
+  tl.fromTo('#hook01-kw-3', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.35, ease: 'power2.out' }, KICKER_TWICE);
+
+  // ---- Scene 3 (5.9-7.95s): staggered signal-color ring pulses ----
+  gsap.set('#hook01-ring-1', { borderColor: AMBER });
+  gsap.set('#hook01-ring-2', { borderColor: TEAL });
+  gsap.set('#hook01-ring-3', { borderColor: VIOLET });
+
+  var RING1_AT = 5.9, RING2_AT = 6.6, RING3_AT = 7.3;
+  var RING_DUR = 0.65;
+  [
+    ['#hook01-ring-1', RING1_AT],
+    ['#hook01-ring-2', RING2_AT],
+    ['#hook01-ring-3', RING3_AT],
+  ].forEach(function (pair) {
+    tl.fromTo(
+      pair[0],
+      { opacity: 0.9, scale: 0.7 },
+      { opacity: 0, scale: 1.5, duration: RING_DUR, ease: 'power2.out' },
+      pair[1],
+    );
+  });
+
+  // ---- Scene 4 (7.9-9.72s): stamp builds word-by-word, then a quiet held jitter ----
+  var STAMP1_AT = 7.9, STAMP2_AT = 8.15, STAMP3_AT = 8.45;
+  var STAMP_POP_DUR = 0.4;
+  tl.fromTo('#hook01-sw-1', { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: STAMP_POP_DUR, ease: 'power3.out' }, STAMP1_AT);
+  tl.fromTo('#hook01-sw-2', { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: STAMP_POP_DUR, ease: 'power3.out' }, STAMP2_AT);
+  tl.fromTo('#hook01-sw-3', { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: STAMP_POP_DUR, ease: 'power3.out' }, STAMP3_AT);
+
+  var HOLD_AT = 8.9;
+  tl.to('#hook01-stamp', { scale: 1.008, duration: 0.4, ease: 'sine.inOut', yoyo: true, repeat: 1 }, HOLD_AT);
+
+  window.__timelines['01-hook'] = tl;
+})();
+</script>
+</template>

@@ -1,0 +1,244 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face {
+          font-family: "Space Grotesk";
+          font-weight: 500;
+          font-style: normal;
+          font-display: block;
+          src: url("assets/fonts/Space-Grotesk-500.woff2") format("woff2");
+        }
+        @font-face {
+          font-family: "Space Grotesk";
+          font-weight: 600;
+          font-style: normal;
+          font-display: block;
+          src: url("assets/fonts/Space-Grotesk-600.woff2") format("woff2");
+        }
+        @font-face {
+          font-family: "Space Grotesk";
+          font-weight: 700;
+          font-style: normal;
+          font-display: block;
+          src: url("assets/fonts/Space-Grotesk-700.woff2") format("woff2");
+        }
+        @font-face {
+          font-family: "Inter";
+          font-weight: 400;
+          font-style: normal;
+          font-display: block;
+          src: url("assets/fonts/Inter-400.woff2") format("woff2");
+        }
+        @font-face {
+          font-family: "Inter";
+          font-weight: 600;
+          font-style: normal;
+          font-display: block;
+          src: url("assets/fonts/Inter-600.woff2") format("woff2");
+        }
+
+        #root {
+          position: relative;
+          width: 1080px;
+          height: 1080px;
+          overflow: hidden;
+          container-type: size;
+          font-family: "Inter", sans-serif;
+        }
+
+        .f07-bg {
+          position: absolute;
+          inset: 0;
+          background: #fdfae7;
+        }
+        .f07-rings {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+          width: 780px;
+          height: 780px;
+        }
+        .f07-ring {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          border-radius: 50%;
+          border: 1.5px solid rgba(30, 43, 250, 0.12);
+          transform: translate(-50%, -50%);
+        }
+        .f07-ring-1 {
+          width: 780px;
+          height: 780px;
+        }
+        .f07-ring-2 {
+          width: 560px;
+          height: 560px;
+        }
+        .f07-ring-3 {
+          width: 340px;
+          height: 340px;
+        }
+
+        .f07-card {
+          position: absolute;
+          left: 90px;
+          right: 90px;
+          top: 150px;
+          bottom: 190px;
+          background: #1e2bfa;
+          border-radius: 40px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          padding: 60px 70px;
+        }
+        .f07-accentline {
+          width: 60px;
+          height: 4px;
+          border-radius: 2px;
+          background: #fdfae7;
+          margin-bottom: 28px;
+        }
+        .f07-h1 {
+          font-family: "Space Grotesk", sans-serif;
+          font-weight: 700;
+          font-size: 6.4cqw;
+          line-height: 1.12;
+          letter-spacing: -0.02em;
+          color: #fdfae7;
+          max-width: 90%;
+          margin-bottom: 22px;
+        }
+        .f07-sub {
+          font-family: "Inter", sans-serif;
+          font-weight: 400;
+          font-size: 2.05cqw;
+          line-height: 1.55;
+          color: rgba(253, 250, 231, 0.75);
+          max-width: 78%;
+          margin-bottom: 44px;
+        }
+        .f07-actions {
+          display: flex;
+          gap: 20px;
+          margin-bottom: 26px;
+        }
+        .f07-action-btn {
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          font-family: "Space Grotesk", sans-serif;
+          font-weight: 600;
+          font-size: 1.75cqw;
+          letter-spacing: 0.01em;
+          color: #1e2bfa;
+          background: #fdfae7;
+          border-radius: 100px;
+          padding: 21px 36px;
+          white-space: nowrap;
+        }
+        .f07-action-icon {
+          width: 26px;
+          height: 26px;
+          flex-shrink: 0;
+        }
+        .f07-microcopy {
+          font-family: "Inter", sans-serif;
+          font-weight: 400;
+          font-size: 1.55cqw;
+          color: rgb(195, 197, 244);
+          margin-bottom: 40px;
+        }
+        .f07-hashtags {
+          font-family: "Inter", sans-serif;
+          font-weight: 400;
+          font-size: 1.45cqw;
+          color: rgb(193, 196, 248);
+        }
+
+        .f07-chrome {
+          position: absolute;
+          left: 80px;
+          right: 80px;
+          bottom: 80px;
+        }
+        .f07-counter {
+          font-family: "Space Grotesk", sans-serif;
+          font-weight: 500;
+          font-size: 1.35cqw;
+          letter-spacing: 0.05em;
+          color: #9a9a9a;
+          margin-bottom: 10px;
+        }
+        .f07-progress-track {
+          width: 100%;
+          height: 3px;
+          background: rgba(30, 43, 250, 0.15);
+        }
+        .f07-progress-fill {
+          width: 100%;
+          height: 100%;
+          background: #1e2bfa;
+        }
+      </style>
+
+      <div id="root" data-composition-id="07-cta" data-width="1080" data-height="1080">
+        <div class="clip f07-bg" data-start="0" data-duration="6" data-track-index="0"></div>
+        <div class="clip f07-rings" data-start="0" data-duration="6" data-track-index="1">
+          <div class="f07-ring f07-ring-1"></div>
+          <div class="f07-ring f07-ring-2"></div>
+          <div class="f07-ring f07-ring-3"></div>
+        </div>
+
+        <div class="clip f07-card" data-start="0" data-duration="6" data-track-index="2">
+          <div class="f07-accentline"></div>
+          <div class="f07-h1">Save this cheat sheet.</div>
+          <div class="f07-sub">
+            4 ways systems talk in real time — and the tradeoff each one hides.
+          </div>
+          <div class="f07-actions">
+            <div class="f07-action-btn">
+              <svg class="f07-action-icon" viewBox="0 0 24 24" fill="none" stroke="#1e2bfa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+              </svg>
+              <span>Save</span>
+            </div>
+            <div class="f07-action-btn">
+              <svg class="f07-action-icon" viewBox="0 0 24 24" fill="none" stroke="#1e2bfa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="8.5" cy="7" r="4"/>
+                <line x1="20" y1="8" x2="20" y2="14"/>
+                <line x1="23" y1="11" x2="17" y2="11"/>
+              </svg>
+              <span>Follow @ratish.ai</span>
+            </div>
+          </div>
+          <div class="f07-microcopy">for more system design breakdowns</div>
+          <div class="f07-hashtags">
+            #systemdesign #webdevelopment #api #softwareengineering
+          </div>
+        </div>
+
+        <div class="clip f07-chrome" data-start="0" data-duration="6" data-track-index="3">
+          <div class="f07-counter">7 / 7</div>
+          <div class="f07-progress-track">
+            <div class="f07-progress-fill"></div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        window.__timelines = window.__timelines || {};
+        window.__timelines["07-cta"] = gsap.timeline({ paused: true });
+      </script>
+    </template>
+  </body>
+</html>

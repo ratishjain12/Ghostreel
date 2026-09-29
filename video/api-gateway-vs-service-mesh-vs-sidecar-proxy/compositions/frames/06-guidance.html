@@ -1,0 +1,317 @@
+<template>
+<div id="root" data-composition-id="06-guidance" data-width="1080" data-height="1920" data-duration="13.75">
+  <style>
+    @font-face { font-family: 'Fraunces'; src: url('assets/fonts/Fraunces-Variable.woff2') format('woff2'); font-weight: 400 700; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Fraunces'; src: url('assets/fonts/Fraunces-Italic.woff2') format('woff2'); font-weight: 400 700; font-style: italic; font-display: block; }
+    @font-face { font-family: 'IBM Plex Sans'; src: url('assets/fonts/IBMPlexSans-Variable.woff2') format('woff2'); font-weight: 300 700; font-style: normal; font-display: block; }
+    @font-face { font-family: 'IBM Plex Mono'; src: url('assets/fonts/IBMPlexMono-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+    @font-face { font-family: 'IBM Plex Mono'; src: url('assets/fonts/IBMPlexMono-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: block; }
+
+    #root {
+      width: 1080px;
+      height: 1920px;
+      position: relative;
+      overflow: hidden;
+      container-type: size;
+      container-name: frame;
+    }
+
+    .h06-guidance-clip { position: absolute; inset: 0; }
+
+    .h06-guidance-ground { background: #0A0D12; }
+
+    .h06-guidance-grid {
+      background-image:
+        linear-gradient(to right, rgba(35,43,51,0.12) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(35,43,51,0.12) 1px, transparent 1px);
+      background-size: 54px 54px;
+    }
+
+    .h06-guidance-stage { position: absolute; inset: 0; }
+
+    .h06-guidance-kicker {
+      position: absolute;
+      left: 6cqw;
+      right: 6cqw;
+      top: 190px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 500;
+      font-size: 1.85cqw;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #8992A1;
+      opacity: 0;
+    }
+
+    .h06-guidance-row {
+      position: absolute;
+      left: 6cqw;
+      right: 6cqw;
+      display: flex;
+      align-items: flex-start;
+      gap: 2.2cqw;
+    }
+    .h06-guidance-row1 { top: 300px; }
+    .h06-guidance-row2 { top: 640px; }
+
+    .h06-guidance-idx-col {
+      flex: 0 0 auto;
+      min-width: 90px;
+    }
+    .h06-guidance-idx {
+      display: inline-block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 500;
+      font-size: 2cqw;
+      letter-spacing: 0.06em;
+      opacity: 0;
+      transform-origin: 0% 50%;
+    }
+    .h06-guidance-idx-violet { color: #B98CFF; }
+    .h06-guidance-idx-teal { color: #4DE8C2; }
+
+    .h06-guidance-text {
+      flex: 1 1 auto;
+      margin: 0;
+      font-family: 'Fraunces', serif;
+      font-weight: 600;
+      font-size: 4.6cqw;
+      line-height: 1.15;
+      letter-spacing: -0.015em;
+      color: #EDEFF3;
+    }
+
+    .h06-guidance-word {
+      display: inline-block;
+      transform-origin: 50% 50%;
+      opacity: 0;
+    }
+
+    .h06-guidance-hl {
+      position: relative;
+      display: inline-flex;
+      white-space: nowrap;
+      align-items: baseline;
+      gap: 0.22em;
+    }
+    .h06-guidance-hl-bar {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -0.07em;
+      height: 4px;
+      transform-origin: 0% 50%;
+      transform: scaleX(0);
+    }
+    .h06-guidance-hl-bar-violet { background: #B98CFF; }
+    .h06-guidance-hl-bar-teal { background: #4DE8C2; }
+
+    .h06-guidance-glow { will-change: transform, color; }
+  </style>
+
+  <div class="h06-guidance-clip clip h06-guidance-ground" data-start="0" data-duration="13.75" data-track-index="0"></div>
+  <div class="h06-guidance-clip clip h06-guidance-grid" data-start="0" data-duration="13.75" data-track-index="1"></div>
+
+  <div class="h06-guidance-clip clip h06-guidance-stage" data-start="0" data-duration="13.75" data-track-index="2">
+    <div class="h06-guidance-kicker" id="h06-guidance-kicker">When to reach for which</div>
+
+    <div class="h06-guidance-row h06-guidance-row1" id="h06-guidance-row1">
+      <div class="h06-guidance-idx-col">
+        <span class="h06-guidance-idx h06-guidance-idx-violet" id="h06-guidance-idx1">01 &middot;</span>
+      </div>
+      <p class="h06-guidance-text" id="h06-guidance-line1">
+        <span class="h06-guidance-word">You</span>
+        <span class="h06-guidance-word">need</span>
+        <span class="h06-guidance-word">an</span>
+        <span class="h06-guidance-hl" id="h06-guidance-hl1">
+          <span class="h06-guidance-word">API</span>
+          <span class="h06-guidance-word">gateway</span>
+          <i class="h06-guidance-hl-bar h06-guidance-hl-bar-violet" id="h06-guidance-hl-bar1"></i>
+        </span>
+        <span class="h06-guidance-word">as</span>
+        <span class="h06-guidance-word">soon</span>
+        <span class="h06-guidance-word">as</span>
+        <span class="h06-guidance-word">external</span>
+        <span class="h06-guidance-word">clients</span>
+        <span class="h06-guidance-word">talk</span>
+        <span class="h06-guidance-word">to</span>
+        <span class="h06-guidance-word">more</span>
+        <span class="h06-guidance-word">than</span>
+        <span class="h06-guidance-word">one</span>
+        <span class="h06-guidance-word">backend</span>
+        <span class="h06-guidance-word">service.</span>
+      </p>
+    </div>
+
+    <div class="h06-guidance-row h06-guidance-row2" id="h06-guidance-row2">
+      <div class="h06-guidance-idx-col">
+        <span class="h06-guidance-idx h06-guidance-idx-teal" id="h06-guidance-idx2">02 &middot;</span>
+      </div>
+      <p class="h06-guidance-text" id="h06-guidance-line2">
+        <span class="h06-guidance-word">Add</span>
+        <span class="h06-guidance-word">a</span>
+        <span class="h06-guidance-hl" id="h06-guidance-hl2">
+          <span class="h06-guidance-word">service</span>
+          <span class="h06-guidance-word">mesh</span>
+          <i class="h06-guidance-hl-bar h06-guidance-hl-bar-teal" id="h06-guidance-hl-bar2"></i>
+        </span>
+        <span class="h06-guidance-word">once</span>
+        <span class="h06-guidance-word">you</span>
+        <span class="h06-guidance-word">have</span>
+        <span class="h06-guidance-word">enough</span>
+        <span class="h06-guidance-word">internal</span>
+        <span class="h06-guidance-word">services</span>
+        <span class="h06-guidance-word">that</span>
+        <span class="h06-guidance-word h06-guidance-glow" id="h06-guidance-glow-retries">retries,</span>
+        <span class="h06-guidance-word h06-guidance-glow" id="h06-guidance-glow-mtls">mTLS,</span>
+        <span class="h06-guidance-word">and</span>
+        <span class="h06-guidance-word h06-guidance-glow" id="h06-guidance-glow-observability">observability</span>
+        <span class="h06-guidance-word">between</span>
+        <span class="h06-guidance-word">them</span>
+        <span class="h06-guidance-word">can't</span>
+        <span class="h06-guidance-word">be</span>
+        <span class="h06-guidance-word">handled</span>
+        <span class="h06-guidance-word">per-team</span>
+        <span class="h06-guidance-word">anymore.</span>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var root = document.querySelector('[data-composition-id="06-guidance"]');
+
+      var tl = gsap.timeline({ paused: true });
+      window.__timelines = window.__timelines || {};
+      window.__timelines['06-guidance'] = tl;
+
+      var kicker = root.querySelector('#h06-guidance-kicker');
+      var idx1 = root.querySelector('#h06-guidance-idx1');
+      var idx2 = root.querySelector('#h06-guidance-idx2');
+      var row1 = root.querySelector('#h06-guidance-row1');
+      var hlBar1 = root.querySelector('#h06-guidance-hl-bar1');
+      var hlBar2 = root.querySelector('#h06-guidance-hl-bar2');
+      var stage = root.querySelector('.h06-guidance-stage');
+      var words1 = root.querySelectorAll('#h06-guidance-line1 .h06-guidance-word');
+      var words2 = root.querySelectorAll('#h06-guidance-line2 .h06-guidance-word');
+
+      // Scene 1 (0.0-4.06s) — kicker + index chip + line 1 per-word stagger reveal.
+      tl.fromTo(kicker, { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' }, 0);
+      tl.fromTo(idx1, { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.3, ease: 'back.out(1.6)' }, 0);
+
+      var START1 = 0.1, END1 = 3.5;
+      var step1 = words1.length > 1 ? (END1 - START1) / (words1.length - 1) : 0;
+      var gatewayOnset = 0;
+      words1.forEach(function (el, i) {
+        var t = START1 + i * step1;
+        if (el.textContent === 'gateway') gatewayOnset = t;
+        tl.fromTo(
+          el,
+          { opacity: 0, y: 14, filter: 'blur(10px)' },
+          { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.4, ease: 'power3.out' },
+          t
+        );
+      });
+      tl.fromTo(hlBar1, { scaleX: 0 }, { scaleX: 1, duration: 0.35, ease: 'power2.out' }, gatewayOnset + 0.45);
+
+      // Scene 2 (4.06-4.76s) — held tension, no motion.
+
+      // Scene 3 (4.76-12.63s) — line 1 dims, line 2 lands, keyword glow pulses.
+      var SCENE3_START = 4.76;
+      var SCENE3_DUR = 12.63 - 4.76;
+
+      tl.to(row1, { opacity: 0.4, duration: 0.4, ease: 'power2.out' }, SCENE3_START);
+      tl.fromTo(
+        idx2,
+        { opacity: 0, scale: 0.85 },
+        { opacity: 1, scale: 1, duration: 0.3, ease: 'back.out(1.6)' },
+        SCENE3_START + 0.05
+      );
+
+      var START2 = 0.5, END2 = 6.1;
+      var step2 = words2.length > 1 ? (END2 - START2) / (words2.length - 1) : 0;
+      var meshOnset = 0;
+      words2.forEach(function (el, i) {
+        var tLocal = START2 + i * step2;
+        var t = SCENE3_START + tLocal;
+        if (el.textContent === 'mesh') meshOnset = t;
+        tl.fromTo(
+          el,
+          { opacity: 0, y: 14, filter: 'blur(10px)' },
+          { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.4, ease: 'power3.out' },
+          t
+        );
+      });
+      tl.fromTo(hlBar2, { scaleX: 0 }, { scaleX: 1, duration: 0.35, ease: 'power2.out' }, meshOnset + 0.45);
+
+      // Keyword glow (asr-keyword-glow) — retries / mTLS / observability pulse teal in place,
+      // scheduled after each word's own entrance tween has fully finished so nothing fights
+      // GSAP for control of that element's transform.
+      var ATTACK_DUR = 0.15;
+      var RELEASE = 0.35;
+      var REST_LEVEL = 0.18;
+      var MAX_BLUR = 22;
+      var MAX_SCALE_BOOST = 0.08;
+      var REST_RGB = { r: 237, g: 239, b: 243 };
+      var ACTIVE_RGB = { r: 77, g: 232, b: 194 };
+
+      var TIMINGS = {
+        retries: { start: 3.04, end: 3.39 },
+        mtls: { start: 3.44, end: 3.84 },
+        observability: { start: 4.24, end: 4.64 },
+      };
+
+      var glowEls = {
+        retries: root.querySelector('#h06-guidance-glow-retries'),
+        mtls: root.querySelector('#h06-guidance-glow-mtls'),
+        observability: root.querySelector('#h06-guidance-glow-observability'),
+      };
+
+      function envelope(time, start, end) {
+        if (time < start) return 0;
+        if (time < end) return Math.min((time - start) / ATTACK_DUR, 1);
+        var releaseEnd = end + RELEASE;
+        if (time < releaseEnd) return 1 - ((time - end) / RELEASE) * (1 - REST_LEVEL);
+        return REST_LEVEL;
+      }
+
+      function lerpChannel(a, b, t) {
+        return Math.round(a + (b - a) * t);
+      }
+
+      var glowDriver = { t: 0 };
+      tl.to(
+        glowDriver,
+        {
+          t: SCENE3_DUR,
+          duration: SCENE3_DUR,
+          ease: 'none',
+          onUpdate: function () {
+            Object.keys(TIMINGS).forEach(function (key) {
+              var el = glowEls[key];
+              var timing = TIMINGS[key];
+              var env = envelope(glowDriver.t, timing.start, timing.end);
+              el.style.textShadow = '0 0 ' + (MAX_BLUR * env) + 'px rgba(77,232,194,' + env + ')';
+              el.style.transform = 'scale(' + (1 + MAX_SCALE_BOOST * env) + ')';
+              el.style.color =
+                'rgb(' +
+                lerpChannel(REST_RGB.r, ACTIVE_RGB.r, env) + ',' +
+                lerpChannel(REST_RGB.g, ACTIVE_RGB.g, env) + ',' +
+                lerpChannel(REST_RGB.b, ACTIVE_RGB.b, env) + ')';
+            });
+          },
+        },
+        SCENE3_START
+      );
+
+      // Scene 4 (12.63-13.25s) — both lines hold, settle, no exit.
+      tl.fromTo(
+        stage,
+        { scale: 1.006 },
+        { scale: 1, duration: 0.3, ease: 'sine.out' },
+        12.63
+      );
+    })();
+  </script>
+</div>
+</template>

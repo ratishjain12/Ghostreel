@@ -1,0 +1,5 @@
+{
+  "message": "Comment \"GUIDE\" and I'll send you the full breakdown.\n\nWhy does an LLM pause before the first word, then stream the rest instantly? Prefill is compute bound, decode is memory bound, and that one split explains LLM latency and pricing.\n\n#aiengineering #llm #machinelearning #softwareengineering",
+  "angle": "ai-engineering",
+  "hook_style": "question"
+}

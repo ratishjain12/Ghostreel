@@ -3,6 +3,8 @@ import hashlib
 import hmac
 import json
 import os
+import time
+import urllib.error
 import urllib.request
 
 import boto3
@@ -48,15 +50,42 @@ def _mark_sent(marker_id):
     _table().put_item(Item={"pk": f"marker#{marker_id}", "sk": "x"})
 
 
+# Permanent, no TTL — unlike the pending# prompt below, "have I ever delivered
+# this exact post's guide to this exact person" should never expire. Without
+# this, a completely natural reply-comment like "thanks for the guide!" carries
+# a brand-new comment_id and contains the keyword, so _handle_comment treats it
+# as a fresh trigger match and resends the whole thing.
+def _already_delivered(sender_id, media_id):
+    return "Item" in _table().get_item(Key={"pk": f"delivered#{sender_id}", "sk": media_id})
+
+
+def _mark_delivered(sender_id, media_id):
+    _table().put_item(Item={"pk": f"delivered#{sender_id}", "sk": media_id})
+
+
+PENDING_TTL_SEC = 3 * 24 * 60 * 60  # 3 days
+
+
 def _set_pending(sender_id, media_id, entry):
     # Keyed by (sender, media) — one pending record per post someone has triggered,
     # not a single slot per sender, so commenting on two tracked posts before
     # replying to either doesn't silently drop the first one.
+    #
+    # TTL matters here: _handle_message treats ANY message or button tap from a
+    # sender as "recheck and deliver" as long as they have an outstanding pending
+    # record — that's what lets a plain text reply (not just the button) confirm
+    # follow status. Without an expiry, someone who triggers a post, gets the
+    # follow-gate prompt, and never taps it leaves that record sitting forever —
+    # then an unrelated DM weeks later (about anything) silently resurfaces and
+    # delivers that long-forgotten guide. The `ttl` attribute (DynamoDB-native
+    # expiry, enabled on this table) makes an abandoned prompt just quietly expire
+    # instead of lying in wait for the next unrelated message.
     _table().put_item(Item={
         "pk": f"pending#{sender_id}",
         "sk": media_id,
         "pdf_key": entry["pdf_key"],
         "keyword": entry.get("keyword", ""),
+        "ttl": int(time.time()) + PENDING_TTL_SEC,
     })
 
 
@@ -67,6 +96,22 @@ def _get_pending_all(sender_id):
 
 def _clear_pending(sender_id, media_id):
     _table().delete_item(Key={"pk": f"pending#{sender_id}", "sk": media_id})
+
+
+# Durable per-post counters for the dashboard's Performance tab — separate from
+# the pending#/marker# rows above, which are transient by design (pending rows
+# are deleted once delivered, so they can't answer "how many people ever got
+# this"). Wrapped so a stats-write failure can never block the actual
+# comment-reply / DM-delivery flow, which is the one thing that must not break.
+def _increment_stat(media_id, field):
+    try:
+        _table().update_item(
+            Key={"pk": f"stats#{media_id}", "sk": "counts"},
+            UpdateExpression=f"ADD {field} :one",
+            ExpressionAttributeValues={":one": 1},
+        )
+    except Exception as exc:
+        print(f"stats: failed to increment {field} for {media_id}: {exc}")
 
 
 def _load_triggers():
@@ -160,12 +205,37 @@ def _deliver_pending(sender_id, recipient):
     })
 
     for item in items:
-        pdf_url = s3.generate_presigned_url("get_object", Params={"Bucket": BUCKET, "Key": item["pdf_key"]}, ExpiresIn=3600)
-        _graph_post(f"{ig_user_id}/messages", {
-            "recipient": recipient,
-            "message": {"attachment": {"type": "file", "payload": {"url": pdf_url, "is_reusable": False}}},
-        })
-        _clear_pending(sender_id, item["sk"])
+        # Isolated per item: one item's send/clear failing (a transient Graph API
+        # error, a bad pdf_key) must not abort the loop and leave every item after
+        # it un-cleared — those would otherwise sit pending indefinitely, waiting
+        # to resurface on the person's next unrelated message. Skip and move on;
+        # the failed one stays pending and gets a fresh attempt next interaction,
+        # bounded by PENDING_TTL_SEC either way.
+        try:
+            pdf_url = s3.generate_presigned_url("get_object", Params={"Bucket": BUCKET, "Key": item["pdf_key"]}, ExpiresIn=3600)
+            try:
+                _graph_post(f"{ig_user_id}/messages", {
+                    "recipient": recipient,
+                    "message": {"attachment": {"type": "file", "payload": {"url": pdf_url, "is_reusable": False}}},
+                })
+            except urllib.error.HTTPError as exc:
+                if exc.code != 500:
+                    raise
+                # Observed in production twice: this call can return HTTP 500 even though
+                # the file attachment is actually delivered — confirmed both times by the
+                # account's own is_echo webhook event for the file message arriving right
+                # after the "failed" call. Treating every 500 here as a hard failure left
+                # the pending record stuck (never cleared, delivered stat never
+                # incremented) even though the recipient already had the file — this
+                # exact log line is what to grep for if that assumption is ever wrong for
+                # a specific case.
+                print(f"deliver: file-send got HTTP 500 for sender={sender_id} media={item['sk']} "
+                      f"— treating as delivered (known Graph API flakiness, not retrying)")
+            _clear_pending(sender_id, item["sk"])
+            _mark_delivered(sender_id, item["sk"])
+            _increment_stat(item["sk"], "delivered")
+        except Exception as exc:
+            print(f"deliver: failed for sender={sender_id} media={item['sk']}: {exc}")
 
 
 COMMENT_ACK_TEXT = "Sent you a DM — check your inbox! 📩"
@@ -201,14 +271,31 @@ def _handle_comment(value):
     if entry["keyword"].strip().lower() not in text:
         print(f"comment: keyword {entry['keyword']!r} not found in comment text, ignoring")
         return
+    if _already_delivered(sender_id, media_id):
+        # A natural reply like "thanks for the guide!" contains the keyword and has
+        # a brand-new comment_id, so without this check it reads as a fresh trigger
+        # and resends the whole thing to someone who already has it.
+        print(f"comment: {sender_id} already received this post's guide, not re-sending")
+        _mark_sent(comment_id)
+        return
 
     _mark_sent(comment_id)
     _set_pending(sender_id, media_id, entry)
+    _increment_stat(media_id, "matched")
 
     # Check follow status up front — a commenter who already follows doesn't need the
     # follow-gate CTA at all; sending it anyway meant they'd get the CTA *and then* the PDF
     # once they tapped/replied, instead of just the PDF right away.
-    profile = _graph_get(sender_id, {"fields": "is_user_follow_business"})
+    #
+    # The profile lookup needs user consent, which only exists once the person has a DM thread
+    # with the account — a first-time commenter gets IGApiException code 230 (surfaced as HTTP
+    # 500). Fall through to the follow-gate private reply, which needs no consent; tapping its
+    # button opens the thread so _handle_message's follow check then works.
+    try:
+        profile = _graph_get(sender_id, {"fields": "is_user_follow_business"})
+    except urllib.error.HTTPError as exc:
+        print(f"comment: profile lookup failed for {sender_id} ({exc.code}: {exc.read().decode()[:300]}) — treating as not following")
+        profile = {}
     if profile.get("is_user_follow_business"):
         print("comment: match! already following — delivering PDF directly")
         _deliver_pending(sender_id, {"comment_id": comment_id})

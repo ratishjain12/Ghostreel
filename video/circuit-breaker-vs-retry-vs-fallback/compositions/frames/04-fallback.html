@@ -1,0 +1,295 @@
+<template>
+  <style>
+    @font-face {
+      font-family: "Space Grotesk";
+      font-weight: 500;
+      font-style: normal;
+      src: url('assets/fonts/Space-Grotesk-500.woff2') format("woff2");
+    }
+    @font-face {
+      font-family: "Space Grotesk";
+      font-weight: 600;
+      font-style: normal;
+      src: url('assets/fonts/Space-Grotesk-600.woff2') format("woff2");
+    }
+    @font-face {
+      font-family: "Space Grotesk";
+      font-weight: 700;
+      font-style: normal;
+      src: url('assets/fonts/Space-Grotesk-700.woff2') format("woff2");
+    }
+    @font-face {
+      font-family: "Inter";
+      font-weight: 400;
+      font-style: normal;
+      src: url('assets/fonts/Inter-400.woff2') format("woff2");
+    }
+
+    #root {
+      position: absolute;
+      inset: 0;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      font-family: "Inter", sans-serif;
+    }
+
+    .fb-bg {
+      position: absolute;
+      inset: 0;
+      background: #fdfae7;
+    }
+
+    /* — Scene 1: slide-header chrome — */
+    .fb-scene1 {
+      position: absolute;
+      inset: 0;
+    }
+
+    .fb-step-circle {
+      position: absolute;
+      left: 60px;
+      top: 172px;
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      background: #1e2bfa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+    }
+    .fb-step-circle span {
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 700;
+      font-size: 40px;
+      color: #fdfae7;
+      line-height: 1;
+    }
+
+    .fb-eyebrow {
+      position: absolute;
+      left: 180px;
+      top: 207px;
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 600;
+      font-size: 24px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #1e2bfa;
+      opacity: 0;
+    }
+
+    .fb-tag-pill {
+      position: absolute;
+      right: 60px;
+      top: 195px;
+      padding: 11px 26px;
+      border-radius: 100px;
+      background: rgba(30, 43, 250, 0.08);
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 500;
+      font-size: 20px;
+      color: #1e2bfa;
+      opacity: 0;
+    }
+
+    .fb-headline {
+      position: absolute;
+      left: 60px;
+      top: 304px;
+      width: 660px;
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 600;
+      font-size: 54px;
+      line-height: 1.14;
+      letter-spacing: -0.02em;
+      color: #111111;
+      opacity: 0;
+    }
+
+    /* — Scene 2/3: triptych option chips — */
+    .fb-chips {
+      position: absolute;
+      left: 60px;
+      top: 600px;
+      width: 960px;
+      height: 280px;
+      display: flex;
+      gap: 24px;
+    }
+
+    .fb-chip {
+      width: 304px;
+      height: 280px;
+      box-sizing: border-box;
+      padding: 28px;
+      background: rgba(30, 43, 250, 0.04);
+      border: 1.5px solid rgba(30, 43, 250, 0.2);
+      border-radius: 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      opacity: 0;
+    }
+
+    .fb-chip-num {
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 600;
+      font-size: 15px;
+      letter-spacing: 0.05em;
+      color: #1e2bfa;
+    }
+
+    .fb-chip-accent {
+      width: 32px;
+      height: 3px;
+      border-radius: 2px;
+      background: #1e2bfa;
+      margin: 16px 0;
+    }
+
+    .fb-chip-label {
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 500;
+      font-size: 32px;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+      color: #111111;
+    }
+
+    /* — Scene 4: closing line — */
+    .fb-closing {
+      position: absolute;
+      left: 60px;
+      top: 980px;
+      width: 960px;
+      font-family: "Inter", sans-serif;
+      font-weight: 400;
+      font-size: 30px;
+      line-height: 1.6;
+      color: #6b6b6b;
+      text-align: center;
+    }
+    .fb-closing #fb-closing-text {
+      opacity: 0;
+    }
+  </style>
+
+  <div id="root" data-composition-id="04-fallback" data-width="1080" data-height="1920" data-duration="12.703">
+    <div class="fb-bg clip" data-start="0" data-duration="12.703" data-track-index="0"></div>
+
+    <div class="fb-scene1 clip" data-start="0" data-duration="12.703" data-track-index="1">
+      <div class="fb-step-circle" id="fb-step-circle"><span>3</span></div>
+      <div class="fb-eyebrow" id="fb-eyebrow">Fallback</div>
+      <div class="fb-tag-pill" id="fb-tag-pill">3 / 3</div>
+      <h2 class="fb-headline" id="fb-headline">What you do instead.</h2>
+    </div>
+
+    <div class="fb-chips clip" data-start="0" data-duration="12.703" data-track-index="2">
+      <div class="fb-chip" id="fb-chip-1">
+        <div class="fb-chip-num">01</div>
+        <div class="fb-chip-accent"></div>
+        <div class="fb-chip-label">Cached data</div>
+      </div>
+      <div class="fb-chip" id="fb-chip-2">
+        <div class="fb-chip-num">02</div>
+        <div class="fb-chip-accent"></div>
+        <div class="fb-chip-label">Default value</div>
+      </div>
+      <div class="fb-chip" id="fb-chip-3">
+        <div class="fb-chip-num">03</div>
+        <div class="fb-chip-accent"></div>
+        <div class="fb-chip-label">Degraded response</div>
+      </div>
+    </div>
+
+    <div class="fb-closing clip" data-start="0" data-duration="12.703" data-track-index="3">
+      <div id="fb-closing-text">anything that keeps the system usable instead of returning an error.</div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const root = document.querySelector('[data-composition-id="04-fallback"]');
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      const stepCircle = root.querySelector("#fb-step-circle");
+      const eyebrow = root.querySelector("#fb-eyebrow");
+      const tagPill = root.querySelector("#fb-tag-pill");
+      const headline = root.querySelector("#fb-headline");
+      const chip1 = root.querySelector("#fb-chip-1");
+      const chip2 = root.querySelector("#fb-chip-2");
+      const chip3 = root.querySelector("#fb-chip-3");
+      const closing = root.querySelector("#fb-closing-text");
+
+      /* Scene 1 (0.0-4.23s): cobalt step-circle "3" + eyebrow "FALLBACK" +
+         h2 "What you do instead." land in sequence, upper zone. */
+      tl.fromTo(
+        stepCircle,
+        { opacity: 0, scale: 0.7 },
+        { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" },
+        0.05,
+      );
+      tl.fromTo(
+        eyebrow,
+        { opacity: 0, x: -16 },
+        { opacity: 1, x: 0, duration: 0.4, ease: "power2.out" },
+        0.35,
+      );
+      tl.fromTo(
+        tagPill,
+        { opacity: 0, y: -10 },
+        { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" },
+        0.5,
+      );
+      tl.fromTo(
+        headline,
+        { opacity: 0, y: 22 },
+        { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" },
+        0.7,
+      );
+
+      /* Scene 2 (4.23-6.62s): on "Return cached data, a default value," the
+         first two tinted chips land left-to-right. */
+      tl.fromTo(
+        chip1,
+        { opacity: 0, y: 24, scale: 0.96 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "power2.out" },
+        4.23,
+      );
+      tl.fromTo(
+        chip2,
+        { opacity: 0, y: 24, scale: 0.96 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "power2.out" },
+        5.3,
+      );
+
+      /* Scene 3 (6.62-8.56s): on "a degraded response," the third chip lands,
+         completing the triptych row. */
+      tl.fromTo(
+        chip3,
+        { opacity: 0, y: 24, scale: 0.96 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "power2.out" },
+        6.62,
+      );
+
+      /* Scene 4 (8.56-12.203s): the 3 chips settle to ~85% opacity as the
+         closing line lands beneath them, held to end. */
+      tl.to(
+        [chip1, chip2, chip3],
+        { opacity: 0.85, duration: 0.5, ease: "power2.out" },
+        8.56,
+      );
+      tl.fromTo(
+        closing,
+        { opacity: 0, y: 16 },
+        { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" },
+        8.9,
+      );
+
+      window.__timelines["04-fallback"] = tl;
+    })();
+  </script>
+</template>

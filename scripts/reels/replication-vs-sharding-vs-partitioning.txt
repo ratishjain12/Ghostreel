@@ -1,0 +1,13 @@
+Replication, sharding, partitioning. Say we need to scale the database and someone will suggest all three like they solve the same problem. They don't.
+
+Replication copies your entire dataset onto multiple servers. Every replica has the same data. It's for availability and read scale, if one node dies, another has everything, and you can spread reads across all of them.
+
+Partitioning does the opposite. Instead of copying everything everywhere, you split your data into smaller chunks, by date range, by customer ID, whatever, so no single piece gets too big to manage. It doesn't add copies, it divides the original.
+
+Sharding is partitioning taken one level further. Each partition doesn't just live on a different table, it lives on a completely different database server. Now write load is split across machines too, not just read load.
+
+So replication solves what if one server dies or gets too many reads. Partitioning and sharding solve what if the dataset itself is too big for one server to hold or write to. Different problems, often used together, never interchangeable.
+
+Add replication first, almost every production database needs it for availability alone. Partition when a single table gets too large to query efficiently. Shard when write throughput on a single server becomes the actual bottleneck.
+
+Comment guide and I'll send over the full breakdown.

@@ -1,0 +1,13 @@
+Message queue, event bus, pub/sub. Three things people use interchangeably when building anything async. They're not the same, and picking wrong either loses messages or floods every service with noise.
+
+A message queue holds a message until exactly one consumer picks it up and processes it. Once it's processed, it's gone. This is for work distribution, you've got a pool of workers, and each job needs to be done once, by one of them.
+
+Pub/sub does the opposite. When you publish a message to a topic, every subscriber gets their own copy. It's not about picking a winner, it's about broadcasting to everyone who cares.
+
+An event bus goes one step further. Instead of subscribers picking a topic, they subscribe to patterns, this event type, from this source, matching this condition, and the bus routes accordingly. Producers don't even need to know who's listening.
+
+So the real difference isn't whether we're messaging asynchronously, all three are. It's who's allowed to consume each message, and how much routing intelligence sits in the middle.
+
+Use a queue when you need reliable one-time work distribution. Reach for pub/sub the moment multiple services need to react to the same event. Add an event bus when the routing rules get too complex for a fixed topic list.
+
+Comment guide and I'll send over the full breakdown, with real examples.

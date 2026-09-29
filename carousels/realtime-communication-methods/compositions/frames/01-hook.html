@@ -1,0 +1,289 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face {
+          font-family: "Space Grotesk";
+          font-weight: 500;
+          font-style: normal;
+          font-display: block;
+          src: url("assets/fonts/Space-Grotesk-500.woff2") format("woff2");
+        }
+        @font-face {
+          font-family: "Space Grotesk";
+          font-weight: 600;
+          font-style: normal;
+          font-display: block;
+          src: url("assets/fonts/Space-Grotesk-600.woff2") format("woff2");
+        }
+        @font-face {
+          font-family: "Space Grotesk";
+          font-weight: 700;
+          font-style: normal;
+          font-display: block;
+          src: url("assets/fonts/Space-Grotesk-700.woff2") format("woff2");
+        }
+        @font-face {
+          font-family: "Inter";
+          font-weight: 400;
+          font-style: normal;
+          font-display: block;
+          src: url("assets/fonts/Inter-400.woff2") format("woff2");
+        }
+        @font-face {
+          font-family: "Inter";
+          font-weight: 600;
+          font-style: normal;
+          font-display: block;
+          src: url("assets/fonts/Inter-600.woff2") format("woff2");
+        }
+
+        #root {
+          position: relative;
+          width: 1080px;
+          height: 1080px;
+          overflow: hidden;
+          container-type: size;
+          font-family: "Inter", sans-serif;
+        }
+
+        .f01-bg {
+          position: absolute;
+          inset: 0;
+          background: #fdfae7;
+        }
+        .f01-panel {
+          position: absolute;
+          inset: 0;
+          clip-path: polygon(68% 0, 100% 0, 100% 100%, 53% 100%);
+          background: rgba(30, 43, 250, 0.08);
+        }
+        .f01-network {
+          position: absolute;
+          right: 120px;
+          top: 623px;
+          width: 200px;
+          height: 200px;
+        }
+        .f01-net-line {
+          position: absolute;
+          left: 100px;
+          top: 100px;
+          width: 71px;
+          height: 2px;
+          background: rgba(30, 43, 250, 0.32);
+          transform-origin: 0 50%;
+        }
+        .f01-net-line-tr {
+          transform: rotate(-45deg);
+        }
+        .f01-net-line-br {
+          transform: rotate(45deg);
+        }
+        .f01-net-line-bl {
+          transform: rotate(135deg);
+        }
+        .f01-net-line-tl {
+          transform: rotate(-135deg);
+        }
+        .f01-net-hub {
+          position: absolute;
+          left: 89px;
+          top: 89px;
+          width: 22px;
+          height: 22px;
+          border-radius: 50%;
+          background: #1e2bfa;
+        }
+        .f01-net-node {
+          position: absolute;
+          width: 14px;
+          height: 14px;
+          margin-left: -7px;
+          margin-top: -7px;
+          border-radius: 50%;
+          background: #1e2bfa;
+          opacity: 0.55;
+        }
+        .f01-net-node-tr {
+          left: 150px;
+          top: 50px;
+        }
+        .f01-net-node-br {
+          left: 150px;
+          top: 150px;
+        }
+        .f01-net-node-bl {
+          left: 50px;
+          top: 150px;
+        }
+        .f01-net-node-tl {
+          left: 50px;
+          top: 50px;
+        }
+
+        .f01-content {
+          position: absolute;
+          left: 80px;
+          right: 80px;
+          top: 80px;
+          bottom: 150px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        }
+        .f01-left {
+          width: 64%;
+        }
+        .f01-accentline {
+          width: 60px;
+          height: 4px;
+          border-radius: 2px;
+          background: #1e2bfa;
+          margin-bottom: 26px;
+        }
+        .f01-eyebrow {
+          font-family: "Space Grotesk", sans-serif;
+          font-weight: 600;
+          font-size: 1.9cqw;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          color: #1e2bfa;
+          margin-bottom: 20px;
+        }
+        .f01-h1 {
+          font-family: "Space Grotesk", sans-serif;
+          font-weight: 700;
+          font-size: 7.4cqw;
+          line-height: 1.08;
+          letter-spacing: -0.02em;
+          color: #111111;
+          margin-bottom: 28px;
+        }
+        .f01-sub {
+          font-family: "Inter", sans-serif;
+          font-weight: 400;
+          font-size: 2.1cqw;
+          line-height: 1.6;
+          color: #6b6b6b;
+          max-width: 82%;
+        }
+
+        .f01-swipe {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          background: rgba(30, 43, 250, 0.08);
+          border-radius: 100px;
+          padding: 12px 20px 12px 22px;
+          width: fit-content;
+        }
+        .f01-swipe-label {
+          font-family: "Space Grotesk", sans-serif;
+          font-weight: 600;
+          font-size: 1.15cqw;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          color: #1e2bfa;
+        }
+        .f01-swipe-arrow {
+          position: relative;
+          width: 18px;
+          height: 10px;
+        }
+        .f01-swipe-arrow::before {
+          content: "";
+          position: absolute;
+          left: 0;
+          right: 6px;
+          top: 50%;
+          height: 2px;
+          margin-top: -1px;
+          background: #1e2bfa;
+        }
+        .f01-swipe-arrow::after {
+          content: "";
+          position: absolute;
+          right: 0;
+          top: 50%;
+          width: 0;
+          height: 0;
+          margin-top: -5px;
+          border-top: 5px solid transparent;
+          border-bottom: 5px solid transparent;
+          border-left: 7px solid #1e2bfa;
+        }
+
+        .f01-chrome {
+          position: absolute;
+          left: 80px;
+          right: 80px;
+          bottom: 80px;
+        }
+        .f01-counter {
+          font-family: "Space Grotesk", sans-serif;
+          font-weight: 500;
+          font-size: 1.35cqw;
+          letter-spacing: 0.05em;
+          color: #9a9a9a;
+          margin-bottom: 10px;
+        }
+        .f01-progress-track {
+          width: 100%;
+          height: 3px;
+          background: rgba(30, 43, 250, 0.15);
+        }
+        .f01-progress-fill {
+          width: 14.3%;
+          height: 100%;
+          background: #1e2bfa;
+        }
+      </style>
+
+      <div id="root" data-composition-id="01-hook" data-width="1080" data-height="1080">
+        <div class="clip f01-bg" data-start="0" data-duration="6" data-track-index="0"></div>
+        <div class="clip f01-panel" data-start="0" data-duration="6" data-track-index="1"></div>
+        <div class="clip f01-network" data-start="0" data-duration="6" data-track-index="2">
+          <div class="f01-net-line f01-net-line-tr"></div>
+          <div class="f01-net-line f01-net-line-br"></div>
+          <div class="f01-net-line f01-net-line-bl"></div>
+          <div class="f01-net-line f01-net-line-tl"></div>
+          <div class="f01-net-node f01-net-node-tr"></div>
+          <div class="f01-net-node f01-net-node-br"></div>
+          <div class="f01-net-node f01-net-node-bl"></div>
+          <div class="f01-net-node f01-net-node-tl"></div>
+          <div class="f01-net-hub"></div>
+        </div>
+
+        <div class="clip f01-content" data-start="0" data-duration="6" data-track-index="3">
+          <div class="f01-left">
+            <div class="f01-accentline"></div>
+            <div class="f01-eyebrow">System Design</div>
+            <div class="f01-h1">4 ways to build real-time.<br />Each one hides a cost.</div>
+            <div class="f01-sub">Polling. Long polling. WebSockets. SSE.</div>
+          </div>
+          <div class="f01-swipe">
+            <span class="f01-swipe-label">Swipe</span>
+            <span class="f01-swipe-arrow"></span>
+          </div>
+        </div>
+
+        <div class="clip f01-chrome" data-start="0" data-duration="6" data-track-index="4">
+          <div class="f01-counter">1 / 7</div>
+          <div class="f01-progress-track">
+            <div class="f01-progress-fill"></div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        window.__timelines = window.__timelines || {};
+        window.__timelines["01-hook"] = gsap.timeline({ paused: true });
+      </script>
+    </template>
+  </body>
+</html>

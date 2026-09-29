@@ -1,0 +1,324 @@
+<template>
+<div id="root" data-composition-id="04-rag" data-width="1080" data-height="1920" data-duration="14.696">
+  <style>
+    @font-face { font-family: 'Fraunces'; src: url('assets/fonts/Fraunces-Variable.woff2') format('woff2'); font-weight: 400 700; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Fraunces'; src: url('assets/fonts/Fraunces-Italic.woff2') format('woff2'); font-weight: 400 700; font-style: italic; font-display: block; }
+    @font-face { font-family: 'IBM Plex Sans'; src: url('assets/fonts/IBMPlexSans-Variable.woff2') format('woff2'); font-weight: 300 700; font-style: normal; font-display: block; }
+    @font-face { font-family: 'IBM Plex Mono'; src: url('assets/fonts/IBMPlexMono-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+    @font-face { font-family: 'IBM Plex Mono'; src: url('assets/fonts/IBMPlexMono-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: block; }
+
+    #root {
+      container-type: size;
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: transparent;
+      font-family: 'IBM Plex Sans', sans-serif;
+    }
+    #root * { box-sizing: border-box; }
+
+    #root .clip { position: absolute; inset: 0; }
+
+    /* ---- background ground ---- */
+    .rag-bg-fill { position: absolute; inset: 0; background: #0A0D12; }
+    .rag-bg-grid {
+      position: absolute; inset: 0;
+      background-image:
+        repeating-linear-gradient(to right, rgba(35,43,51,0.14) 0 1px, transparent 1px 54px),
+        repeating-linear-gradient(to bottom, rgba(35,43,51,0.14) 0 1px, transparent 1px 54px);
+    }
+
+    /* ---- kicker ---- */
+    .rag-kicker {
+      position: absolute; left: 6cqw; top: 8.6cqh; width: 70cqw;
+      font-family: 'Fraunces', serif; font-style: italic; font-weight: 500;
+      font-size: 2cqw; line-height: 1.1; color: #EDEFF3; letter-spacing: -0.01em;
+      opacity: 0;
+    }
+
+    /* ---- context window box ---- */
+    .rag-cw-box {
+      position: absolute; left: 6cqw; top: 11cqh; width: 88cqw; height: 25.5cqh;
+      background: #12161C; border: 1.5px solid #2E3742; border-radius: 8px;
+      padding: 1.4cqh 2.2cqw; display: flex; flex-direction: column; gap: 1cqh;
+      opacity: 0;
+    }
+    .rag-cw-header {
+      flex: 0 0 auto; display: flex; align-items: center; justify-content: space-between;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 500; letter-spacing: 0.04em;
+      font-size: 1.3cqw; color: #EDEFF3;
+    }
+    .rag-cw-header .rag-tag {
+      font-size: 1cqw; letter-spacing: 0.14em; text-transform: uppercase; color: #8992A1;
+    }
+    .rag-cw-layers { flex: 1; display: flex; flex-direction: column; gap: 1cqh; min-height: 0; }
+    .rag-cw-layer {
+      flex: 1; min-height: 0; border-radius: 4px; display: flex; align-items: center;
+      padding: 0 1.6cqw; font-family: 'IBM Plex Mono', monospace; font-weight: 500;
+      font-size: 1.2cqw; letter-spacing: 0.04em; color: #EDEFF3;
+    }
+    .rag-layer-amber { background: rgba(255,159,69,0.12); border-left: 3px solid #FF9F45; }
+    .rag-layer-teal  { background: rgba(77,232,194,0.12); border-left: 3px solid #4DE8C2; }
+    .rag-cw-row3 { position: relative; flex: 1; min-height: 0; }
+    .rag-cw-row3-outline {
+      position: absolute; inset: 0; border-radius: 4px; border: 1.5px dashed #4A525E;
+      opacity: 0;
+    }
+    .rag-cw-row3-filled {
+      position: absolute; inset: 0; border-radius: 4px; display: flex; align-items: center;
+      padding: 0 1.6cqw; font-family: 'IBM Plex Mono', monospace; font-weight: 500;
+      font-size: 1.2cqw; letter-spacing: 0.04em; color: #EDEFF3;
+      background: rgba(185,140,255,0.14); border-left: 3px solid #B98CFF;
+      opacity: 0; transform: scale(0.9); transform-origin: 50% 50%;
+    }
+
+    /* ---- external docs node ---- */
+    .rag-ext-docs {
+      position: absolute; left: 6cqw; top: 61.5cqh; width: 34cqw; height: 7.8cqh;
+      background: #12161C; border: 1.5px solid rgba(137,146,161,0.4); border-radius: 4px;
+      padding: 1.1cqh 1.6cqw; display: flex; flex-direction: column; justify-content: center; gap: 0.5cqh;
+      opacity: 0; transform: scale(0.9); transform-origin: 50% 50%;
+    }
+    .rag-ext-docs .rag-node-label {
+      font-family: 'IBM Plex Mono', monospace; font-weight: 500; font-size: 1.3cqw;
+      letter-spacing: 0.04em; color: #EDEFF3;
+    }
+    .rag-ext-docs .rag-node-micro {
+      font-family: 'IBM Plex Mono', monospace; font-weight: 500; font-size: 0.95cqw;
+      letter-spacing: 0.14em; text-transform: uppercase; color: #8992A1;
+      opacity: 0;
+    }
+
+    /* ---- past-turn fragments (carried, dimmed) ---- */
+    .rag-past-label {
+      position: absolute; left: 60cqw; top: 59.6cqh; width: 34cqw; text-align: right;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 500; font-size: 1cqw;
+      letter-spacing: 0.14em; text-transform: uppercase; color: #8992A1;
+      opacity: 0;
+    }
+    .rag-past-row {
+      position: absolute; left: 60cqw; top: 61.5cqh; width: 34cqw; height: 5.7cqh;
+      display: flex; justify-content: flex-end; gap: 0.9cqw;
+      opacity: 0;
+    }
+    .rag-fragment {
+      width: 5.9cqw; height: 100%; background: #181D24; border: 1px solid #232B33;
+      border-radius: 4px; display: flex; flex-direction: column; align-items: center;
+      justify-content: center; gap: 0.6cqh;
+    }
+    .rag-fragment span { display: block; width: 60%; height: 2px; background: #4A525E; }
+
+    /* ---- query label ---- */
+    .rag-query-label {
+      position: absolute; left: 15.5cqw; top: 57.6cqh; width: 16cqw; text-align: right;
+      font-family: 'IBM Plex Mono', monospace; font-weight: 500; font-size: 1cqw;
+      letter-spacing: 0.14em; text-transform: uppercase; color: #8992A1;
+      opacity: 0;
+    }
+
+    /* ---- edge svg ---- */
+    .rag-edge-svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+    .rag-edge-svg path {
+      fill: none; stroke: #B98CFF; stroke-width: 5; stroke-linecap: round; stroke-linejoin: round;
+    }
+
+    /* ---- gate ticks ---- */
+    .rag-tick { position: absolute; width: 4.6cqw; height: 4.6cqw; transform: translate(-50%, -50%); }
+    .rag-tick-outline {
+      position: absolute; inset: 0; border-radius: 50%; border: 2px solid #8992A1;
+      opacity: 0; transform: scale(0.7); transform-origin: 50% 50%;
+    }
+    .rag-tick-filled {
+      position: absolute; inset: 0; border-radius: 50%; background: #B98CFF;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transform: scale(0.75); transform-origin: 50% 50%;
+    }
+    .rag-tick-filled svg { width: 58%; height: 58%; overflow: visible; }
+    .rag-tick-filled path { fill: none; stroke: #0A0D12; stroke-width: 3.4; stroke-linecap: round; stroke-linejoin: round; }
+    .rag-tick-label {
+      position: absolute; right: calc(100% + 0.9cqw); top: 50%; transform: translateY(-50%);
+      white-space: nowrap; font-family: 'IBM Plex Mono', monospace; font-weight: 500;
+      font-size: 0.95cqw; letter-spacing: 0.14em; text-transform: uppercase; color: #8992A1;
+    }
+  </style>
+
+  <div class="clip" data-start="0" data-duration="14.696" data-track-index="0">
+    <div class="rag-bg-fill"></div>
+    <div class="rag-bg-grid"></div>
+  </div>
+
+  <div class="clip" data-start="0" data-duration="14.696" data-track-index="1" id="rag-stage">
+    <div class="rag-kicker" id="rag-kicker">outside the conversation</div>
+
+    <div class="rag-cw-box" id="rag-cw-box">
+      <div class="rag-cw-header">
+        <span>CONTEXT WINDOW</span>
+        <span class="rag-tag">SHARED</span>
+      </div>
+      <div class="rag-cw-layers">
+        <div class="rag-cw-layer rag-layer-amber">PROMPT</div>
+        <div class="rag-cw-layer rag-layer-teal">MEMORY</div>
+        <div class="rag-cw-row3">
+          <div class="rag-cw-row3-outline" id="rag-row3-outline"></div>
+          <div class="rag-cw-row3-filled" id="rag-row3-filled">RETRIEVED DOC</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rag-ext-docs" id="rag-ext-docs">
+      <div class="rag-node-label">EXTERNAL DOCS</div>
+      <div class="rag-node-micro" id="rag-ext-micro">SEPARATE STORE</div>
+    </div>
+
+    <div class="rag-query-label" id="rag-query-label">QUERY</div>
+
+    <div class="rag-past-label" id="rag-past-label">PAST TURNS</div>
+    <div class="rag-past-row" id="rag-past-row">
+      <div class="rag-fragment"><span></span><span></span></div>
+      <div class="rag-fragment"><span></span><span></span></div>
+      <div class="rag-fragment"><span></span><span></span></div>
+      <div class="rag-fragment"><span></span><span></span></div>
+      <div class="rag-fragment"><span></span><span></span></div>
+    </div>
+
+    <svg class="rag-edge-svg" viewBox="0 0 1080 1920" preserveAspectRatio="none">
+      <path id="rag-seg0" d="M 248 1181 L 253 1127" />
+      <path id="rag-seg1" d="M 253 1127 L 259 1027" />
+      <path id="rag-seg2" d="M 259 1027 L 267 893" />
+      <path id="rag-seg3" d="M 267 893 L 273 758" />
+      <path id="rag-seg4" d="M 273 758 L 270 701" />
+    </svg>
+
+    <div class="rag-tick" id="rag-tick-match" style="left: 24cqw; top: 53.5cqh;">
+      <div class="rag-tick-label">MATCH</div>
+      <div class="rag-tick-outline"></div>
+      <div class="rag-tick-filled">
+        <svg viewBox="0 0 24 24"><path id="rag-check-match" d="M5 13 L10 18 L19 7" /></svg>
+      </div>
+    </div>
+    <div class="rag-tick" id="rag-tick-rank" style="left: 25cqw; top: 46.5cqh;">
+      <div class="rag-tick-label">RANK</div>
+      <div class="rag-tick-outline"></div>
+      <div class="rag-tick-filled">
+        <svg viewBox="0 0 24 24"><path id="rag-check-rank" d="M5 13 L10 18 L19 7" /></svg>
+      </div>
+    </div>
+    <div class="rag-tick" id="rag-tick-inject" style="left: 26cqw; top: 39.5cqh;">
+      <div class="rag-tick-label">INJECT</div>
+      <div class="rag-tick-outline"></div>
+      <div class="rag-tick-filled">
+        <svg viewBox="0 0 24 24"><path id="rag-check-inject" d="M5 13 L10 18 L19 7" /></svg>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var root = document.querySelector('[data-composition-id="04-rag"]');
+      var q = function (sel) { return root.querySelector(sel); };
+      var qa = function (sel) { return root.querySelectorAll(sel); };
+
+      // ---- svg-path-draw setup: measure + hide every stroked path synchronously ----
+      var edgeSegs = ["#rag-seg0", "#rag-seg1", "#rag-seg2", "#rag-seg3", "#rag-seg4"];
+      var checkPaths = ["#rag-check-match", "#rag-check-rank", "#rag-check-inject"];
+      edgeSegs.concat(checkPaths).forEach(function (sel) {
+        var p = q(sel);
+        var len = p.getTotalLength();
+        p.style.strokeDasharray = len;
+        p.style.strokeDashoffset = len;
+      });
+
+      var tl = gsap.timeline({ paused: true });
+      window.__timelines = window.__timelines || {};
+      window.__timelines["04-rag"] = tl;
+
+      // ================= Scene 1 (0.0-3.4s): stage settles, EXTERNAL DOCS arrives =================
+
+      // carried-over stage settle: kicker, cw-box (with existing prompt/memory layers), dimmed past-turns
+      tl.fromTo(q("#rag-kicker"), { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, 0);
+      tl.fromTo(q("#rag-cw-box"), { opacity: 0, scale: 0.98 }, { opacity: 1, scale: 1, duration: 0.3, ease: "power2.out" }, 0);
+      tl.fromTo(q("#rag-row3-outline"), { opacity: 0, scale: 0.96 }, { opacity: 0.5, scale: 1, duration: 0.3, ease: "power2.out" }, 0);
+      tl.fromTo(
+        [q("#rag-past-label"), q("#rag-past-row")],
+        { opacity: 0, scale: 0.97 },
+        { opacity: function (i) { return i === 0 ? 0.7 : 0.25; }, scale: 1, duration: 0.3, ease: "power2.out" },
+        0
+      );
+
+      // EXTERNAL DOCS node draws in, deliberately distant from the fragments
+      tl.fromTo(q("#rag-ext-docs"), { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.55, ease: "power3.out" }, 0.6);
+      tl.fromTo(q("#rag-ext-micro"), { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power1.out" }, 1.1);
+
+      // edge stub draws from EXTERNAL DOCS toward the QUERY gate
+      tl.to(q("#rag-seg0"), { strokeDashoffset: 0, duration: 0.4, ease: "power2.out" }, 1.7);
+      tl.fromTo(q("#rag-query-label"), { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power1.out" }, 2.2);
+
+      // ================= Scene 2 (3.4-7.0s): QUERY gate opens, MATCH resolves =================
+
+      tl.to(q("#rag-seg1"), { strokeDashoffset: 0, duration: 0.35, ease: "power2.out" }, 3.4);
+      tl.fromTo(q("#rag-tick-match .rag-tick-outline"), { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.3, ease: "power3.out" }, 3.75);
+      // hold — the request visibly pauses at the tick (4.05 - 5.8)
+      tl.to(q("#rag-tick-match .rag-tick-outline"), { scale: 0.75, opacity: 0, duration: 0.3, ease: "power2.in" }, 5.8);
+      tl.fromTo(
+        q("#rag-tick-match .rag-tick-filled"),
+        { scale: 0.75, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 0.5, ease: "back.out(1.6)" },
+        5.95
+      );
+      tl.set(q("#rag-tick-match .rag-tick-label"), { color: "#B98CFF" }, 5.95);
+      tl.to(q("#rag-check-match"), { strokeDashoffset: 0, duration: 0.3, ease: "power2.out" }, 6.15);
+
+      // ================= Scene 3 (7.0-11.2s): RANK then INJECT resolve, edge lands, third layer arrives =================
+
+      // RANK
+      tl.to(q("#rag-seg2"), { strokeDashoffset: 0, duration: 0.3, ease: "power2.out" }, 7.0);
+      tl.fromTo(q("#rag-tick-rank .rag-tick-outline"), { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.25, ease: "power3.out" }, 7.3);
+      tl.to(q("#rag-tick-rank .rag-tick-outline"), { scale: 0.75, opacity: 0, duration: 0.25, ease: "power2.in" }, 8.05);
+      tl.fromTo(
+        q("#rag-tick-rank .rag-tick-filled"),
+        { scale: 0.75, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 0.4, ease: "back.out(1.6)" },
+        8.15
+      );
+      tl.set(q("#rag-tick-rank .rag-tick-label"), { color: "#B98CFF" }, 8.15);
+      tl.to(q("#rag-check-rank"), { strokeDashoffset: 0, duration: 0.25, ease: "power2.out" }, 8.35);
+
+      // INJECT
+      tl.to(q("#rag-seg3"), { strokeDashoffset: 0, duration: 0.25, ease: "power2.out" }, 8.6);
+      tl.fromTo(q("#rag-tick-inject .rag-tick-outline"), { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.25, ease: "power3.out" }, 8.85);
+      tl.to(q("#rag-tick-inject .rag-tick-outline"), { scale: 0.75, opacity: 0, duration: 0.22, ease: "power2.in" }, 9.5);
+      tl.fromTo(
+        q("#rag-tick-inject .rag-tick-filled"),
+        { scale: 0.75, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 0.35, ease: "back.out(1.6)" },
+        9.6
+      );
+      tl.set(q("#rag-tick-inject .rag-tick-label"), { color: "#B98CFF" }, 9.6);
+      tl.to(q("#rag-check-inject"), { strokeDashoffset: 0, duration: 0.23, ease: "power2.out" }, 9.75);
+
+      // edge completes into the CONTEXT WINDOW box
+      tl.to(q("#rag-seg4"), { strokeDashoffset: 0, duration: 0.4, ease: "power2.out" }, 10.0);
+
+      // third content layer lands — hollow slot swaps for the filled retrieved-doc layer
+      tl.to(q("#rag-row3-outline"), { scale: 0.9, opacity: 0, duration: 0.25, ease: "power2.in" }, 10.35);
+      tl.fromTo(
+        q("#rag-row3-filled"),
+        { scale: 0.9, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 0.5, ease: "back.out(1.5)" },
+        10.45
+      );
+
+      // ================= Scene 4 (11.2-14.196s): hold — past turns brighten back =================
+
+      tl.to(q("#rag-past-label"), { opacity: 1, duration: 0.7, ease: "power2.out" }, 11.2);
+      tl.to(q("#rag-past-row"), { opacity: 1, duration: 0.7, ease: "power2.out" }, 11.2);
+
+      // subtle finite jitter on the held composition — no further push
+      tl.to(q("#rag-stage"), { y: -2, duration: 0.4, ease: "sine.inOut" }, 12.2);
+      tl.to(q("#rag-stage"), { y: 1, duration: 0.4, ease: "sine.inOut" }, 12.9);
+      tl.to(q("#rag-stage"), { y: 0, duration: 0.4, ease: "sine.inOut" }, 13.6);
+    })();
+  </script>
+</div>
+</template>

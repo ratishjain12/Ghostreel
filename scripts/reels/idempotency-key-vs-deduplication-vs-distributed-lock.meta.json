@@ -1,0 +1,5 @@
+{
+  "message": "Comment \"GUIDE\" and I'll send you the full breakdown.\n\nIdempotency key, deduplication, distributed lock: three ways to stop the same thing from happening twice, solving three genuinely different problems. I broke down which one actually applies where.\n\n#systemdesign #softwareengineering #backenddevelopment #distributedsystems",
+  "angle": "system-design",
+  "hook_style": "contrarian"
+}

@@ -60,4 +60,53 @@ export const api = {
     }),
   jobStatus: (jobId, since) => request(`/api/jobs/${jobId}?since=${since}`),
   listVideos: () => request("/api/videos"),
+  listCarousels: () => request("/api/carousels"),
+  createCarousel: (body) =>
+    request("/api/carousels", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    }),
+  deleteCarousel: (name) => request(`/api/carousels/${name}`, { method: "DELETE" }),
+  revealCarousel: (name) => request(`/api/carousels/${name}/reveal`, { method: "POST" }),
+  syncCarouselsPublished: () => request("/api/carousels/sync-published", { method: "POST" }),
+  generateCarousel: (names) =>
+    request("/api/generate-carousel", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ names }),
+    }),
+  authorCarousel: (name) =>
+    request("/api/author-carousel", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name }),
+    }),
+  listSchedule: () => request("/api/schedule"),
+  createSchedule: (body) =>
+    request("/api/schedule", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    }),
+  updateSchedule: (id, body) =>
+    request(`/api/schedule/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    }),
+  deleteSchedule: (id) => request(`/api/schedule/${id}`, { method: "DELETE" }),
+  listInsights: () => request("/api/insights"),
+  tokenStatus: () => request("/api/tokens/status"),
+  growthSnapshot: () => request("/api/growth/snapshot", { method: "POST" }),
+  growthAnalyze: (days) =>
+    request("/api/growth/analyze", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ days: days ?? 7 }),
+    }),
+  followerHistory: () =>
+    fetch(`/growth-data/follower-history.json?t=${Date.now()}`).then((res) => (res.ok ? res.json() : [])),
+  latestGrowthAnalysis: () =>
+    fetch(`/growth-data/analysis-latest.md?t=${Date.now()}`).then((res) => (res.ok ? res.text() : null)),
 };

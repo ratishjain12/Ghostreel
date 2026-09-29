@@ -1,0 +1,19 @@
+The server is slow, the alert is firing, and you just SSH'd in. There are thousands of Linux commands. These are the ones you run in the first five minutes, in order.
+
+First, uptime. Load average tells you in one second whether the box is actually overloaded, or whether the problem is somewhere else.
+
+Second, top, or htop. Which process is eating CPU or memory right now.
+
+Third, free minus h. Is memory full, and is the machine swapping. Swapping is why everything suddenly got a hundred times slower.
+
+Fourth, df minus h. A full disk breaks logging, databases, and deploys in ways that look completely unrelated.
+
+Fifth, dmesg. If the kernel killed your process for using too much memory, this is the only place it says so.
+
+Sixth, journalctl, or your app logs, for the error right before it all started.
+
+And seventh, ss minus tulpn. Is the port actually listening, and who is connected to it.
+
+CPU, memory, disk, kernel, logs, network. Same order, every incident.
+
+Comment guide and I'll send you the full incident checklist.

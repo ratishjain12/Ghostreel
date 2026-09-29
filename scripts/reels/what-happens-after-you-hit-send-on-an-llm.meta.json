@@ -1,0 +1,5 @@
+{
+  "message": "Comment \"GUIDE\" and I'll send you the full breakdown.\n\nYou hit send on a prompt. Before the first word appears, it passes through six systems: gateway, cache, router, batching queue, prefill, decode. Here's the full request path, and how to tell which step is making it slow.\n\n#aiengineering #llm #systemdesign #softwareengineering",
+  "angle": "ai-engineering",
+  "hook_style": "question"
+}

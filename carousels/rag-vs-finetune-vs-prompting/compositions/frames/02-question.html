@@ -1,0 +1,81 @@
+<template>
+<div id="root" data-composition-id="02-question" data-width="1080" data-height="1080" data-duration="2">
+  <style>
+    @font-face { font-family: 'Space Grotesk'; src: url('assets/fonts/Space-Grotesk-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Space Grotesk'; src: url('assets/fonts/Space-Grotesk-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Space Grotesk'; src: url('assets/fonts/Space-Grotesk-700.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Inter'; src: url('assets/fonts/Inter-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Inter'; src: url('assets/fonts/Inter-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: block; }
+
+    #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: 'Inter', sans-serif; color: #111111; }
+    #root .clip { position: absolute; }
+
+    .q-bg { inset: 0; background: #fdfae7; }
+
+    .q-mark {
+      left: 90px; top: 170px; width: 900px; text-align: center;
+      font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 140px;
+      line-height: 0.5; color: #1e2bfa; opacity: 0.15;
+    }
+    .q-blockquote {
+      left: 130px; top: 380px; width: 820px; text-align: center;
+      font-family: 'Space Grotesk', sans-serif; font-weight: 500; font-size: 54px;
+      line-height: 1.35; letter-spacing: -0.01em; color: #111111;
+    }
+    .q-cite {
+      left: 90px; top: 760px; width: 900px; text-align: center;
+      font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 22px;
+      letter-spacing: 0.08em; text-transform: uppercase; color: #6b6b6b;
+    }
+
+    .q-branchrow { left: 190px; top: 826px; width: 700px; height: 42px; display: flex; align-items: center; justify-content: center; gap: 14px; }
+    .q-branch {
+      display: flex; align-items: center; height: 42px; padding: 0 18px;
+      background: rgba(30,43,250,0.06); border: 1.5px solid rgba(30,43,250,0.2); border-radius: 100px;
+      font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 16px;
+      letter-spacing: 0.04em; text-transform: uppercase; color: #1e2bfa; white-space: nowrap;
+    }
+
+    .q-dots { left: 481px; top: 955px; width: 118px; height: 8px; }
+    .q-dots .pdot { position: absolute; top: 0; width: 8px; height: 8px; border-radius: 50%; background: rgba(30,43,250,0.2); }
+    .q-dots .pdot.active { background: #1e2bfa; }
+  </style>
+
+  <div id="q-bg" class="clip q-bg" data-start="0" data-duration="2" data-track-index="0">
+    <svg width="1080" height="1080" style="position:absolute;left:0;top:0;">
+      <circle cx="540" cy="540" r="360" fill="none" stroke="rgba(30,43,250,0.06)" stroke-width="2" />
+      <circle cx="540" cy="540" r="280" fill="none" stroke="rgba(30,43,250,0.08)" stroke-width="2" />
+      <circle cx="540" cy="540" r="200" fill="none" stroke="rgba(30,43,250,0.1)" stroke-width="2" />
+    </svg>
+  </div>
+
+  <div id="q-mark" class="clip q-mark" data-start="0" data-duration="2" data-track-index="2" data-layout-allow-occlusion>&ldquo;</div>
+  <div id="q-blockquote" class="clip q-blockquote" data-start="0" data-duration="2" data-track-index="3">What&rsquo;s actually missing: knowledge, behavior, or instructions?</div>
+  <div id="q-cite" class="clip q-cite" data-start="0" data-duration="2" data-track-index="3">One question decides it</div>
+
+  <div id="q-branchrow" class="clip q-branchrow" data-start="0" data-duration="2" data-track-index="4">
+    <div class="q-branch">Instructions</div>
+    <div class="q-branch">Knowledge</div>
+    <div class="q-branch">Behavior</div>
+  </div>
+
+  <div id="q-dots" class="clip q-dots" data-start="0" data-duration="2" data-track-index="9">
+    <div class="pdot" style="left:0px;"></div>
+    <div class="pdot active" style="left:22px;"></div>
+    <div class="pdot" style="left:44px;"></div>
+    <div class="pdot" style="left:66px;"></div>
+    <div class="pdot" style="left:88px;"></div>
+    <div class="pdot" style="left:110px;"></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    (function () {
+      const root = document.querySelector('[data-composition-id="02-question"]');
+      const tl = gsap.timeline({ paused: true });
+      window.__timelines = window.__timelines || {};
+      window.__timelines["02-question"] = tl;
+    })();
+  </script>
+</div>
+</template>

@@ -1,0 +1,7 @@
+Hook: Polling. Webhooks. WebSockets. SSE. Same goal, four very different tradeoffs.
+Polling: simplest to build, wastes requests, always some lag.
+Webhooks: push-based, no lag, but you own the endpoint and the retries.
+WebSockets: full duplex, real-time, but stateful connections get expensive at scale.
+SSE: one-way server-to-client push over plain HTTP, simpler than WebSockets when that's all you need.
+Which one, when: a 4-row cheat sheet.
+CTA: Comment GUIDE for the full breakdown.

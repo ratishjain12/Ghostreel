@@ -1,0 +1,98 @@
+<template>
+<div id="root" data-composition-id="04-failure-recovery" data-width="1080" data-height="1080" data-duration="4">
+  <style>
+    @font-face { font-family: 'Space Grotesk'; src: url('assets/fonts/Space-Grotesk-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Space Grotesk'; src: url('assets/fonts/Space-Grotesk-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Space Grotesk'; src: url('assets/fonts/Space-Grotesk-700.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Inter'; src: url('assets/fonts/Inter-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Inter'; src: url('assets/fonts/Inter-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: block; }
+
+    #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: 'Inter', sans-serif; color: #111111; }
+    #root .clip { position: absolute; }
+
+    .f04-bg { inset: 0; background: #fdfae7; }
+
+    .f04-eyebrow {
+      left: 80px; top: 96px; width: 600px;
+      font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase; color: #1e2bfa;
+    }
+    .f04-pill {
+      left: 880px; top: 84px; width: 120px; height: 32px;
+      background: rgba(30,43,250,0.08); border-radius: 100px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 500; color: #1e2bfa;
+    }
+
+    .f04-card {
+      left: 140px; top: 220px; width: 800px; height: 680px;
+      background: rgba(30,43,250,0.04); border: 1.5px solid rgba(30,43,250,0.2);
+      border-radius: 14px;
+    }
+    .f04-circle {
+      left: 488px; top: 313px; width: 104px; height: 104px; border-radius: 50%;
+      background: #1e2bfa; display: flex; align-items: center; justify-content: center;
+      font-family: 'Space Grotesk', sans-serif; font-size: 38px; font-weight: 600; color: #fdfae7;
+    }
+    .f04-headline {
+      left: 200px; top: 460px; width: 680px; text-align: center;
+      font-family: 'Space Grotesk', sans-serif; font-size: 52px; font-weight: 600;
+      line-height: 1.2; letter-spacing: -0.02em; color: #111111;
+    }
+    .f04-body {
+      left: 200px; top: 580px; width: 680px; text-align: center;
+      font-family: 'Inter', sans-serif; font-size: 32px; font-weight: 400;
+      line-height: 1.5; color: #6b6b6b;
+    }
+
+    .f04-bar-track { left: 80px; top: 980px; width: 920px; height: 3px; background: rgba(30,43,250,0.15); border-radius: 6px; }
+    .f04-bar-fill { left: 0; top: 0; width: 57.1428%; height: 3px; background: #1e2bfa; border-radius: 6px; }
+
+    .f04-trigger {
+      left: 390px; top: 690px; width: 300px; height: 40px; border-radius: 10px;
+      background: rgba(30,43,250,0.04); border: 1.5px solid rgba(154,154,154,0.3);
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      font-family: 'Inter', sans-serif; font-size: 18px; font-weight: 400; color: rgb(106,106,106);
+    }
+    .f04-stem { left: 539px; top: 730px; width: 2px; height: 18px; background: rgba(154,154,154,0.4); }
+    .f04-branch {
+      top: 752px; height: 52px; border-radius: 10px; display: flex; align-items: center; justify-content: center; gap: 8px;
+      font-family: 'Inter', sans-serif; font-size: 17px; font-weight: 400;
+    }
+    .f04-branch-primary { left: 230px; width: 240px; background: rgba(30,43,250,0.08); border: 1.5px solid rgba(30,43,250,0.2); border-left: 4px solid #1e2bfa; color: #111111; font-weight: 600; }
+    .f04-branch-muted { left: 610px; width: 240px; background: rgba(30,43,250,0.04); border: 1.5px solid rgba(154,154,154,0.3); color: rgb(106,106,106); }
+    .f04-mini-badge { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+    .f04-mini-badge-warn { background: rgba(154,154,154,0.25); color: rgb(94,94,94); }
+    .f04-mini-badge-ok { background: #1e2bfa; color: #fdfae7; }
+    .f04-mini-badge-muted { background: rgba(154,154,154,0.25); color: rgb(94,94,94); }
+  </style>
+
+  <div class="clip f04-bg" data-start="0" data-duration="4" data-track-index="0"></div>
+  <div class="clip f04-eyebrow" data-start="0" data-duration="4" data-track-index="1">Agent eval checklist</div>
+  <div class="clip f04-pill" data-start="0" data-duration="4" data-track-index="1">03 / 05</div>
+
+  <div class="clip f04-card" data-start="0" data-duration="4" data-track-index="2"></div>
+  <div class="clip f04-circle" data-start="0" data-duration="4" data-track-index="3">3</div>
+  <div class="clip f04-headline" data-start="0" data-duration="4" data-track-index="4">Failure recovery</div>
+  <div class="clip f04-body" data-start="0" data-duration="4" data-track-index="5">What happens when a tool call errors or times out.</div>
+
+  <div class="clip f04-trigger" data-start="0" data-duration="4" data-track-index="6"><span class="f04-mini-badge f04-mini-badge-warn">!</span>Tool call fails</div>
+  <div class="clip f04-stem" data-start="0" data-duration="4" data-track-index="6"></div>
+  <div class="clip f04-branch f04-branch-primary" data-start="0" data-duration="4" data-track-index="6"><span class="f04-mini-badge f04-mini-badge-ok">&#10003;</span>&#8618; Retries, recovers</div>
+  <div class="clip f04-branch f04-branch-muted" data-start="0" data-duration="4" data-track-index="6"><span class="f04-mini-badge f04-mini-badge-muted">&#10005;</span>&#8618; No retry: silent fail</div>
+
+  <div class="clip f04-bar-track" data-start="0" data-duration="4" data-track-index="7">
+    <div class="f04-bar-fill"></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    (function () {
+      const root = document.querySelector('[data-composition-id="04-failure-recovery"]');
+      const tl = gsap.timeline({ paused: true });
+      window.__timelines = window.__timelines || {};
+      window.__timelines["04-failure-recovery"] = tl;
+    })();
+  </script>
+</div>
+</template>

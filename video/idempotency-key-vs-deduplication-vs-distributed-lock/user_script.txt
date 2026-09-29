@@ -1,0 +1,13 @@
+Idempotency key, deduplication, distributed lock. Three ways to stop the same thing from happening twice, and they solve three genuinely different versions of that problem.
+
+An idempotency key is something the client attaches to a request, a unique ID for that specific logical operation. If the same request gets sent twice, because of a retry, a flaky network, whatever, the server sees the same key and knows to return the original result instead of doing the work again.
+
+Deduplication is the system's own job, not the client's. It's for event and message pipelines, where the same message can arrive more than once through no fault of the sender, and the consumer has to recognize it's already processed that exact message ID and skip it.
+
+A distributed lock isn't really about duplicates at all, it's about concurrency. It makes sure that when multiple processes across multiple machines could all try to do the same critical section of work at the same time, only one of them actually gets to.
+
+So idempotency keys and deduplication both stop the same operation from running twice, one from the client side, one from the consumer side. A distributed lock stops different processes from colliding while doing that operation in the first place.
+
+Use an idempotency key for any client-initiated write that might get retried, payments especially. Use deduplication in any message or event pipeline where at-least-once delivery is possible. Reach for a distributed lock when multiple workers could pick up the same job simultaneously and you need exactly one of them to win.
+
+Comment guide and I'll send over the full breakdown.

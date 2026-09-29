@@ -1,0 +1,5 @@
+{
+  "message": "Comment \"GUIDE\" and I'll send you the full breakdown.\n\nRound robin, least connections, consistent hashing: the load balancing algorithm you pick decides whether your cache actually works. I broke down what each one is really optimizing for.\n\n#systemdesign #softwareengineering #backenddevelopment #api",
+  "angle": "system-design",
+  "hook_style": "contrarian"
+}

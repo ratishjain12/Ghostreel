@@ -67,3 +67,12 @@ video/*/.waveform-cache/
 video/*/.media/
 video/*/.hyperframes/
 video/*/snapshots/
+
+# Competitor reel downloads (transcripts in growth/competitors/transcripts/ are kept)
+growth/competitors/media/
+
+# Private account analytics + scraped competitor data/transcripts — local research only.
+growth/
+
+# Unrelated product demo (Vouch), kept locally.
+video/warmvouch-demo/

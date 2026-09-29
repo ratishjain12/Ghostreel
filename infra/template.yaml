@@ -1,27 +1,38 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: >
-  Instagram comment-to-DM webhook handler for the reel pipeline. Receives Meta's
+  Instagram comment-to-DM webhook handler for Content Studio. Receives Meta's
   comment/message webhooks, sends a private-reply follow-gate, and delivers the
   matching PDF guide from S3 once the commenter confirms they're following.
 
 Parameters:
   VerifyTokenParam:
     Type: String
-    Default: /reel-pipeline/ig-verify-token
+    Default: /content-studio/ig-verify-token
     Description: SSM parameter name holding the webhook verify token (you choose this value; Meta echoes it back during subscription)
   AppSecretParam:
     Type: String
-    Default: /reel-pipeline/ig-app-secret
+    Default: /content-studio/ig-app-secret
     Description: SSM parameter name holding the Meta app secret, used to verify X-Hub-Signature-256
   AccessTokenParam:
     Type: String
-    Default: /reel-pipeline/ig-access-token
+    Default: /content-studio/ig-access-token
     Description: SSM parameter name holding the long-lived Instagram access token
   IgUserIdParam:
     Type: String
-    Default: /reel-pipeline/ig-user-id
+    Default: /content-studio/ig-user-id
     Description: SSM parameter name holding the Instagram business account's user id
+  FbAccessTokenParam:
+    Type: String
+    Default: /content-studio/ig-fb-access-token
+    Description: SSM parameter name holding the Facebook Login Page token used for competitor research (business_discovery)
+  FbAppSecretParam:
+    Type: String
+    Default: /content-studio/fb-app-secret
+    Description: SSM parameter name holding the main Meta app secret (App settings → Basic — not the Instagram app secret)
+  FbAppId:
+    Type: String
+    Description: Meta app id, used with FbAppSecretParam to build an app token for debug_token
 
 Globals:
   Function:
@@ -99,6 +110,169 @@ Resources:
           KeyType: HASH
         - AttributeName: sk
           KeyType: RANGE
+      # pending# rows carry a `ttl` (see handler.py's PENDING_TTL_SEC) so an
+      # abandoned follow-gate prompt expires instead of resurfacing as a surprise
+      # auto-DM whenever that person happens to message again. marker#/stats# rows
+      # never set `ttl`, so this has no effect on them.
+      TimeToLiveSpecification:
+        AttributeName: ttl
+        Enabled: true
+
+  # One row per scheduled post, written by the local dashboard on create/edit and
+  # updated by SchedulePublishFunction once EventBridge Scheduler invokes it — the
+  # dashboard's calendar reads this table, not local disk, so a post's real status
+  # survives the dashboard process being closed when the schedule actually fires.
+  ScheduledPostsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+
+  # Invoked by a one-shot EventBridge Scheduler schedule (one per scheduled post,
+  # created/deleted by the local dashboard) at the exact wall-clock time chosen —
+  # firing does not depend on the dashboard process or the operator's machine being
+  # on. Publishes straight from the render already uploaded to S3 at schedule time.
+  SchedulePublishFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: lambda/
+      Handler: schedule_publish.handler
+      Timeout: 400
+      Environment:
+        Variables:
+          BUCKET_NAME: !Ref ResourceBucket
+          ACCESS_TOKEN_PARAM: !Ref AccessTokenParam
+          IG_USER_ID_PARAM: !Ref IgUserIdParam
+          SCHEDULE_TABLE: !Ref ScheduledPostsTable
+      Policies:
+        - S3CrudPolicy:
+            BucketName: !Ref ResourceBucket
+        - DynamoDBCrudPolicy:
+            TableName: !Ref ScheduledPostsTable
+        - Statement:
+            - Sid: ReadSecretParams
+              Effect: Allow
+              Action: ssm:GetParameter
+              Resource:
+                - !Sub "arn:${AWS::Partition}:ssm:${AWS::Region}:${AWS::AccountId}:parameter${AccessTokenParam}"
+                - !Sub "arn:${AWS::Partition}:ssm:${AWS::Region}:${AWS::AccountId}:parameter${IgUserIdParam}"
+
+  # Weekly: refreshes the 60-day Instagram Login token in place (the webhook and
+  # scheduled publishing read it from SSM) and checks the competitor-research
+  # token's data-access expiry, which no API can extend.
+  TokenRefreshFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: lambda/
+      Handler: token_refresh.handler
+      Timeout: 30
+      Environment:
+        Variables:
+          ACCESS_TOKEN_PARAM: !Ref AccessTokenParam
+          FB_TOKEN_PARAM: !Ref FbAccessTokenParam
+          FB_APP_SECRET_PARAM: !Ref FbAppSecretParam
+          FB_APP_ID: !Ref FbAppId
+      Policies:
+        - Statement:
+            - Sid: ReadTokens
+              Effect: Allow
+              Action: ssm:GetParameter
+              Resource:
+                - !Sub "arn:${AWS::Partition}:ssm:${AWS::Region}:${AWS::AccountId}:parameter${AccessTokenParam}"
+                - !Sub "arn:${AWS::Partition}:ssm:${AWS::Region}:${AWS::AccountId}:parameter${FbAccessTokenParam}"
+                - !Sub "arn:${AWS::Partition}:ssm:${AWS::Region}:${AWS::AccountId}:parameter${FbAppSecretParam}"
+            - Sid: WriteRefreshedInstagramToken
+              Effect: Allow
+              Action: ssm:PutParameter
+              Resource: !Sub "arn:${AWS::Partition}:ssm:${AWS::Region}:${AWS::AccountId}:parameter${AccessTokenParam}"
+      Events:
+        Weekly:
+          Type: ScheduleV2
+          Properties:
+            ScheduleExpression: rate(7 days)
+
+  # Publishing a Reel is not idempotent (each attempt creates a new IG media
+  # container) and the handler re-raises on any failure so it's visible in
+  # CloudWatch — without this, Lambda's default async-invoke retry (2 attempts)
+  # would silently re-run the whole publish flow on any transient failure after
+  # the container was already created, risking a duplicate post. One attempt
+  # only; a failure surfaces as this schedule item's "error" status instead.
+  SchedulePublishFunctionInvokeConfig:
+    Type: AWS::Lambda::EventInvokeConfig
+    Properties:
+      FunctionName: !Ref SchedulePublishFunction
+      Qualifier: "$LATEST"
+      MaximumRetryAttempts: 0
+      MaximumEventAgeInSeconds: 3600
+
+  # Assumed by EventBridge Scheduler (not by the dashboard) purely to invoke
+  # SchedulePublishFunction — scoped to nothing else.
+  SchedulerInvokeRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: scheduler.amazonaws.com
+            Action: sts:AssumeRole
+            Condition:
+              StringEquals:
+                aws:SourceAccount: !Ref AWS::AccountId
+      Policies:
+        - PolicyName: InvokeSchedulePublishFunction
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action: lambda:InvokeFunction
+                Resource: !GetAtt SchedulePublishFunction.Arn
+
+  # Attach to whichever IAM identity dashboard/server.py runs as locally — grants
+  # exactly what the Schedule tab needs (create/update/delete its own one-shot
+  # schedules, pass the invoke role, read/write the tracking table, upload a
+  # scheduled render) and nothing else.
+  DashboardOperatorPolicy:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      Description: Lets the local Content Studio dashboard manage scheduled Instagram posts.
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: ManageOwnSchedules
+            Effect: Allow
+            Action:
+              - scheduler:CreateSchedule
+              - scheduler:UpdateSchedule
+              - scheduler:DeleteSchedule
+              - scheduler:GetSchedule
+            Resource: !Sub "arn:${AWS::Partition}:scheduler:${AWS::Region}:${AWS::AccountId}:schedule/default/reel-publish-*"
+          - Sid: PassSchedulerInvokeRole
+            Effect: Allow
+            Action: iam:PassRole
+            Resource: !GetAtt SchedulerInvokeRole.Arn
+          - Sid: ScheduledPostsTableAccess
+            Effect: Allow
+            Action:
+              - dynamodb:PutItem
+              - dynamodb:GetItem
+              - dynamodb:Scan
+              - dynamodb:DeleteItem
+            Resource: !GetAtt ScheduledPostsTable.Arn
+          - Sid: UploadScheduledRenders
+            Effect: Allow
+            Action: s3:PutObject
+            Resource: !Sub "${ResourceBucket.Arn}/*/scheduled/*"
+          - Sid: ReadTriggerStats
+            Effect: Allow
+            Action: dynamodb:GetItem
+            Resource: !GetAtt SentMarkersTable.Arn
 
   ResourceBucket:
     Type: AWS::S3::Bucket
@@ -123,3 +297,18 @@ Outputs:
   PrivacyPolicyUrl:
     Description: Paste this into Meta's App Settings > Basic > Privacy Policy URL
     Value: !Sub "${ServerlessHttpApi.ApiEndpoint}/privacy"
+  ScheduleLambdaArn:
+    Description: Put this into your local .env as SCHEDULE_LAMBDA_ARN
+    Value: !GetAtt SchedulePublishFunction.Arn
+  SchedulerRoleArn:
+    Description: Put this into your local .env as SCHEDULER_ROLE_ARN
+    Value: !GetAtt SchedulerInvokeRole.Arn
+  ScheduledPostsTableName:
+    Description: Put this into your local .env as SCHEDULE_TABLE
+    Value: !Ref ScheduledPostsTable
+  SentMarkersTableName:
+    Description: Put this into your local .env as TRIGGER_STATS_TABLE (dashboard Performance tab reads the stats#<media_id> rows the webhook writes here)
+    Value: !Ref SentMarkersTable
+  DashboardOperatorPolicyArn:
+    Description: Attach this managed policy to the IAM identity dashboard/server.py runs as locally
+    Value: !Ref DashboardOperatorPolicy

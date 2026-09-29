@@ -1,0 +1,162 @@
+<template>
+  <style>
+    @font-face { font-family: 'Fraunces'; src: url('assets/fonts/Fraunces-Variable.woff2') format('woff2'); font-weight: 400 700; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Fraunces'; src: url('assets/fonts/Fraunces-Italic.woff2') format('woff2'); font-weight: 400 700; font-style: italic; font-display: block; }
+    @font-face { font-family: 'IBM Plex Sans'; src: url('assets/fonts/IBMPlexSans-Variable.woff2') format('woff2'); font-weight: 300 700; font-style: normal; font-display: block; }
+    @font-face { font-family: 'IBM Plex Mono'; src: url('assets/fonts/IBMPlexMono-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+    @font-face { font-family: 'IBM Plex Mono'; src: url('assets/fonts/IBMPlexMono-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: block; }
+
+    #root {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      container-type: size;
+      overflow: hidden;
+      font-family: 'IBM Plex Sans', sans-serif;
+    }
+
+    .g06-bg {
+      position: absolute;
+      inset: 0;
+      background-color: #0A0D12;
+      background-image:
+        repeating-linear-gradient(0deg, rgba(35, 43, 51, 0.14) 0px, rgba(35, 43, 51, 0.14) 1px, transparent 1px, transparent 64px),
+        repeating-linear-gradient(90deg, rgba(35, 43, 51, 0.14) 0px, rgba(35, 43, 51, 0.14) 1px, transparent 1px, transparent 64px);
+    }
+
+    .g06-row {
+      position: absolute;
+      left: 6cqw;
+      width: 88cqw;
+      opacity: 1;
+    }
+    #g06-row1 { top: 15cqh; }
+    #g06-row2 { top: 36cqh; }
+    #g06-row3 { top: 57cqh; }
+
+    .g06-index {
+      display: block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 2.0cqw;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 1.4cqh;
+      opacity: 0;
+    }
+    #g06-row1 .g06-index { color: #FF9F45; }
+    #g06-row2 .g06-index { color: #4DE8C2; }
+    #g06-row3 .g06-index { color: #B98CFF; }
+
+    .g06-line {
+      font-family: 'Fraunces', serif;
+      font-size: 5.0cqw;
+      font-weight: 600;
+      line-height: 1.16;
+      letter-spacing: -0.01em;
+      color: #EDEFF3;
+    }
+
+    .g06-word {
+      display: inline-block;
+      opacity: 0;
+      will-change: transform, opacity, filter;
+    }
+
+    .g06-tick {
+      display: inline-block;
+      width: 0.9cqw;
+      height: 0.9cqw;
+      border-radius: 2px;
+      margin-right: 0.9cqw;
+      vertical-align: middle;
+    }
+    #g06-row1 .g06-tick { background: #FF9F45; }
+    #g06-row2 .g06-tick { background: #4DE8C2; }
+    #g06-row3 .g06-tick { background: #B98CFF; }
+  </style>
+
+  <div
+    id="root"
+    data-composition-id="06-guidance"
+    data-start="0"
+    data-duration="13.952"
+    data-width="1080"
+    data-height="1920"
+  >
+    <div class="clip g06-bg" data-start="0" data-duration="13.952" data-track-index="0"></div>
+
+    <div class="clip g06-row" id="g06-row1" data-start="0" data-duration="13.952" data-track-index="1">
+      <span class="g06-index">01 &middot;</span>
+      <div class="g06-line">
+        <span class="g06-word">You</span>
+        <span class="g06-word">always</span>
+        <span class="g06-word">have</span>
+        <span class="g06-word">a</span>
+        <span class="g06-tick"></span><span class="g06-word">context</span>
+        <span class="g06-word">window.</span>
+      </div>
+    </div>
+
+    <div class="clip g06-row" id="g06-row2" data-start="0" data-duration="13.952" data-track-index="2">
+      <span class="g06-index">02 &middot;</span>
+      <div class="g06-line">
+        <span class="g06-word">Add</span>
+        <span class="g06-tick"></span><span class="g06-word">memory</span>
+        <span class="g06-word">to</span>
+        <span class="g06-word">remember</span>
+        <span class="g06-word">across</span>
+        <span class="g06-word">turns.</span>
+      </div>
+    </div>
+
+    <div class="clip g06-row" id="g06-row3" data-start="0" data-duration="13.952" data-track-index="3">
+      <span class="g06-index">03 &middot;</span>
+      <div class="g06-line">
+        <span class="g06-word">Add</span>
+        <span class="g06-tick"></span><span class="g06-word">RAG</span>
+        <span class="g06-word">for</span>
+        <span class="g06-word">facts</span>
+        <span class="g06-word">you</span>
+        <span class="g06-word">weren&rsquo;t</span>
+        <span class="g06-word">given.</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var root = document.querySelector('[data-composition-id="06-guidance"]');
+
+      var tl = gsap.timeline({ paused: true });
+
+      var row1Words = root.querySelectorAll('#g06-row1 .g06-word');
+      var row2Words = root.querySelectorAll('#g06-row2 .g06-word');
+      var row3Words = root.querySelectorAll('#g06-row3 .g06-word');
+
+      var WORD_FROM = { opacity: 0, y: 14, filter: 'blur(8px)' };
+      var WORD_TO = { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.42, ease: 'power2.out', stagger: 0.075 };
+
+      // Scene 1 (0.0-4.26s) — line 1 lands, amber.
+      tl.fromTo('#g06-row1 .g06-index', { opacity: 0, x: -8 }, { opacity: 1, x: 0, duration: 0.3, ease: 'power2.out' }, 0.08);
+      tl.fromTo('#g06-row1 .g06-tick', { scale: 0 }, { scale: 1, duration: 0.25, ease: 'back.out(2)' }, 0.12);
+      tl.fromTo(row1Words, WORD_FROM, Object.assign({}, WORD_TO), 0.2);
+
+      // Scene 2 (4.26-8.94s) — line 1 cedes focus (dim to 40%), line 2 lands, teal.
+      tl.fromTo('#g06-row1', { opacity: 1 }, { opacity: 0.4, duration: 0.4, ease: 'power1.inOut' }, 4.26);
+      tl.fromTo('#g06-row2 .g06-index', { opacity: 0, x: -8 }, { opacity: 1, x: 0, duration: 0.3, ease: 'power2.out' }, 4.38);
+      tl.fromTo('#g06-row2 .g06-tick', { scale: 0 }, { scale: 1, duration: 0.25, ease: 'back.out(2)' }, 4.42);
+      tl.fromTo(row2Words, WORD_FROM, Object.assign({}, WORD_TO), 4.5);
+
+      // Scene 3 (8.94-13.452s) — line 2 cedes focus (dim to 40%), line 3 lands and holds, violet.
+      tl.fromTo('#g06-row2', { opacity: 1 }, { opacity: 0.4, duration: 0.4, ease: 'power1.inOut' }, 8.94);
+      tl.fromTo('#g06-row3 .g06-index', { opacity: 0, x: -8 }, { opacity: 1, x: 0, duration: 0.3, ease: 'power2.out' }, 9.06);
+      tl.fromTo('#g06-row3 .g06-tick', { scale: 0 }, { scale: 1, duration: 0.25, ease: 'back.out(2)' }, 9.1);
+      tl.fromTo(row3Words, WORD_FROM, Object.assign({}, WORD_TO), 9.18);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['06-guidance'] = tl;
+      tl.seek(0);
+    })();
+  </script>
+</template>

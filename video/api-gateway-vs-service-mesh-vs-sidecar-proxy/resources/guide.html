@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>API Gateway vs Service Mesh vs Sidecar Proxy</title>
+<style>
+  @font-face { font-family: 'Fraunces'; src: url('../assets/fonts/Fraunces-Variable.woff2') format('woff2'); font-weight: 400 700; font-style: normal; }
+  @font-face { font-family: 'Fraunces'; src: url('../assets/fonts/Fraunces-Italic.woff2') format('woff2'); font-weight: 400 700; font-style: italic; }
+  @font-face { font-family: 'IBM Plex Sans'; src: url('../assets/fonts/IBMPlexSans-Variable.woff2') format('woff2'); font-weight: 300 700; font-style: normal; }
+  @font-face { font-family: 'IBM Plex Mono'; src: url('../assets/fonts/IBMPlexMono-400.woff2') format('woff2'); font-weight: 400; font-style: normal; }
+  @font-face { font-family: 'IBM Plex Mono'; src: url('../assets/fonts/IBMPlexMono-500.woff2') format('woff2'); font-weight: 500; font-style: normal; }
+
+  :root {
+    --canvas: #0A0D12;
+    --canvas-raised: #12161C;
+    --canvas-raised-2: #181D24;
+    --ink: #EDEFF3;
+    --ink-dim: #8992A1;
+    --ink-faint: #4A525E;
+    --line: #232B33;
+    --line-strong: #2E3742;
+    --amber: #FF9F45;
+    --teal: #4DE8C2;
+    --violet: #B98CFF;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--canvas);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', sans-serif;
+  }
+
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  .page-bg {
+    background: var(--canvas);
+  }
+
+  .sheet {
+    padding: 64px 68px 72px;
+  }
+
+  /* ---- Cover ---- */
+  .cover {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 100px 72px;
+    position: relative;
+  }
+  .cover::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 36px 36px;
+    opacity: 0.10;
+  }
+  .cover-kicker {
+    position: relative;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 28px;
+  }
+  .cover-title {
+    position: relative;
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 52px;
+    line-height: 1.08;
+    letter-spacing: -0.015em;
+    margin: 0 0 22px 0;
+  }
+  .cover-title .amber { color: var(--amber); }
+  .cover-title .teal { color: var(--teal); }
+  .cover-title .violet { color: var(--violet); }
+  .cover-sub {
+    position: relative;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 22px;
+    color: var(--ink-dim);
+    max-width: 520px;
+    line-height: 1.4;
+  }
+  .cover-footer {
+    position: relative;
+    margin-top: 90px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    display: flex;
+    gap: 24px;
+  }
+  .cover-footer span { display: inline-flex; align-items: center; gap: 8px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+  .dot.amber { background: var(--amber); }
+  .dot.teal { background: var(--teal); }
+  .dot.violet { background: var(--violet); }
+
+  /* ---- Body content ---- */
+  .intro {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 21px;
+    line-height: 1.55;
+    color: var(--ink);
+    border-left: 2px solid var(--amber);
+    padding-left: 24px;
+    margin: 0 0 44px 0;
+  }
+
+  section.block {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin-bottom: 40px;
+  }
+
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .eyebrow .idx {
+    color: var(--canvas);
+    background: var(--ink-dim);
+    width: 22px;
+    height: 22px;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+  }
+  .eyebrow.amber .idx { background: var(--amber); }
+  .eyebrow.teal .idx { background: var(--teal); }
+  .eyebrow.violet .idx { background: var(--violet); }
+  .eyebrow.amber { color: var(--amber); }
+  .eyebrow.teal { color: var(--teal); }
+  .eyebrow.violet { color: var(--violet); }
+
+  h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 27px;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin: 0 0 14px 0;
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 19px;
+    line-height: 1.2;
+    margin: 0 0 12px 0;
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  p {
+    font-size: 15.5px;
+    line-height: 1.7;
+    color: var(--ink-dim);
+    margin: 0 0 14px 0;
+  }
+  p:last-child { margin-bottom: 0; }
+  p strong { color: var(--ink); font-weight: 500; }
+
+  .card {
+    background: var(--canvas-raised);
+    border: 1.5px solid rgba(137,146,161,0.28);
+    border-radius: 8px;
+    padding: 26px 28px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .card.amber { border-left: 3px solid var(--amber); }
+  .card.teal { border-left: 3px solid var(--teal); }
+  .card.violet { border-left: 3px solid var(--violet); }
+
+  .divider {
+    height: 1px;
+    background: var(--line);
+    margin: 36px 0;
+  }
+
+  .split {
+    display: flex;
+    gap: 20px;
+  }
+  .split .card { flex: 1; }
+
+  .callout {
+    background: var(--canvas-raised-2);
+    border: 1.5px solid var(--line-strong);
+    border-radius: 8px;
+    padding: 24px 28px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin-top: 4px;
+  }
+  .callout .label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 10px;
+  }
+
+  ul.rules {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  ul.rules li {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    display: flex;
+    gap: 14px;
+    padding: 16px 0;
+    border-top: 1px solid var(--line);
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink-dim);
+  }
+  ul.rules li:first-child { border-top: none; padding-top: 0; }
+  ul.rules li .tick {
+    flex: 0 0 auto;
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+    margin-top: 7px;
+  }
+  ul.rules li .tick.amber { background: var(--amber); }
+  ul.rules li .tick.teal { background: var(--teal); }
+  ul.rules li .tick.violet { background: var(--violet); }
+  ul.rules li strong { color: var(--ink); font-weight: 500; }
+
+  .takeaways {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .takeaways h2 { margin-bottom: 20px; }
+  .takeaways .card { margin-bottom: 14px; }
+  .takeaways .card:last-child { margin-bottom: 0; }
+  .takeaways .row {
+    display: flex;
+    gap: 16px;
+    align-items: baseline;
+  }
+  .takeaways .row .tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    flex: 0 0 auto;
+    padding-top: 3px;
+    min-width: 108px;
+  }
+  .takeaways .row.amber .tag { color: var(--amber); }
+  .takeaways .row.teal .tag { color: var(--teal); }
+  .takeaways .row.violet .tag { color: var(--violet); }
+  .takeaways .row p { margin: 0; color: var(--ink); font-size: 14.5px; }
+
+  .closing {
+    margin-top: 48px;
+    padding-top: 28px;
+    border-top: 1px solid var(--line);
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .closing p {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 17px;
+    color: var(--ink);
+    line-height: 1.6;
+  }
+
+  .footer-tag {
+    margin-top: 30px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+</style>
+</head>
+<body>
+
+  <!-- Cover page -->
+  <div class="page-bg cover">
+    <div class="cover-kicker">Systems Design Guide</div>
+    <h1 class="cover-title">
+      <span class="amber">API Gateway</span> vs<br/>
+      <span class="violet">Service Mesh</span> vs<br/>
+      <span class="teal">Sidecar Proxy</span>
+    </h1>
+    <div class="cover-sub">The front door, the hallways, and the local layer in between — why a microservices system usually needs all three, not just one.</div>
+    <div class="cover-footer">
+      <span><span class="dot amber"></span>Gateway — the edge</span>
+      <span><span class="dot teal"></span>Sidecar — per service</span>
+      <span><span class="dot violet"></span>Mesh — coordinated</span>
+    </div>
+  </div>
+
+  <!-- Content page(s) -->
+  <div class="page-bg sheet">
+
+    <p class="intro">API gateway, service mesh, sidecar proxy — all three sit in the request path of a microservices system, and it's easy to think you only need one. You usually need all three, doing different jobs.</p>
+
+    <section class="block">
+      <div class="eyebrow amber"><span class="idx">1</span>The API Gateway</div>
+      <h2>The single door for external traffic</h2>
+      <div class="card amber">
+        <p>An API gateway sits at the edge — the single door external clients come through. It's the one place handling <strong>auth</strong>, <strong>rate limiting</strong>, and <strong>routing</strong> requests to the right service, before anything is internal traffic yet.</p>
+      </div>
+    </section>
+
+    <section class="block">
+      <div class="eyebrow teal"><span class="idx">2</span>The Sidecar Proxy</div>
+      <h2>A local traffic layer for one service</h2>
+      <div class="card teal">
+        <p>A sidecar proxy is a small proxy deployed next to a single service instance, intercepting everything that service sends and receives. It's not about the edge — it's about every individual service having its own local traffic layer.</p>
+      </div>
+    </section>
+
+    <section class="block">
+      <div class="eyebrow violet"><span class="idx">3</span>The Service Mesh</div>
+      <h2>Sidecars, coordinated by a control plane</h2>
+      <div class="card violet">
+        <p>A service mesh is what you get when every service has its own sidecar, and a control plane manages all of them together — retries, timeouts, encryption, and observability, for every service-to-service call, consistently, without each team building it themselves.</p>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="block">
+      <h2>Front door vs. hallways</h2>
+      <p>The gateway handles traffic coming into your system from outside. The mesh, built out of sidecars, handles traffic moving between your own services once it's already inside.</p>
+      <div class="callout">
+        <div class="label">In one line</div>
+        <p style="color: var(--ink); font-size: 16px;">One's the front door, the other is the hallways.</p>
+      </div>
+    </section>
+
+    <section class="block">
+      <h2>When to add each one</h2>
+      <ul class="rules">
+        <li><span class="tick amber"></span><span><strong>Add an API gateway</strong> as soon as external clients talk to more than one backend service.</span></li>
+        <li><span class="tick violet"></span><span><strong>Add a service mesh</strong> once you have enough internal services that retries, mTLS, and observability between them can't be handled per-team anymore.</span></li>
+      </ul>
+    </section>
+
+    <section class="block takeaways">
+      <h2>Key takeaways</h2>
+      <div class="card">
+        <div class="row amber">
+          <span class="tag">Gateway</span>
+          <p>The front door. Edge-facing: auth, rate limiting, routing for external clients.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="row teal">
+          <span class="tag">Sidecar</span>
+          <p>A local traffic layer riding next to a single service instance.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="row violet">
+          <span class="tag">Mesh</span>
+          <p>Sidecars plus a control plane, coordinating retries, timeouts, encryption, and observability across every internal service-to-service call.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="closing">
+      <p>Same request path, three different jobs — a gateway guarding the door, a sidecar riding with each service, and a mesh tying every sidecar together into one coordinated layer.</p>
+      <div class="footer-tag">API Gateway · Service Mesh · Sidecar Proxy — Guide</div>
+    </div>
+
+  </div>
+
+</body>
+</html>

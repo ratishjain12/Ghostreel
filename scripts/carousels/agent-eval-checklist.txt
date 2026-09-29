@@ -1,0 +1,7 @@
+Hook: Most agents fail in production for the same 5 reasons.
+Task success rate: did it finish the job, not just respond.
+Tool-call accuracy: right tool, right arguments, every time.
+Failure recovery: what happens when a tool call errors or times out.
+Cost per run: token + latency budget, not just correctness.
+Human-in-the-loop threshold: which decisions still need a person to sign off.
+CTA: Comment GUIDE for the full eval checklist.

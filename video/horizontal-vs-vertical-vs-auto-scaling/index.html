@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js" integrity="sha384-sG0Hv1tP1lZCk9KQmrIbY/XNwi+OY84GQqhMscbnsoBFqAz8KNCil1kvfL3Hbbk2" crossorigin="anonymous"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        background: #000;
+      }
+      #root {
+        position: relative;
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        background: #0A0D12;
+      }
+      .scene {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="75.985"
+      data-width="1080"
+      data-height="1920"
+    >
+      <div
+        id="el-01-hook"
+        class="scene"
+        data-composition-id="01-hook"
+        data-composition-src="compositions/frames/01-hook.html"
+        data-start="0"
+        data-duration="11.337"
+        data-track-index="0"
+      ></div>
+      <audio
+        id="el-01-hook-voice"
+        src="audio/frame-clips/01.wav"
+        data-start="0"
+        data-duration="10.837"
+        data-track-index="10"
+        data-volume="1"
+      ></audio>
+
+      <div
+        id="el-02-vertical"
+        class="scene"
+        data-composition-id="02-vertical"
+        data-composition-src="compositions/frames/02-vertical.html"
+        data-start="10.837"
+        data-duration="14.665"
+        data-track-index="1"
+      ></div>
+      <audio
+        id="el-02-vertical-voice"
+        src="audio/frame-clips/02.wav"
+        data-start="10.837"
+        data-duration="14.165"
+        data-track-index="10"
+        data-volume="1"
+      ></audio>
+
+      <div
+        id="el-03-horizontal"
+        class="scene"
+        data-composition-id="03-horizontal"
+        data-composition-src="compositions/frames/03-horizontal.html"
+        data-start="25.002"
+        data-duration="15.604"
+        data-track-index="0"
+      ></div>
+      <audio
+        id="el-03-horizontal-voice"
+        src="audio/frame-clips/03.wav"
+        data-start="25.002"
+        data-duration="15.104"
+        data-track-index="10"
+        data-volume="1"
+      ></audio>
+
+      <div
+        id="el-04-auto"
+        class="scene"
+        data-composition-id="04-auto"
+        data-composition-src="compositions/frames/04-auto.html"
+        data-start="40.105999999999995"
+        data-duration="12.361"
+        data-track-index="1"
+      ></div>
+      <audio
+        id="el-04-auto-voice"
+        src="audio/frame-clips/04.wav"
+        data-start="40.105999999999995"
+        data-duration="11.861"
+        data-track-index="10"
+        data-volume="1"
+      ></audio>
+
+      <div
+        id="el-05-split"
+        class="scene"
+        data-composition-id="05-split"
+        data-composition-src="compositions/frames/05-split.html"
+        data-start="51.967"
+        data-duration="9.033"
+        data-track-index="0"
+      ></div>
+      <audio
+        id="el-05-split-voice"
+        src="audio/frame-clips/05.wav"
+        data-start="51.967"
+        data-duration="8.533"
+        data-track-index="10"
+        data-volume="1"
+      ></audio>
+
+      <div
+        id="el-06-guidance"
+        class="scene"
+        data-composition-id="06-guidance"
+        data-composition-src="compositions/frames/06-guidance.html"
+        data-start="60.5"
+        data-duration="13.556"
+        data-track-index="1"
+      ></div>
+      <audio
+        id="el-06-guidance-voice"
+        src="audio/frame-clips/06.wav"
+        data-start="60.5"
+        data-duration="13.056"
+        data-track-index="10"
+        data-volume="1"
+      ></audio>
+
+      <div
+        id="el-07-cta"
+        class="scene"
+        data-composition-id="07-cta"
+        data-composition-src="compositions/frames/07-cta.html"
+        data-start="73.556"
+        data-duration="2.429"
+        data-track-index="0"
+      ></div>
+      <audio
+        id="el-07-cta-voice"
+        src="audio/frame-clips/07.wav"
+        data-start="73.556"
+        data-duration="2.429"
+        data-track-index="10"
+        data-volume="1"
+      ></audio>
+
+      <!-- captions -->
+      <div
+        id="el-captions"
+        class="scene"
+        data-composition-id="captions"
+        data-composition-src="compositions/captions.html"
+        data-start="0"
+        data-duration="75.985"
+        data-track-index="2"
+      ></div>
+
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = gsap.timeline({ paused: true });
+      // ── frame transitions (injected by transitions.mjs) ──
+      (function () { var tl = window.__timelines["main"];
+        tl.to("#el-01-hook", { opacity: 0, duration: 0.5, ease: "power2.inOut" }, 10.837);
+        tl.fromTo("#el-02-vertical", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.inOut" }, 10.837);
+        tl.to("#el-02-vertical", { opacity: 0, duration: 0.5, ease: "power2.inOut" }, 25.002);
+        tl.fromTo("#el-03-horizontal", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.inOut" }, 25.002);
+        tl.to("#el-03-horizontal", { opacity: 0, duration: 0.5, ease: "power2.inOut" }, 40.106);
+        tl.fromTo("#el-04-auto", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.inOut" }, 40.106);
+        tl.to("#el-04-auto", { opacity: 0, duration: 0.5, ease: "power2.inOut" }, 51.967);
+        tl.fromTo("#el-05-split", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.inOut" }, 51.967);
+        tl.to("#el-05-split", { opacity: 0, duration: 0.5, ease: "power2.inOut" }, 60.5);
+        tl.fromTo("#el-06-guidance", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.inOut" }, 60.5);
+        tl.to("#el-06-guidance", { opacity: 0, duration: 0.5, ease: "power2.inOut" }, 73.556);
+        tl.fromTo("#el-07-cta", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.inOut" }, 73.556);
+        tl.to({}, { duration: 75.985 }, 0); // full-span anchor — main.duration() == composition total (Studio master duration)
+      })();
+    </script>
+  </body>
+</html>

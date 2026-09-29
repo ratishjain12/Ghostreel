@@ -1,0 +1,11 @@
+Say your payment fails to confirm, so your app retries the request automatically. Did your customer just get charged twice? If you don't know the answer, you have an idempotency problem.
+
+Idempotency means calling the same operation multiple times produces the exact same result as calling it once. Not "runs successfully every time" — the same result, no matter how many times it fires.
+
+Here's the classic fix. Every request that changes state — a payment, an order, a signup — carries a unique idempotency key, generated once by the client. The server remembers every key it's already processed. If the same key shows up again, from a retry, a flaky network, a duplicate click, the server doesn't redo the work. It just returns the original result.
+
+This matters most exactly where things fail — timeouts, dropped connections, automatic retries. Your client can't always tell if the first request actually succeeded before the connection dropped. So it retries, just to be safe. Idempotency is what makes "just to be safe" actually safe.
+
+Reads are naturally idempotent — asking for the same data twice doesn't change anything. Writes are where this gets dangerous, and where most systems that skip this step eventually get burned in production.
+
+Comment guide and I'll send over exactly how to implement idempotency keys, with the failure cases.

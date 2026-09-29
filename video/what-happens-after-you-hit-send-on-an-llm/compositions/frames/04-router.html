@@ -1,0 +1,168 @@
+<template id="04-router-template">
+  <div id="root" data-composition-id="04-router" data-width="1080" data-height="1920" data-duration="7.385">
+    <style>
+      @font-face { font-family: "EB Garamond"; src: url("assets/fonts/EBGaramond-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: block; }
+      @font-face { font-family: "EB Garamond"; src: url("assets/fonts/EBGaramond-700.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: block; }
+      @font-face { font-family: "Inter"; src: url("assets/fonts/Inter-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: block; }
+      @font-face { font-family: "Inter"; src: url("assets/fonts/Inter-700.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: block; }
+      @font-face { font-family: "JetBrains Mono"; src: url("assets/fonts/JetBrainsMono-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: block; }
+      @font-face { font-family: "JetBrains Mono"; src: url("assets/fonts/JetBrainsMono-700.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: block; }
+
+      #root {
+        position: relative;
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        container-type: size;
+        font-family: "Inter", sans-serif;
+        color: #141413;
+      }
+      [class~="04-router-ground"] { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; background: #FAF9F5; }
+
+      [class~="04-router-seg"] { position: absolute; top: 229px; width: 68px; height: 2px; background: rgba(20, 20, 19, 0.18); }
+      [class~="04-router-dot"] { position: absolute; top: 216px; width: 28px; height: 28px; box-sizing: border-box; border-radius: 9999px; }
+      [class~="04-router-dot-past"] { background: rgba(20, 20, 19, 0.25); }
+      [class~="04-router-dot-now"] { background: #CC785C; }
+      [class~="04-router-dot-next"] { border: 2px solid rgba(20, 20, 19, 0.28); }
+
+      [class~="04-router-kicker"] {
+        position: absolute; left: 140px; top: 282px; width: 800px; height: 36px;
+        font-family: "JetBrains Mono", monospace; font-weight: 400; font-size: 28px; line-height: 36px;
+        letter-spacing: 0.16em; text-transform: uppercase; text-align: center; color: #141413;
+      }
+      [class~="04-router-spike"] { color: #CC785C; }
+      [class~="04-router-title"] {
+        position: absolute; left: 90px; top: 346px; width: 900px; height: 170px;
+        font-family: "EB Garamond", serif; font-weight: 400; font-size: 156px; line-height: 170px;
+        letter-spacing: -0.022em; text-align: center; color: #141413;
+      }
+
+      [class~="04-router-node"] {
+        position: absolute; left: 496px; top: 596px; width: 88px; height: 88px;
+        border-radius: 9999px; background: #141413;
+      }
+      [class~="04-router-node"] svg { position: absolute; left: 0; top: 0; width: 88px; height: 88px; }
+      [class~="04-router-tag"] {
+        position: absolute; left: 612px; top: 618px; width: 196px; height: 44px; box-sizing: border-box;
+        border: 1px solid rgba(20, 20, 19, 0.2); border-radius: 9999px; background: #EFE9DE;
+        font-family: "JetBrains Mono", monospace; font-weight: 400; font-size: 24px; line-height: 42px;
+        letter-spacing: 0.02em; text-align: center; color: #141413;
+      }
+
+      [class~="04-router-branches"] { position: absolute; left: 0; top: 684px; width: 1080px; height: 236px; overflow: visible; }
+      [class~="04-router-branch"] { fill: none; stroke: rgba(20, 20, 19, 0.28); stroke-width: 2; stroke-dasharray: 1; stroke-dashoffset: 1; }
+      [class~="04-router-route"] { fill: none; stroke: #CC785C; stroke-width: 5; stroke-dasharray: 1; stroke-dashoffset: 1; }
+
+      [class~="04-router-card"] {
+        position: absolute; top: 920px; width: 280px; height: 360px; box-sizing: border-box;
+        background: #EFE9DE; border: 1px solid rgba(20, 20, 19, 0.12); border-radius: 12px;
+        box-shadow: 0 1px 3px rgba(20, 20, 19, 0.08), 0 4px 16px rgba(20, 20, 19, 0.04);
+      }
+      [class~="04-router-card-label"] {
+        position: absolute; left: 20px; top: 40px; width: 240px; height: 32px;
+        font-family: "JetBrains Mono", monospace; font-weight: 400; font-size: 24px; line-height: 32px;
+        letter-spacing: 0.08em; text-transform: uppercase; text-align: center; color: rgba(20, 20, 19, 0.72);
+      }
+      [class~="04-router-card-letter"] {
+        position: absolute; left: 20px; top: 104px; width: 240px; height: 140px;
+        font-family: "EB Garamond", serif; font-weight: 400; font-size: 140px; line-height: 140px;
+        letter-spacing: -0.02em; text-align: center; color: #141413;
+      }
+      [class~="04-router-bar"] {
+        position: absolute; left: 28px; top: 290px; width: 224px; height: 14px;
+        border-radius: 9999px; background: rgba(20, 20, 19, 0.1); overflow: hidden;
+      }
+      [class~="04-router-bar-fill"] {
+        position: absolute; left: 0; top: 0; width: 224px; height: 14px;
+        border-radius: 9999px; background: #141413; transform-origin: 0% 50%;
+      }
+
+      [class~="04-router-req"] {
+        position: absolute; left: 526px; top: 690px; width: 28px; height: 28px;
+        border-radius: 9999px; background: #CC785C; box-shadow: 0 0 0 5px #FAF9F5;
+      }
+    </style>
+
+    <div class="clip 04-router-ground" data-start="0" data-duration="7.385" data-track-index="0"></div>
+
+    <div class="04-router-seg" style="left: 314px;"></div>
+    <div class="04-router-seg" style="left: 410px;"></div>
+    <div class="04-router-seg" style="left: 506px;"></div>
+    <div class="04-router-seg" style="left: 602px;"></div>
+    <div class="04-router-seg" style="left: 698px;"></div>
+    <div class="04-router-dot 04-router-dot-past" style="left: 286px;"></div>
+    <div class="04-router-dot 04-router-dot-past" style="left: 382px;"></div>
+    <div id="04-router-dot-now" class="04-router-dot 04-router-dot-now" style="left: 478px;"></div>
+    <div class="04-router-dot 04-router-dot-next" style="left: 574px;"></div>
+    <div class="04-router-dot 04-router-dot-next" style="left: 670px;"></div>
+    <div class="04-router-dot 04-router-dot-next" style="left: 766px;"></div>
+
+    <div id="04-router-kicker" class="04-router-kicker"><span class="04-router-spike">✱</span> Step 03 / 06</div>
+    <div id="04-router-title" class="04-router-title">Router</div>
+
+    <svg id="04-router-branches" class="04-router-branches" viewBox="0 0 1080 236">
+      <path id="04-router-branch-a" class="04-router-branch" pathLength="1" d="M540 0 C540 130 224 106 224 236" />
+      <path id="04-router-branch-b" class="04-router-branch" pathLength="1" d="M540 0 L540 236" />
+      <path id="04-router-branch-c" class="04-router-branch" pathLength="1" d="M540 0 C540 130 856 106 856 236" />
+      <path id="04-router-route" class="04-router-route" pathLength="1" d="M540 0 L540 236" />
+    </svg>
+
+    <div id="04-router-node" class="04-router-node">
+      <svg viewBox="0 0 88 88">
+        <path d="M44 22 L44 42 M44 42 L28 64 M44 42 L44 66 M44 42 L60 64" fill="none" stroke="#FAF9F5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </div>
+    <div id="04-router-tag" class="04-router-tag">your model</div>
+
+    <div id="04-router-card-a" class="04-router-card" style="left: 84px;">
+      <div class="04-router-card-label">GPU cluster</div>
+      <div class="04-router-card-letter">A</div>
+      <div class="04-router-bar"><div id="04-router-fill-a" class="04-router-bar-fill"></div></div>
+    </div>
+    <div id="04-router-card-b" class="04-router-card" style="left: 400px;">
+      <div class="04-router-card-label">GPU cluster</div>
+      <div class="04-router-card-letter">B</div>
+      <div class="04-router-bar"><div id="04-router-fill-b" class="04-router-bar-fill"></div></div>
+    </div>
+    <div id="04-router-card-c" class="04-router-card" style="left: 716px;">
+      <div class="04-router-card-label">GPU cluster</div>
+      <div class="04-router-card-letter">C</div>
+      <div class="04-router-bar"><div id="04-router-fill-c" class="04-router-bar-fill"></div></div>
+    </div>
+
+    <div id="04-router-req" class="04-router-req"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script>
+      (function () {
+        var root = document.querySelector('[data-composition-id="04-router"]');
+        var q = function (id) { return root.querySelector('[id="04-router-' + id + '"]'); };
+        var tl = gsap.timeline({ paused: true });
+
+        // Scene 1: current station pops, kicker, headline, router node
+        tl.fromTo(q("dot-now"), { scale: 0.4, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4, ease: "power3.out" }, 0);
+        tl.fromTo(q("kicker"), { y: 16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, 0.08);
+        tl.fromTo(q("title"), { y: 48, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: "power3.out" }, 0.4);
+        tl.fromTo(q("node"), { scale: 0.7, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.5, ease: "power3.out" }, 0.9);
+
+        // Scene 2: branches draw down, cluster cards settle
+        tl.fromTo([q("branch-a"), q("branch-b"), q("branch-c")], { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 0.8, ease: "power2.inOut", stagger: 0.08 }, 1.4);
+        tl.fromTo([q("card-a"), q("card-b"), q("card-c")], { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power3.out", stagger: 0.1 }, 2.0);
+
+        // Scene 3: load bars fill (relative: high, low, medium)
+        tl.fromTo(q("fill-a"), { scaleX: 0 }, { scaleX: 0.86, duration: 0.9, ease: "power2.out" }, 3.9);
+        tl.fromTo(q("fill-b"), { scaleX: 0 }, { scaleX: 0.22, duration: 0.9, ease: "power2.out" }, 4.05);
+        tl.fromTo(q("fill-c"), { scaleX: 0 }, { scaleX: 0.55, duration: 0.9, ease: "power2.out" }, 4.2);
+
+        // Scene 4: tag on router, coral route to low-load card, request dot seats
+        tl.fromTo(q("tag"), { x: -16, opacity: 0 }, { x: 0, opacity: 1, duration: 0.45, ease: "power3.out" }, 5.6);
+        tl.fromTo(q("route"), { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 0.5, ease: "power2.inOut" }, 5.75);
+        tl.fromTo(q("req"), { opacity: 0, scale: 0.5 }, { opacity: 1, scale: 1, duration: 0.2, ease: "power2.out" }, 5.95);
+        tl.fromTo(q("req"), { y: 0 }, { y: 216, duration: 0.55, ease: "power2.inOut", immediateRender: false }, 6.05);
+
+        window.__timelines = window.__timelines || {};
+        window.__timelines["04-router"] = tl;
+      })();
+    </script>
+  </div>
+</template>

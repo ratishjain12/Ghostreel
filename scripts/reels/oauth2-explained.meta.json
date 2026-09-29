@@ -1,0 +1,5 @@
+{
+  "message": "Comment \"GUIDE\" and I'll send you the full breakdown.\n\n\"Continue with Google\" isn't login. It's delegation. The app never sees your password, only a scoped permission slip it can't exceed. I broke down the actual token exchange happening in those two seconds, and why it's fundamentally different from just sharing credentials.\n\n#systemdesign #webdevelopment #softwareengineering #api",
+  "angle": "system-design",
+  "hook_style": "before-after"
+}

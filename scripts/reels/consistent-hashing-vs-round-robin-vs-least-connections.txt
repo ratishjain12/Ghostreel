@@ -1,0 +1,13 @@
+Round robin, least connections, consistent hashing. Three load balancing algorithms that get treated like implementation details, but the one you pick decides whether your cache actually works or your servers stay evenly loaded.
+
+Round robin just cycles through your servers in order, one request each, over and over. Dead simple, no state to track, but it has no idea if server three is already overloaded and server four is idle.
+
+Least connections fixes that. It routes each new request to whichever server currently has the fewest active connections. It actually reacts to load, which matters a lot once requests take wildly different amounts of time to finish.
+
+Consistent hashing solves a completely different problem. Instead of balancing load, it guarantees that the same key, a user ID, a cache key, almost always lands on the same server. And when you add or remove a server, only a small slice of keys get remapped, not all of them.
+
+So round robin and least connections are both trying to spread load evenly. Consistent hashing is deliberately not trying to do that, it's optimizing for the same request landing in the same place every time.
+
+Use round robin for simple, uniform, stateless workloads. Use least connections when request duration varies a lot. Reach for consistent hashing the moment you're routing to a cache or anything where hitting the same backend for the same key actually matters.
+
+Comment guide and I'll send over the full breakdown.

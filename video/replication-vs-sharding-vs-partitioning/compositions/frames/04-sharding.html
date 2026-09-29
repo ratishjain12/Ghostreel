@@ -1,0 +1,221 @@
+<template>
+  <style>
+    @font-face { font-family: 'Fraunces'; src: url('assets/fonts/Fraunces-Variable.woff2') format('woff2'); font-weight: 400 700; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Fraunces'; src: url('assets/fonts/Fraunces-Italic.woff2') format('woff2'); font-weight: 400 700; font-style: italic; font-display: block; }
+    @font-face { font-family: 'IBM Plex Sans'; src: url('assets/fonts/IBMPlexSans-Variable.woff2') format('woff2'); font-weight: 300 700; font-style: normal; font-display: block; }
+    @font-face { font-family: 'IBM Plex Mono'; src: url('assets/fonts/IBMPlexMono-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+    @font-face { font-family: 'IBM Plex Mono'; src: url('assets/fonts/IBMPlexMono-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: block; }
+
+    #root {
+      position: absolute;
+      inset: 0;
+      width: 100cqw;
+      height: 100cqh;
+      container-type: size;
+      overflow: hidden;
+      background: transparent;
+      font-family: 'IBM Plex Sans', sans-serif;
+    }
+
+    #root * { box-sizing: border-box; }
+
+    .f04-bg {
+      position: absolute;
+      inset: 0;
+      background: #0A0D12;
+    }
+
+    .f04-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(0deg, rgba(35, 43, 51, 0.14) 0px, rgba(35, 43, 51, 0.14) 1px, transparent 1px, transparent 64px),
+        repeating-linear-gradient(90deg, rgba(35, 43, 51, 0.14) 0px, rgba(35, 43, 51, 0.14) 1px, transparent 1px, transparent 64px);
+    }
+
+    .f04-tiles, .f04-lines, .f04-boxes, .f04-ticks, .f04-dots {
+      position: absolute;
+      inset: 0;
+    }
+
+    .f04-tile {
+      position: absolute;
+      top: 269px;
+      width: 216px;
+      height: 154px;
+      background: #12161C;
+      border: 1.5px solid #4DE8C2;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      padding: 0 0.6cqw;
+    }
+    #f04-tile-a { left: 173px; }
+    #f04-tile-b { left: 432px; }
+    #f04-tile-c { left: 691px; }
+
+    .f04-tile-label {
+      font-family: 'IBM Plex Mono';
+      font-size: 1.1cqw;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #8992A1;
+      text-align: center;
+    }
+
+    .f04-line {
+      position: absolute;
+      top: 422px;
+      width: 2px;
+      height: 0px;
+      background: #B98CFF;
+    }
+    #f04-line-a { left: 280px; }
+    #f04-line-b { left: 539px; }
+    #f04-line-c { left: 798px; }
+
+    .f04-box {
+      position: absolute;
+      top: 845px;
+      width: 216px;
+      height: 307px;
+      background: #12161C;
+      border: 1.5px solid #B98CFF;
+      border-radius: 4px;
+      opacity: 0;
+    }
+    #f04-box-a { left: 173px; }
+    #f04-box-b { left: 432px; }
+    #f04-box-c { left: 691px; }
+
+    .f04-box-tag {
+      position: absolute;
+      top: 1085px;
+      width: 216px;
+      text-align: center;
+      font-family: 'IBM Plex Mono';
+      font-size: 1.1cqw;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #8992A1;
+      opacity: 0;
+    }
+    #f04-tag-a { left: 173px; }
+    #f04-tag-b { left: 432px; }
+    #f04-tag-c { left: 691px; }
+
+    .f04-write-tick {
+      position: absolute;
+      top: 979px;
+      width: 32px;
+      text-align: center;
+      font-family: 'IBM Plex Mono';
+      font-size: 1.6cqw;
+      font-weight: 500;
+      color: #B98CFF;
+      opacity: 0;
+      line-height: 1;
+    }
+    #f04-write-a { left: 227px; }
+    #f04-write-b { left: 486px; }
+    #f04-write-c { left: 745px; }
+
+    .f04-read-dot {
+      position: absolute;
+      top: 1004px;
+      width: 10px;
+      height: 10px;
+      border: 1.5px solid #B98CFF;
+      background: transparent;
+      border-radius: 1px;
+      opacity: 0;
+    }
+    #f04-read-a { left: 313px; }
+    #f04-read-b { left: 572px; }
+    #f04-read-c { left: 831px; }
+  </style>
+
+  <div id="root" data-composition-id="04-sharding" data-width="1080" data-height="1920" data-duration="12.447">
+    <div class="clip f04-bg" data-start="0" data-duration="12.447" data-track-index="0"></div>
+    <div class="clip f04-grid" data-start="0" data-duration="12.447" data-track-index="1"></div>
+
+    <div class="clip f04-tiles" data-start="0" data-duration="12.447" data-track-index="2">
+      <div class="f04-tile" id="f04-tile-a"><span class="f04-tile-label"></span></div>
+      <div class="f04-tile" id="f04-tile-b"><span class="f04-tile-label">Date range</span></div>
+      <div class="f04-tile" id="f04-tile-c"><span class="f04-tile-label">Customer ID</span></div>
+    </div>
+
+    <div class="clip f04-lines" data-start="0.99" data-duration="11.457" data-track-index="3">
+      <div class="f04-line" id="f04-line-a"></div>
+      <div class="f04-line" id="f04-line-b"></div>
+      <div class="f04-line" id="f04-line-c"></div>
+    </div>
+
+    <div class="clip f04-boxes" data-start="0.99" data-duration="11.457" data-track-index="4">
+      <div class="f04-box" id="f04-box-a"></div>
+      <div class="f04-box" id="f04-box-b"></div>
+      <div class="f04-box" id="f04-box-c"></div>
+      <span class="f04-box-tag" id="f04-tag-a">Server A</span>
+      <span class="f04-box-tag" id="f04-tag-b">Server B</span>
+      <span class="f04-box-tag" id="f04-tag-c">Server C</span>
+    </div>
+
+    <div class="clip f04-ticks" data-start="7.52" data-duration="4.927" data-track-index="5">
+      <div class="f04-write-tick" id="f04-write-a">&#8593;</div>
+      <div class="f04-write-tick" id="f04-write-b">&#8593;</div>
+      <div class="f04-write-tick" id="f04-write-c">&#8593;</div>
+    </div>
+
+    <div class="clip f04-dots" data-start="9.33" data-duration="3.117" data-track-index="6">
+      <div class="f04-read-dot" id="f04-read-a"></div>
+      <div class="f04-read-dot" id="f04-read-b"></div>
+      <div class="f04-read-dot" id="f04-read-c"></div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var root = document.querySelector('[data-composition-id="04-sharding"]');
+      var tiles = root.querySelectorAll('.f04-tile');
+      var boxes = root.querySelectorAll('.f04-box');
+      var lines = root.querySelectorAll('.f04-line');
+      var tags = ['#f04-tag-a', '#f04-tag-b', '#f04-tag-c'].map(function (s) { return root.querySelector(s); });
+      var writeTicks = root.querySelectorAll('.f04-write-tick');
+      var readDots = root.querySelectorAll('.f04-read-dot');
+
+      var tl = gsap.timeline({ paused: true });
+
+      // Scene 1 (0.0-0.99s) — callback tiles reveal, then a single pulse on "Sharding is partitioning"
+      tl.fromTo(tiles, { opacity: 0, y: -10 }, { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' }, 0);
+      tl.to(tiles, { scale: 1.06, duration: 0.18, ease: 'power1.out' }, 0.45);
+      tl.to(tiles, { scale: 1, duration: 0.22, ease: 'power2.out' }, 0.63);
+
+      // Scene 2 (0.99-3.04s) — empty server boxes appear, violet hairlines self-draw down to them
+      tl.fromTo(boxes, { opacity: 0, scale: 0.92 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'power2.out', stagger: 0.12 }, 0.99);
+      tl.fromTo(lines, { height: '0px' }, { height: '413px', duration: 1.4, ease: 'power3.out', stagger: 0.12 }, 1.15);
+
+      // Scene 3 (3.44-7.52s) — each tile travels down its line, lands, its server tag hard-cuts on
+      tl.to(tiles[0], { y: 595, height: '84px', duration: 1.0, ease: 'power3.inOut' }, 3.44);
+      tl.set(tags[0], { opacity: 1 }, 4.44);
+
+      tl.to(tiles[1], { y: 595, height: '84px', duration: 1.0, ease: 'power3.inOut' }, 4.9);
+      tl.set(tags[1], { opacity: 1 }, 5.9);
+
+      tl.to(tiles[2], { y: 595, height: '84px', duration: 1.0, ease: 'power3.inOut' }, 6.3);
+      tl.set(tags[2], { opacity: 1 }, 7.3);
+
+      // Scene 4 (7.52-9.33s) — write-tick appears on all three servers together (shared beat)
+      tl.fromTo(writeTicks, { opacity: 0, y: -4 }, { opacity: 1, y: 0, duration: 0.32, ease: 'power2.out', stagger: 0.08 }, 7.6);
+
+      // Scene 5 (9.33-11.947s) — a smaller read-dot fans across all three servers too; holds still
+      tl.fromTo(readDots, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.3, ease: 'power2.out', stagger: 0.15 }, 9.4);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['04-sharding'] = tl;
+    })();
+  </script>
+</template>

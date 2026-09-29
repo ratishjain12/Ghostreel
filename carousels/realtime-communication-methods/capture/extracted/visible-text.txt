@@ -1,0 +1,32 @@
+4 ways systems talk in real time, and the tradeoff each one hides.
+
+Content type: carousel (7 slides, 1080x1080, no voiceover, no captions).
+Angle: concept explainer.
+
+Core idea: modern systems need to move data between a client and a server (or between
+services) as events happen, not just on a fixed schedule. There are four common patterns
+for this, and each one trades something away to get its real-time-ness:
+
+1. Polling — the client asks "anything new?" on a fixed interval. Dead simple, works
+   everywhere, but wastes requests when nothing changed and adds latency up to the poll
+   interval.
+2. Long polling — the client asks once and the server holds the request open until there
+   is something to say (or a timeout). Lower latency than polling, but each held-open
+   request ties up a server thread/connection, and the client must immediately
+   re-request after every response.
+3. WebSockets — a single persistent, full-duplex connection is opened once; either side
+   pushes messages over it at any time. Real, instant two-way communication — but the
+   connection is stateful, so it complicates horizontal scaling (sticky sessions / a
+   pub-sub backplane) and load balancing.
+4. Server-Sent Events (SSE) — a single long-lived HTTP connection where the server
+   streams events to the client. Simple, plays natively with HTTP infra (caches, proxies,
+   auto-reconnect built into the browser), but it's one-way only — the client can't push
+   data back over the same channel.
+
+Takeaway: there's no universally "best" real-time transport — the right choice depends on
+whether you need bidirectional communication, how many concurrent connections you must
+hold, and how much operational complexity you can carry.
+
+CTA: Comment 'GUIDE' for the full breakdown.
+
+Hashtags: #systemdesign #webdevelopment #api #softwareengineering

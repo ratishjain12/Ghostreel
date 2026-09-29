@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ScriptForm from "./ScriptForm";
 import { firstSentence } from "../utils";
+import { pillarLabel, hookStyleLabel } from "../growthTags";
 
 const STAGES = [
   { key: "txt", label: "TXT", done: () => true },
@@ -22,7 +23,14 @@ export default function ScriptRow({ script, selected, onToggle, onAuthor, onRend
     return (
       <div className="channel-strip editing">
         <ScriptForm
-          initial={{ name: script.name, text: script.text, message: script.meta.message || "", aspect: script.meta.aspect || "" }}
+          initial={{
+            name: script.name,
+            text: script.text,
+            message: script.meta.message || "",
+            aspect: script.meta.aspect || "",
+            pillar: script.meta.angle || "",
+            hook_style: script.meta.hook_style || "",
+          }}
           lockName
           submitLabel="Save changes"
           onCancel={() => setEditing(false)}
@@ -38,6 +46,8 @@ export default function ScriptRow({ script, selected, onToggle, onAuthor, onRend
   const isOverride = Boolean(script.meta.message);
   const message = script.meta.message || firstSentence(script.text);
   const canPublish = script.hasPdf && script.renders.length > 0;
+  const pillar = pillarLabel(script.meta.angle);
+  const hookStyle = hookStyleLabel(script.meta.hook_style);
 
   function handlePublishClick() {
     if (!confirm(`Post this Reel to Instagram now, live and public?\n\nCaption:\n"${message}"`)) return;
@@ -71,6 +81,12 @@ export default function ScriptRow({ script, selected, onToggle, onAuthor, onRend
         {isOverride && <span className="override-tag">custom caption</span>}
         <span>“{message}”</span>
       </p>
+      {(pillar || hookStyle) && (
+        <p className="tag-line">
+          {pillar && <span className="pillar-tag">{pillar}</span>}
+          {hookStyle && <span className="hook-tag">{hookStyle}</span>}
+        </p>
+      )}
       <p className="text-preview">{script.text}</p>
 
       <div className="row-actions">

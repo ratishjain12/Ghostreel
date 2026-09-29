@@ -1,0 +1,11 @@
+You rewrite an API handler with async and it goes from four hundred milliseconds to forty. Then you add one line and it's back to four hundred. Here's why.
+
+The handler makes three network calls. Written normally, it waits for each one before starting the next. With async, it starts all three and waits while they're in flight. The waiting overlaps. That's concurrency: one worker juggling many tasks that are mostly waiting.
+
+Now you add a function that resizes an image. That's not waiting, that's pure computation. An async event loop runs on a single thread, so while it's resizing, nothing else can move. Every other request on that server is stuck behind it.
+
+Running work at the same instant needs parallelism: multiple CPU cores working at once. That means a worker pool, separate processes, or a background queue.
+
+So the rule is simple. Async helps when your code is waiting on something. Parallelism helps when your code is computing something. Mix them up, and async makes things slower, not faster.
+
+Comment guide and I'll send you the full breakdown.

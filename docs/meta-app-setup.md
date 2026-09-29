@@ -50,14 +50,14 @@ Meta's free Graph API — no subscriptions.
    on and that the constant matches).
 2. Exchange it for a **long-lived** token (60-day, Meta documents the exchange endpoint).
 3. Store it in SSM Parameter Store as a `SecureString` at the parameter name your stack uses
-   (default `/reel-pipeline/ig-access-token`):
+   (default `/content-studio/ig-access-token`):
    ```bash
-   aws ssm put-parameter --name /reel-pipeline/ig-access-token --type SecureString --value "<token>"
+   aws ssm put-parameter --name /content-studio/ig-access-token --type SecureString --value "<token>"
    ```
 4. Also store your **IG business account's user id** the same way
-   (`/reel-pipeline/ig-user-id`), the **app secret** from the app's Basic Settings
-   (`/reel-pipeline/ig-app-secret`), and a **verify token** you make up yourself — any random
-   string, it's just a shared secret for the webhook handshake (`/reel-pipeline/ig-verify-token`).
+   (`/content-studio/ig-user-id`), the **app secret** from the app's Basic Settings
+   (`/content-studio/ig-app-secret`), and a **verify token** you make up yourself — any random
+   string, it's just a shared secret for the webhook handshake (`/content-studio/ig-verify-token`).
 
 ## 6. Subscribing to webhooks
 
@@ -80,7 +80,7 @@ ID automatically, no manual ID-copying. It needs one extra permission first:
    generation time, so the existing one won't include the new permission until refreshed.
 3. Update the SSM parameter with the new token (same parameter the Lambda already reads):
    ```bash
-   aws ssm put-parameter --name /reel-pipeline/ig-access-token --type SecureString --value "<new token>" --overwrite
+   aws ssm put-parameter --name /content-studio/ig-access-token --type SecureString --value "<new token>" --overwrite
    ```
 4. In the dashboard, once a project shows **PDF** and **REN** lit, click **Approve & Publish** —
    confirm the caption in the dialog, enter (or accept the pre-filled) trigger keyword, and it
@@ -97,6 +97,50 @@ checks this via `ffprobe` and fails clearly before calling Meta's API if a rende
 2. In the dashboard, once that project shows **Uploaded**, enter the media ID and your chosen
    trigger keyword in its trigger form and hit **Save trigger** — this updates `triggers.json` in
    S3, which the Lambda reads on every webhook event. No redeploy needed.
+
+## 7b. Competitor research token (Business Discovery)
+
+`scripts/scrape_competitors.py` reads other Business/Creator accounts' public posts (caption,
+likes, comments, timestamp, permalink) via `business_discovery`. That field only exists on the
+**Facebook Login** Graph API (`graph.facebook.com`). The Instagram Login token above returns
+`Tried accessing nonexisting field (business_discovery)`, so this needs a second token. Saves
+are never returned for accounts you don't own; nothing exposes them.
+
+1. Make sure your IG account is linked to a Facebook Page (Instagram app → Settings → Accounts
+   Center, or the Page's Settings → Linked accounts).
+2. In the same Meta app, under the Instagram use case → **API setup with Facebook login** →
+   permissions, add `instagram_basic`, `instagram_manage_insights`, `pages_show_list`,
+   `pages_read_engagement`, `business_management`. Without `instagram_manage_insights`,
+   `business_discovery` fails with `(#10) Application does not have permission`. Stay in
+   Development Mode; as the app admin you don't need App Review.
+3. **Facebook Login for Business → Configurations → Create**: access token type *User access
+   token*, assets Pages + Instagram accounts, the five permissions above. Graph API Explorer
+   won't issue user tokens on a Business app without one ("No configurations available").
+   Copy the configuration id into `.env` as `FB_LOGIN_CONFIG_ID`, and set `FB_APP_ID`.
+4. Store the **main** app secret (App settings → Basic, not the Instagram app secret):
+   ```bash
+   aws ssm put-parameter --name /reel-pipeline/fb-app-secret --type SecureString --value "<app secret>"
+   aws ssm put-parameter --name /reel-pipeline/ig-fb-user-id --type SecureString --value "<IG account id as the Facebook API sees it>"
+   ```
+   The IG id comes from `GET /me/accounts?fields=instagram_business_account` and differs from
+   `ig-user-id`.
+5. Add `http://localhost:8787/api/fb/callback` to **Facebook Login for Business → Settings →
+   Valid OAuth Redirect URIs**.
+6. Dashboard → Performance → **Meta tokens → Reconnect Facebook**. Tick your Page and IG account
+   in the popup. The dashboard exchanges the code, derives the Page token and stores it at
+   `ig-fb-access-token`.
+7. Test: `make competitors`. Accounts that are personal (not Business/Creator) get skipped with an
+   error line. The rest land in `growth/competitors/<handle>.json`.
+
+**Token lifetimes.**
+- **Instagram Login token (posting, webhook, scheduled publish):** 60 days. `TokenRefreshFunction`
+  (weekly, `infra/template.yaml`) calls `refresh_access_token` and writes it back to SSM. A
+  token can only be refreshed while it's at least 24h old and not yet expired, so if the Lambda
+  stops for 60 days you have to generate one by hand again.
+- **Competitor Page token:** never expires itself, but Meta enforces a 90-day *data access*
+  limit that only a fresh login resets; no API extends it. The Meta tokens panel shows the days
+  left. Click Reconnect Facebook when it turns red (under 14 days). The weekly Lambda also fails
+  in CloudWatch then.
 
 ## 8. Testing checklist
 

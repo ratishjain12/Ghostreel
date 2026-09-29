@@ -1,0 +1,181 @@
+<template id="01-hook-template">
+<div id="root" data-composition-id="01-hook" data-width="1080" data-height="1920" data-duration="6.86">
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <style>
+@font-face { font-family: "EB Garamond"; src: url("assets/fonts/EBGaramond-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: block; }
+@font-face { font-family: "EB Garamond"; src: url("assets/fonts/EBGaramond-700.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: block; }
+@font-face { font-family: "Inter"; src: url("assets/fonts/Inter-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: block; }
+@font-face { font-family: "Inter"; src: url("assets/fonts/Inter-700.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: block; }
+@font-face { font-family: "JetBrains Mono"; src: url("assets/fonts/JetBrainsMono-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: block; }
+@font-face { font-family: "JetBrains Mono"; src: url("assets/fonts/JetBrainsMono-700.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: block; }
+
+    #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; }
+
+    [class~="01-hook-bg"] { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; background-color: #FAF9F5; }
+    [class~="01-hook-grid"] {
+      position: absolute; left: 0; top: 0; width: 1080px; height: 1920px;
+      background-image:
+        linear-gradient(to right, rgba(20,20,19,0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(20,20,19,0.05) 1px, transparent 1px);
+      background-size: 60px 60px;
+      background-position: 0 0;
+    }
+
+    [id="01-hook-composer-lift"] { position: absolute; left: 150px; top: 580px; width: 780px; height: 240px; }
+    [id="01-hook-composer"] {
+      position: absolute; left: 0; top: 0; width: 780px; height: 240px; box-sizing: border-box;
+      background: #181715; border: 1px solid rgba(250,249,245,0.14); border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(20,20,19,0.08), 0 4px 16px rgba(20,20,19,0.04);
+    }
+    [id="01-hook-prompt-clip"] {
+      position: absolute; left: 44px; top: 48px; width: 0px; height: 52px; overflow: hidden; white-space: nowrap;
+    }
+    [id="01-hook-prompt"] {
+      position: absolute; left: 0; top: 0; width: 300px; height: 52px;
+      font-family: "JetBrains Mono", monospace; font-weight: 400; font-size: 40px; line-height: 52px;
+      letter-spacing: 0; color: #FAF9F5;
+    }
+    [id="01-hook-caret"] { position: absolute; left: 46px; top: 52px; width: 3px; height: 44px; background: #FAF9F5; }
+    [id="01-hook-send"] {
+      position: absolute; left: 598px; top: 144px; width: 150px; height: 64px; border-radius: 9999px;
+      background: #CC785C; color: #FAF9F5;
+      font-family: "Inter", sans-serif; font-weight: 400; font-size: 30px; line-height: 64px; text-align: center;
+    }
+
+    [id="01-hook-two"] {
+      position: absolute; left: 90px; top: 450px; width: 900px; height: 116px;
+      font-family: "EB Garamond", serif; font-weight: 400; font-size: 110px; line-height: 116px;
+      letter-spacing: -0.018em; color: #141413; text-align: center;
+    }
+
+    [id="01-hook-fuse"] { position: absolute; left: 0; top: 640px; width: 1080px; height: 100px; }
+    [id="01-hook-line"] { position: absolute; left: 110px; top: 19px; width: 860px; height: 2px; background: rgba(20,20,19,0.35); }
+    [class~="01-hook-station"] {
+      position: absolute; top: 6px; width: 28px; height: 28px; box-sizing: border-box;
+      border: 1.5px solid rgba(20,20,19,0.5); border-radius: 9999px; background: #FAF9F5;
+    }
+    [id="01-hook-reqdot"] {
+      position: absolute; left: 102px; top: 12px; width: 16px; height: 16px; border-radius: 9999px; background: #CC785C;
+    }
+    [class~="01-hook-label"] {
+      position: absolute; top: 64px; height: 30px;
+      font-family: "JetBrains Mono", monospace; font-weight: 400; font-size: 22px; line-height: 30px;
+      letter-spacing: 0.16em; text-transform: uppercase; color: rgba(20,20,19,0.7); text-align: center; white-space: nowrap;
+    }
+    [id="01-hook-lbl-send"] { left: 50px; width: 120px; }
+    [id="01-hook-lbl-first"] { left: 870px; width: 200px; }
+
+    [id="01-hook-six"] {
+      position: absolute; left: 244px; top: 600px; width: 240px; height: 420px;
+      font-family: "EB Garamond", serif; font-weight: 400; font-size: 420px; line-height: 420px;
+      font-variant-numeric: lining-nums; letter-spacing: -0.025em; color: #141413; text-align: center;
+    }
+    [id="01-hook-unit"] {
+      position: absolute; left: 516px; top: 908px; width: 320px; height: 56px;
+      font-family: "JetBrains Mono", monospace; font-weight: 400; font-size: 56px; line-height: 56px;
+      letter-spacing: 0.16em; text-transform: uppercase; color: #141413; white-space: nowrap;
+    }
+  </style>
+
+  <div class="clip 01-hook-bg" data-start="0" data-duration="6.86" data-track-index="0">
+    <div class="01-hook-grid"></div>
+  </div>
+
+  <div id="01-hook-composer-lift">
+    <div id="01-hook-composer">
+      <div id="01-hook-prompt-clip" data-layout-allow-overflow><div id="01-hook-prompt">your prompt</div></div>
+      <div id="01-hook-caret"></div>
+      <div id="01-hook-send">Send</div>
+    </div>
+  </div>
+
+  <div id="01-hook-two">Two seconds</div>
+
+  <div id="01-hook-fuse">
+    <div id="01-hook-line"></div>
+    <div class="01-hook-station" style="left: 286px;"></div>
+    <div class="01-hook-station" style="left: 382px;"></div>
+    <div class="01-hook-station" style="left: 478px;"></div>
+    <div class="01-hook-station" style="left: 574px;"></div>
+    <div class="01-hook-station" style="left: 670px;"></div>
+    <div class="01-hook-station" style="left: 766px;"></div>
+    <div id="01-hook-reqdot"></div>
+    <div class="01-hook-label" id="01-hook-lbl-send">Send</div>
+    <div class="01-hook-label" id="01-hook-lbl-first">First word</div>
+  </div>
+
+  <div id="01-hook-six">6</div>
+  <div id="01-hook-unit">Systems</div>
+
+  <script>
+    (function () {
+      var root = document.querySelector('[data-composition-id="01-hook"]');
+      var byId = function (id) { return root.querySelector('[id="' + id + '"]'); };
+
+      var lift = byId("01-hook-composer-lift");
+      var composer = byId("01-hook-composer");
+      var clipBox = byId("01-hook-prompt-clip");
+      var caret = byId("01-hook-caret");
+      var send = byId("01-hook-send");
+      var two = byId("01-hook-two");
+      var line = byId("01-hook-line");
+      var fuse = byId("01-hook-fuse");
+      var reqdot = byId("01-hook-reqdot");
+      var lblSend = byId("01-hook-lbl-send");
+      var lblFirst = byId("01-hook-lbl-first");
+      var stations = root.querySelectorAll('[class~="01-hook-station"]');
+      var six = byId("01-hook-six");
+      var unit = byId("01-hook-unit");
+
+      var tl = gsap.timeline({ paused: true });
+
+      // Scene 1: composer visible from the first frame, prompt types in
+      tl.fromTo(composer, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" }, 0);
+
+      var CHAR = 24; // JetBrains Mono advance at 40px
+      var text = "your prompt";
+      var t0 = 0.15, step = 0.075;
+      tl.set(clipBox, { width: 0 }, 0);
+      tl.set(caret, { x: 0 }, 0);
+      for (var i = 1; i <= text.length; i++) {
+        tl.set(clipBox, { width: i * CHAR }, t0 + (i - 1) * step);
+        tl.set(caret, { x: i * CHAR, opacity: 1 }, t0 + (i - 1) * step);
+      }
+      var typedEnd = t0 + text.length * step;
+      for (var b = typedEnd + 0.3, on = false; b < 6.36; b += 0.5, on = !on) {
+        tl.set(caret, { opacity: on ? 1 : 0 }, b);
+      }
+
+      // Send press-release on "hit send"
+      tl.fromTo(send, { scale: 1 }, { scale: 0.9, duration: 0.08, ease: "power2.in", immediateRender: false }, 1.45);
+      tl.fromTo(send, { scale: 0.9 }, { scale: 1, duration: 0.22, ease: "power2.out", immediateRender: false }, 1.53);
+
+      // Scene 2: composer lifts to the top third
+      tl.fromTo(lift, { y: 0, scale: 1 }, { y: -405, scale: 0.8, duration: 0.45, ease: "power3.inOut" }, 1.8);
+
+      tl.fromTo(two, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 2.2);
+
+      tl.fromTo(line, { scaleX: 0, transformOrigin: "0% 50%" }, { scaleX: 1, duration: 0.7, ease: "power2.out" }, 2.3);
+      tl.fromTo(lblSend, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" }, 2.3);
+      tl.fromTo(reqdot, { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.25, ease: "power2.out" }, 2.3);
+      tl.fromTo(reqdot, { x: 0 }, { x: 860, duration: 1.4, ease: "none", immediateRender: false }, 2.35);
+      tl.fromTo(lblFirst, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" }, 3.3);
+
+      // Scene 3: fuse compresses into the six-station row, then settles below the hero
+      tl.fromTo(line, { scaleX: 1, transformOrigin: "50% 50%" }, { scaleX: 480 / 860, duration: 0.6, ease: "power2.inOut", immediateRender: false }, 4.4);
+      tl.fromTo(lblSend, { x: 0 }, { x: 190, duration: 0.6, ease: "power2.inOut", immediateRender: false }, 4.4);
+      tl.fromTo(lblFirst, { x: 0 }, { x: -190, duration: 0.6, ease: "power2.inOut", immediateRender: false }, 4.4);
+      tl.fromTo(reqdot, { x: 860, scale: 1 }, { x: 190, scale: 0.75, duration: 0.6, ease: "power2.inOut", immediateRender: false }, 4.4);
+
+      tl.fromTo(fuse, { y: 0 }, { y: 480, duration: 0.45, ease: "power3.inOut" }, 5.0);
+      tl.fromTo(stations, { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.3, ease: "power2.out", stagger: 0.05 }, 5.3);
+
+      tl.fromTo(six, { opacity: 0, scale: 0.94, filter: "blur(10px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.45, ease: "power3.out" }, 5.5);
+      tl.fromTo(unit, { opacity: 0, x: -16 }, { opacity: 1, x: 0, duration: 0.35, ease: "power2.out" }, 5.68);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["01-hook"] = tl;
+    })();
+  </script>
+</div>
+</template>

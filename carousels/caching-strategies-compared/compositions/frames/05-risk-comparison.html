@@ -1,0 +1,55 @@
+<template>
+<div id="root" data-composition-id="05-risk-comparison" data-width="1080" data-height="1080" data-duration="3">
+  <style>
+    @font-face { font-family: 'Space Grotesk'; src: url('assets/fonts/Space-Grotesk-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Space Grotesk'; src: url('assets/fonts/Space-Grotesk-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Space Grotesk'; src: url('assets/fonts/Space-Grotesk-700.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Inter'; src: url('assets/fonts/Inter-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Inter'; src: url('assets/fonts/Inter-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: block; }
+
+    #root { position: relative; width: 100%; height: 100%; overflow: hidden; background: #fdfae7; font-family: 'Inter', sans-serif; color: #111111; }
+
+    .eyebrow { position: absolute; left: 80px; top: 140px; width: 600px; font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #1e2bfa; }
+    .h2 { position: absolute; left: 80px; top: 192px; width: 920px; font-family: 'Space Grotesk', sans-serif; font-size: 40px; font-weight: 600; line-height: 1.15; letter-spacing: -0.02em; color: #111111; }
+    .caption { position: absolute; left: 80px; top: 252px; width: 920px; font-family: 'Inter', sans-serif; font-size: 22px; font-weight: 400; line-height: 1.5; color: #595959; }
+
+    .row-icon { position: absolute; left: 80px; width: 26px; height: 26px; }
+    .row-label { position: absolute; left: 118px; width: 260px; font-family: 'Space Grotesk', sans-serif; font-size: 26px; font-weight: 600; color: #111111; }
+    .row-chip { position: absolute; left: 800px; width: 120px; text-align: right; font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
+    .row-chip.positive { color: #047857; }
+    .row-chip.negative { color: #c81e1e; }
+    .track { position: absolute; left: 80px; width: 840px; height: 28px; border-radius: 6px; background: rgba(30,43,250,0.08); }
+    .fill { position: absolute; left: 80px; height: 28px; border-radius: 6px; background: #1e2bfa; }
+
+    .counter { position: absolute; right: 80px; top: 80px; width: 120px; text-align: right; font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 500; letter-spacing: 0.05em; color: #595959; }
+    .bar-track { position: absolute; left: 80px; top: 985px; width: 920px; height: 3px; background: rgba(30,43,250,0.15); }
+    .bar-fill { position: absolute; left: 80px; top: 985px; width: 767px; height: 3px; background: #1e2bfa; }
+  </style>
+
+  <div class="eyebrow">The Trade-off</div>
+  <div class="h2">Same job. Very different risk.</div>
+  <div class="caption">Durability risk if the cache process is lost mid-flight: by design, not a measured statistic.</div>
+
+  <svg class="row-icon" style="top:362px;" viewBox="0 0 24 24" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-3.5 7-9V6l-7-3-7 3v6c0 5.5 7 9 7 9z"/><path d="M9 11.5l2 2 4-4"/></svg>
+  <div class="row-label" style="top:360px;">Cache-Aside</div>
+  <div class="row-chip positive" style="top:360px;">Low</div>
+  <div class="track" style="top:396px;"></div>
+  <div class="fill" style="top:396px; width:210px;"></div>
+
+  <svg class="row-icon" style="top:612px;" viewBox="0 0 24 24" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-3.5 7-9V6l-7-3-7 3v6c0 5.5 7 9 7 9z"/><path d="M9 11.5l2 2 4-4"/></svg>
+  <div class="row-label" style="top:610px;">Write-Through</div>
+  <div class="row-chip positive" style="top:610px;">Low</div>
+  <div class="track" style="top:646px;"></div>
+  <div class="fill" style="top:646px; width:210px;"></div>
+
+  <svg class="row-icon" style="top:862px;" viewBox="0 0 24 24" fill="none" stroke="#c81e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+  <div class="row-label" style="top:860px;">Write-Behind</div>
+  <div class="row-chip negative" style="top:860px;">High</div>
+  <div class="track" style="top:896px;"></div>
+  <div class="fill" style="top:896px; width:714px;"></div>
+
+  <div class="counter">05 / 06</div>
+  <div class="bar-track"></div>
+  <div class="bar-fill"></div>
+</div>
+</template>

@@ -1,0 +1,17 @@
+You type a prompt and hit send. In the two seconds before the first word appears, your message goes through six systems.
+
+First, an API gateway. It checks your key, your rate limit, and how many tokens you're allowed to spend.
+
+Second, a cache lookup. If the start of your prompt matches something the provider has already processed, like a long system prompt, that work gets reused instead of recomputed.
+
+Third, a router picks which model and which GPU cluster handles you, based on load and on the model you asked for.
+
+Fourth, a batching queue. Your request waits a few milliseconds so it can share a GPU pass with dozens of others. That's how inference stays affordable.
+
+Fifth, prefill. The model reads your entire prompt in one parallel pass. This is the pause before the first token.
+
+And sixth, decode. The model generates one token at a time, and each one is streamed back to you the moment it exists.
+
+So when an LLM feels slow, ask which of those six steps is slow.
+
+Comment guide and I'll send you the full request path.

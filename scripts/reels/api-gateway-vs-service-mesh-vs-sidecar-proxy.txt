@@ -1,0 +1,13 @@
+API gateway, service mesh, sidecar proxy. All three sit in the request path of a microservices system, and it's easy to think you only need one. You usually need all three, doing different jobs.
+
+An API gateway sits at the edge, the single door external clients come through. It's the one place handling auth, rate limiting, and routing requests to the right service, before anything is internal traffic yet.
+
+A sidecar proxy is a small proxy deployed next to a single service instance, intercepting everything that service sends and receives. It's not about the edge, it's about every individual service having its own local traffic layer.
+
+A service mesh is what you get when every service has its own sidecar, and a control plane manages all of them together, retries, timeouts, encryption, and observability, for every service-to-service call, consistently, without each team building it themselves.
+
+So the gateway handles traffic coming into your system from outside. The mesh, built out of sidecars, handles traffic moving between your own services once it's already inside. One's the front door, the other is the hallways.
+
+You need an API gateway as soon as external clients talk to more than one backend service. Add a service mesh once you have enough internal services that retries, mTLS, and observability between them can't be handled per-team anymore.
+
+Comment guide and I'll send over the full breakdown.

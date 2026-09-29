@@ -1,0 +1,257 @@
+<template>
+  <style>
+    @font-face { font-family: 'Fraunces'; src: url('assets/fonts/Fraunces-Variable.woff2') format('woff2'); font-weight: 400 700; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Fraunces'; src: url('assets/fonts/Fraunces-Italic.woff2') format('woff2'); font-weight: 400 700; font-style: italic; font-display: block; }
+    @font-face { font-family: 'IBM Plex Sans'; src: url('assets/fonts/IBMPlexSans-Variable.woff2') format('woff2'); font-weight: 300 700; font-style: normal; font-display: block; }
+    @font-face { font-family: 'IBM Plex Mono'; src: url('assets/fonts/IBMPlexMono-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+    @font-face { font-family: 'IBM Plex Mono'; src: url('assets/fonts/IBMPlexMono-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: block; }
+
+    #root {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      container-type: size;
+      overflow: hidden;
+      font-family: 'IBM Plex Sans', sans-serif;
+      --h06-canvas: #0A0D12;
+      --h06-ink: #EDEFF3;
+      --h06-ink-dim: #8992A1;
+      --h06-line: #232B33;
+      --h06-amber: #FF9F45;
+      --h06-teal: #4DE8C2;
+      --h06-violet: #B98CFF;
+    }
+
+    #root .h06-bg {
+      position: absolute;
+      inset: 0;
+      background-color: var(--h06-canvas);
+      background-image:
+        repeating-linear-gradient(0deg, rgba(35, 43, 51, 0.14) 0px, rgba(35, 43, 51, 0.14) 1px, transparent 1px, transparent 80px),
+        repeating-linear-gradient(90deg, rgba(35, 43, 51, 0.14) 0px, rgba(35, 43, 51, 0.14) 1px, transparent 1px, transparent 80px);
+    }
+
+    #root .h06-kicker-wrap {
+      position: absolute;
+      inset: 0;
+    }
+
+    #root .h06-kicker {
+      position: absolute;
+      top: 200px;
+      left: 6cqw;
+      right: 6cqw;
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-weight: 500;
+      font-size: 2cqw;
+      line-height: 1.1;
+      color: var(--h06-ink-dim);
+      opacity: 0;
+    }
+
+    #root .h06-row {
+      position: absolute;
+      left: 6cqw;
+      width: 88cqw;
+      opacity: 1;
+    }
+    #h06-row1 { top: 380px; --h06-row-color: var(--h06-amber); }
+    #h06-row2 { top: 760px; --h06-row-color: var(--h06-teal); }
+    #h06-row3 { top: 1140px; --h06-row-color: var(--h06-violet); }
+
+    #root .h06-row-head {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    #root .h06-index {
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 500;
+      font-size: 1.3cqw;
+      letter-spacing: 0.04em;
+      color: var(--h06-ink-dim);
+      opacity: 0;
+    }
+
+    #root .h06-tick {
+      display: inline-block;
+      width: 32px;
+      height: 4px;
+      background: var(--h06-row-color);
+      transform-origin: left center;
+      transform: scaleX(0);
+    }
+
+    #root .h06-line {
+      font-family: 'Fraunces', serif;
+      font-weight: 600;
+      font-size: 3cqw;
+      line-height: 1.22;
+      letter-spacing: -0.01em;
+      color: var(--h06-ink);
+    }
+
+    #root .h06-word {
+      display: inline-block;
+      opacity: 0;
+      will-change: transform, opacity, filter;
+    }
+
+    #root .h06-glow-word {
+      color: var(--h06-violet);
+    }
+  </style>
+
+  <div id="root" data-composition-id="06-guidance" data-width="1080" data-height="1920" data-duration="13.556">
+    <div class="clip h06-bg" data-start="0" data-duration="13.556" data-track-index="0"></div>
+
+    <div class="clip h06-kicker-wrap" data-start="0" data-duration="13.556" data-track-index="1">
+      <div class="h06-kicker">the order that matters</div>
+    </div>
+
+    <div class="clip h06-row" id="h06-row1" data-start="0" data-duration="13.556" data-track-index="2">
+      <div class="h06-row-head">
+        <span class="h06-index">01</span>
+        <span class="h06-tick"></span>
+      </div>
+      <div class="h06-line">
+        <span class="h06-word">Scale</span>
+        <span class="h06-word">vertically</span>
+        <span class="h06-word">first,</span>
+        <span class="h06-word">it&rsquo;s</span>
+        <span class="h06-word">the</span>
+        <span class="h06-word">cheapest</span>
+        <span class="h06-word">fix</span>
+        <span class="h06-word">while</span>
+        <span class="h06-word">you&rsquo;re</span>
+        <span class="h06-word">small.</span>
+      </div>
+    </div>
+
+    <div class="clip h06-row" id="h06-row2" data-start="0" data-duration="13.556" data-track-index="3">
+      <div class="h06-row-head">
+        <span class="h06-index">02</span>
+        <span class="h06-tick"></span>
+      </div>
+      <div class="h06-line">
+        <span class="h06-word">Move</span>
+        <span class="h06-word">to</span>
+        <span class="h06-word">horizontal</span>
+        <span class="h06-word">once</span>
+        <span class="h06-word">you</span>
+        <span class="h06-word">need</span>
+        <span class="h06-word">redundancy</span>
+        <span class="h06-word">or</span>
+        <span class="h06-word">you&rsquo;re</span>
+        <span class="h06-word">hitting</span>
+        <span class="h06-word">the</span>
+        <span class="h06-word">ceiling</span>
+        <span class="h06-word">of</span>
+        <span class="h06-word">a</span>
+        <span class="h06-word">single</span>
+        <span class="h06-word">machine.</span>
+      </div>
+    </div>
+
+    <div class="clip h06-row" id="h06-row3" data-start="0" data-duration="13.556" data-track-index="4">
+      <div class="h06-row-head">
+        <span class="h06-index">03</span>
+        <span class="h06-tick"></span>
+      </div>
+      <div class="h06-line">
+        <span class="h06-word">Add</span>
+        <span class="h06-word">auto-scaling</span>
+        <span class="h06-word">once</span>
+        <span class="h06-word">your</span>
+        <span class="h06-word">traffic</span>
+        <span class="h06-word">is</span>
+        <span class="h06-word">unpredictable</span>
+        <span class="h06-word">enough</span>
+        <span class="h06-word">that</span>
+        <span class="h06-word">manual</span>
+        <span class="h06-word">scaling</span>
+        <span class="h06-word">can&rsquo;t</span>
+        <span class="h06-word h06-glow-word">keep</span>
+        <span class="h06-word h06-glow-word">up.</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var root = document.querySelector('[data-composition-id="06-guidance"]');
+      var tl = gsap.timeline({ paused: true });
+
+      var row1Words = root.querySelectorAll('#h06-row1 .h06-word');
+      var row2Words = root.querySelectorAll('#h06-row2 .h06-word');
+      var row3Words = root.querySelectorAll('#h06-row3 .h06-word');
+
+      var WORD_FROM = { opacity: 0, y: 14, filter: 'blur(8px)' };
+      var WORD_TO = { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.4, ease: 'power2.out', stagger: 0.075 };
+
+      // kicker
+      tl.fromTo('.h06-kicker', { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, 0.05);
+
+      // Scene 1 (0.0-3.25s) — index 01 + amber tick land, statement 1 per-word reveal.
+      tl.fromTo('#h06-row1 .h06-index', { opacity: 0, x: -8 }, { opacity: 1, x: 0, duration: 0.3, ease: 'power2.out' }, 0.15);
+      tl.fromTo('#h06-row1 .h06-tick', { scaleX: 0 }, { scaleX: 1, duration: 0.28, ease: 'power2.out' }, 0.22);
+      tl.fromTo(row1Words, WORD_FROM, Object.assign({}, WORD_TO), 0.32);
+
+      // Scene 2 (3.25-8.19s) — row1 dims, index 02 + teal tick land, statement 2 per-word reveal.
+      tl.fromTo('#h06-row1', { opacity: 1 }, { opacity: 0.45, duration: 0.4, ease: 'power1.inOut' }, 3.25);
+      tl.fromTo('#h06-row2 .h06-index', { opacity: 0, x: -8 }, { opacity: 1, x: 0, duration: 0.3, ease: 'power2.out' }, 3.4);
+      tl.fromTo('#h06-row2 .h06-tick', { scaleX: 0 }, { scaleX: 1, duration: 0.28, ease: 'power2.out' }, 3.47);
+      tl.fromTo(row2Words, WORD_FROM, Object.assign({}, WORD_TO), 3.57);
+
+      // Scene 3 (8.19-13.056s) — row2 dims, index 03 + violet tick land, statement 3 per-word reveal,
+      // "keep up" keyword-glows, then the stacked trio holds with a subtle jitter.
+      tl.fromTo('#h06-row2', { opacity: 1 }, { opacity: 0.45, duration: 0.4, ease: 'power1.inOut' }, 8.19);
+      tl.fromTo('#h06-row3 .h06-index', { opacity: 0, x: -8 }, { opacity: 1, x: 0, duration: 0.3, ease: 'power2.out' }, 8.34);
+      tl.fromTo('#h06-row3 .h06-tick', { scaleX: 0 }, { scaleX: 1, duration: 0.28, ease: 'power2.out' }, 8.41);
+      tl.fromTo(row3Words, WORD_FROM, Object.assign({}, WORD_TO), 8.51);
+
+      // keyword glow: attack to peak, then decay to a lingering (non-zero) rest.
+      var glowStart = 9.95;
+      tl.fromTo(
+        '.h06-glow-word',
+        { textShadow: '0 0 0px rgba(185,140,255,0)', scale: 1 },
+        { textShadow: '0 0 26px rgba(185,140,255,0.6)', scale: 1.06, duration: 0.32, ease: 'power2.out' },
+        glowStart
+      );
+      tl.to(
+        '.h06-glow-word',
+        { textShadow: '0 0 9px rgba(185,140,255,0.24)', scale: 1.02, duration: 0.42, ease: 'power2.out' },
+        glowStart + 0.32
+      );
+
+      // subtle jitter hold on the three stacked statements — bounded, low-amplitude, phase-offset per row.
+      var jitterStart = 10.75;
+      var jitterDur = 13.056 - jitterStart;
+      var row1El = root.querySelector('#h06-row1');
+      var row2El = root.querySelector('#h06-row2');
+      var row3El = root.querySelector('#h06-row3');
+      var phase = { p: 0 };
+      tl.to(
+        phase,
+        {
+          p: Math.PI * 2,
+          duration: jitterDur,
+          ease: 'none',
+          onUpdate: function () {
+            row1El.style.transform = 'translateY(' + (Math.sin(phase.p) * 1.6).toFixed(2) + 'px)';
+            row2El.style.transform = 'translateY(' + (Math.sin(phase.p + 1.05) * 1.8).toFixed(2) + 'px)';
+            row3El.style.transform = 'translateY(' + (Math.sin(phase.p + 2.1) * 2.0).toFixed(2) + 'px)';
+          },
+        },
+        jitterStart
+      );
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['06-guidance'] = tl;
+      tl.seek(0);
+    })();
+  </script>
+</template>

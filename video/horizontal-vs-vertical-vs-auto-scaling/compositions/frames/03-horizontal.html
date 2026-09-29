@@ -1,0 +1,367 @@
+<template>
+  <style>
+    @font-face { font-family: 'Fraunces'; src: url('assets/fonts/Fraunces-Variable.woff2') format('woff2'); font-weight: 400 700; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Fraunces'; src: url('assets/fonts/Fraunces-Italic.woff2') format('woff2'); font-weight: 400 700; font-style: italic; font-display: block; }
+    @font-face { font-family: 'IBM Plex Sans'; src: url('assets/fonts/IBMPlexSans-Variable.woff2') format('woff2'); font-weight: 300 700; font-style: normal; font-display: block; }
+    @font-face { font-family: 'IBM Plex Mono'; src: url('assets/fonts/IBMPlexMono-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+    @font-face { font-family: 'IBM Plex Mono'; src: url('assets/fonts/IBMPlexMono-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: block; }
+
+    #root {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      container-type: size;
+      font-family: 'IBM Plex Sans', sans-serif;
+      color: #EDEFF3;
+      --canvas: #0A0D12;
+      --canvas-raised: #12161C;
+      --ink: #EDEFF3;
+      --ink-dim: #8992A1;
+      --ink-faint: #4A525E;
+      --line: #232B33;
+      --accent-2: #4DE8C2;
+    }
+
+    .h03-bg {
+      position: absolute;
+      inset: 0;
+      background-color: var(--canvas);
+      background-image:
+        linear-gradient(rgba(35, 43, 51, 0.14) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(35, 43, 51, 0.14) 1px, transparent 1px);
+      background-size: 54px 54px;
+    }
+
+    .h03-label-layer,
+    .h03-diagram,
+    .h03-captions {
+      position: absolute;
+      inset: 0;
+    }
+
+    /* --- top station label --- */
+    .h03-label {
+      position: absolute;
+      left: 0;
+      top: 150px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-family: 'IBM Plex Mono';
+      font-weight: 500;
+      font-size: 1.3cqw;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+      opacity: 0;
+    }
+    .h03-label-tick {
+      width: 8px;
+      height: 8px;
+      flex: none;
+      background: var(--accent-2);
+    }
+
+    /* --- diagram nodes --- */
+    .h03-node {
+      position: absolute;
+      box-sizing: border-box;
+      background: var(--canvas-raised);
+      border: 1.5px solid rgba(137, 146, 161, 0.4);
+      border-radius: 4px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      opacity: 0;
+    }
+    .h03-node-tag {
+      font-family: 'IBM Plex Mono';
+      font-weight: 500;
+      font-size: 1.4cqw;
+      letter-spacing: 0.04em;
+      color: var(--ink);
+    }
+    .h03-node-role {
+      font-family: 'IBM Plex Mono';
+      font-weight: 500;
+      font-size: 1.1cqw;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+    }
+
+    .h03-client {
+      left: 430px;
+      top: 240px;
+      width: 220px;
+      height: 110px;
+    }
+
+    .h03-server {
+      top: 660px;
+      width: 280px;
+      height: 190px;
+      border-color: var(--accent-2);
+    }
+    #h03-server-a { left: 80px; }
+    #h03-server-b { left: 400px; }
+    #h03-server-c { left: 720px; }
+
+    .h03-server .h03-node-tag { color: var(--ink); }
+
+    .h03-led {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      background: var(--accent-2);
+    }
+
+    .h03-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+    .h03-edge {
+      fill: none;
+      stroke: var(--accent-2);
+      stroke-width: 3;
+      stroke-linecap: round;
+    }
+
+    /* --- captions beneath the stack --- */
+    .h03-headline {
+      position: absolute;
+      left: 0;
+      top: 940px;
+      width: 100%;
+      text-align: center;
+      font-family: 'Fraunces';
+      font-weight: 600;
+      font-size: 3.2cqw;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+    }
+    .h03-headline .h03-word {
+      display: inline-block;
+      opacity: 0;
+    }
+    .h03-headline .h03-accent {
+      color: var(--accent-2);
+    }
+
+    .h03-subline-row {
+      position: absolute;
+      left: 0;
+      top: 1060px;
+      width: 100%;
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: 10px;
+      opacity: 0;
+    }
+    .h03-subline-tick {
+      width: 8px;
+      height: 8px;
+      flex: none;
+      background: var(--accent-2);
+      align-self: center;
+    }
+    .h03-subline-terminal {
+      font-family: 'IBM Plex Mono';
+      font-weight: 500;
+      font-size: 1.6cqw;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink);
+      white-space: pre;
+      display: flex;
+      align-items: baseline;
+    }
+    .h03-caret {
+      display: inline-block;
+      width: 0.55em;
+      height: 1.05em;
+      background: var(--accent-2);
+      margin-left: 2px;
+      vertical-align: -0.12em;
+    }
+  </style>
+
+  <div id="root" data-composition-id="03-horizontal" data-width="1080" data-height="1920" data-duration="15.604">
+    <div class="h03-bg clip" data-start="0" data-duration="15.604" data-track-index="0"></div>
+
+    <div class="h03-label-layer clip" data-start="0" data-duration="15.604" data-track-index="1">
+      <div class="h03-label" id="h03-label"><span class="h03-label-tick"></span>Horizontal</div>
+    </div>
+
+    <div class="h03-diagram clip" data-start="0" data-duration="15.604" data-track-index="2">
+      <div id="h03-diagram-group" style="position:absolute; inset:0;">
+        <svg class="h03-svg" viewBox="0 0 1080 1920" preserveAspectRatio="none">
+          <path class="h03-edge" id="h03-stem" d="M540,350 L540,520" />
+          <path class="h03-edge" id="h03-branch-a" d="M540,520 C540,585 260,585 220,660" />
+          <path class="h03-edge" id="h03-branch-b" d="M540,520 L540,660" />
+          <path class="h03-edge" id="h03-branch-c" d="M540,520 C540,585 820,585 860,660" />
+        </svg>
+
+        <div class="h03-node h03-client" id="h03-client">
+          <div class="h03-node-tag">Client</div>
+        </div>
+
+        <div class="h03-node h03-server" id="h03-server-a">
+          <span class="h03-led"></span>
+          <div class="h03-node-tag">Server</div>
+          <div class="h03-node-role">Copy 1</div>
+        </div>
+        <div class="h03-node h03-server" id="h03-server-b">
+          <span class="h03-led" id="h03-led-b"></span>
+          <div class="h03-node-tag">Server</div>
+          <div class="h03-node-role">Copy 2</div>
+        </div>
+        <div class="h03-node h03-server" id="h03-server-c">
+          <span class="h03-led"></span>
+          <div class="h03-node-tag">Server</div>
+          <div class="h03-node-role">Copy 3</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="h03-captions clip" data-start="0" data-duration="15.604" data-track-index="3">
+      <div class="h03-headline" id="h03-headline">
+        <span class="h03-word">Many</span>
+        <span class="h03-word h03-accent">machines,</span>
+        <span class="h03-word">same</span>
+        <span class="h03-word">job.</span>
+      </div>
+      <div class="h03-subline-row" id="h03-subline-row">
+        <span class="h03-subline-tick"></span>
+        <div class="h03-subline-terminal"><span id="h03-subline-text"></span><span class="h03-caret" id="h03-caret"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var root = document.querySelector('[data-composition-id="03-horizontal"]');
+      if (!root) return;
+
+      function setupDraw(el) {
+        var len = el.getTotalLength();
+        el.style.strokeDasharray = String(len);
+        el.style.strokeDashoffset = String(len);
+      }
+      ['#h03-stem', '#h03-branch-a', '#h03-branch-b', '#h03-branch-c'].forEach(function (sel) {
+        setupDraw(root.querySelector(sel));
+      });
+
+      var tl = gsap.timeline({ paused: true });
+      window.__timelines = window.__timelines || {};
+      window.__timelines['03-horizontal'] = tl;
+
+      // Scene 1 (0.0-1.08s) — neutral client node continues from frame 2's diagram (crossfade handles the visual join).
+      tl.fromTo(root.querySelector('#h03-client'),
+        { opacity: 0, y: 16 },
+        { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' },
+        0.05
+      );
+
+      // Scene 2 (1.08-4.32s) — the edge forks teal, three identical server copies burst outward from the fork point, left to right, all fully lit at once.
+      tl.fromTo(root.querySelector('#h03-label'),
+        { opacity: 0, x: -10 },
+        { opacity: 1, x: 0, duration: 0.3, ease: 'power1.out' },
+        1.15
+      );
+      tl.to(root.querySelector('#h03-stem'), { strokeDashoffset: 0, duration: 0.3, ease: 'power2.out' }, 1.25);
+
+      // Each server node starts at the fork's (540,520) origin (expressed as a transform delta from its own
+      // final resting center) and radiates outward — center-outward-expansion, left-to-right stagger.
+      var burstNodes = [
+        { sel: '#h03-server-a', edge: '#h03-branch-a', dx: -320, dy: 235, at: 1.60 },
+        { sel: '#h03-server-b', edge: '#h03-branch-b', dx: 0, dy: 235, at: 1.82 },
+        { sel: '#h03-server-c', edge: '#h03-branch-c', dx: 320, dy: 235, at: 2.04 }
+      ];
+      burstNodes.forEach(function (n) {
+        tl.to(root.querySelector(n.edge), { strokeDashoffset: 0, duration: 0.28, ease: 'power2.out' }, n.at);
+        tl.fromTo(root.querySelector(n.sel),
+          { opacity: 0, x: n.dx, y: n.dy, scale: 0.6 },
+          { opacity: 1, x: 0, y: 0, scale: 1, duration: 0.4, ease: 'power3.out' },
+          n.at
+        );
+      });
+
+      // Scene 3 (4.32-8.52s) — "Many machines, same job." settles beneath the stack, word by word; stack holds.
+      var words = root.querySelectorAll('#h03-headline .h03-word');
+      words.forEach(function (w, i) {
+        tl.fromTo(w,
+          { opacity: 0, y: 8 },
+          { opacity: 1, y: 0, duration: 0.3, ease: 'power1.out' },
+          4.40 + i * 0.15
+        );
+      });
+
+      // Scene 4 (8.52-10.55s) — the middle copy dims out (inverse keyword-glow envelope: attack down, hold, release up)
+      // while the others stay lit, then relights: redundancy demonstrated live.
+      var serverB = root.querySelector('#h03-server-b');
+      var ledB = root.querySelector('#h03-led-b');
+      tl.to(serverB, { opacity: 0.35, borderColor: '#4A525E', duration: 0.25, ease: 'power2.in' }, 8.55);
+      tl.to(ledB, { backgroundColor: '#4A525E', duration: 0.25, ease: 'power2.in' }, 8.55);
+      tl.to(serverB, { opacity: 1, borderColor: '#4DE8C2', duration: 0.35, ease: 'power2.out' }, 9.30);
+      tl.to(ledB, { backgroundColor: '#4DE8C2', duration: 0.35, ease: 'power2.out' }, 9.30);
+
+      // Scene 5 (10.55-15.104s) — "coordinated copies" types on with a teal caret, then holds with a subtle idle jitter.
+      tl.fromTo(root.querySelector('#h03-subline-row'),
+        { opacity: 0 }, { opacity: 1, duration: 0.2, ease: 'power1.out' }, 10.60
+      );
+
+      var fullText = 'COORDINATED COPIES';
+      var textEl = root.querySelector('#h03-subline-text');
+      var typeLen = { v: 0 };
+      tl.to(typeLen, {
+        v: fullText.length,
+        duration: 1.33,
+        ease: 'power1.inOut',
+        onUpdate: function () {
+          textEl.textContent = fullText.substring(0, Math.floor(typeLen.v));
+        }
+      }, 10.80);
+
+      // Solid caret while typing, then a deterministic sin-wave blink for the remainder of the hold.
+      var caretEl = root.querySelector('#h03-caret');
+      tl.set(caretEl, { opacity: 1 }, 10.80);
+      var blink = { p: 0 };
+      tl.to(blink, {
+        p: Math.PI * 2 * 4,
+        duration: 2.974,
+        ease: 'none',
+        onUpdate: function () {
+          caretEl.style.opacity = Math.sin(blink.p) > 0 ? '1' : '0';
+        }
+      }, 12.13);
+
+      // Subtle settle jitter on the whole diagram group so the final hold doesn't read as frozen.
+      var diagramGroup = root.querySelector('#h03-diagram-group');
+      var jitter = { p: 0 };
+      tl.to(jitter, {
+        p: Math.PI * 2 * 4,
+        duration: 15.104 - 12.13,
+        ease: 'none',
+        onUpdate: function () {
+          var s = Math.sin(jitter.p);
+          diagramGroup.style.transform = 'translateY(' + (s * 2.5) + 'px)';
+        }
+      }, 12.13);
+
+      tl.seek(0);
+    })();
+  </script>
+</template>

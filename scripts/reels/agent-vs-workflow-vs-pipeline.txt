@@ -1,0 +1,13 @@
+Agent, workflow, pipeline. Everyone's building agents right now, but most of what gets called an agent is actually one of the other two, and that's not a bad thing, it's usually the right call.
+
+A pipeline is a fixed sequence of steps. Step one always runs, then step two, then step three, in that exact order, every time. Nothing decides anything, it's just a predetermined path from input to output.
+
+A workflow adds branching to that. Depending on the result of a step, you go down path A or path B, maybe a human approves something in the middle. Still mostly predetermined, but the path isn't always the same one.
+
+An agent is different because the model itself decides what happens next, at each step, based on reasoning about the current state. Which tool to call, in what order, whether to stop, none of that is hardcoded, it's decided live.
+
+So the real spectrum isn't how much AI is involved, all three can use an LLM somewhere. It's how much of the control flow is decided in advance by you, versus decided live by the model.
+
+Use a pipeline when the steps are always the same, you don't need an LLM deciding anything there. Use a workflow when there's branching but the branches themselves are known ahead of time. Reach for an actual agent only when the next step genuinely can't be predetermined, because that flexibility costs you predictability and cost control.
+
+Comment guide and I'll send over the full breakdown.
