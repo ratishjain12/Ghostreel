@@ -378,7 +378,7 @@ short-lived, single-use links sent directly to you.</li>
 
 <h2>Deletion requests</h2>
 <p>To request deletion of any data associated with your account, contact
-<a href="mailto:ratish.jain@flowace.ai">ratish.jain@flowace.ai</a>.</p>
+<a href="mailto:ratishjain6@gmail.com">ratishjain6@gmail.com</a>.</p>
 </body></html>"""
 
 
